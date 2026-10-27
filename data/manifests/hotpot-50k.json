@@ -1,0 +1,43 @@
+{
+  "version": "2026-10-27-v1",
+  "seed": 42,
+  "dataset": "hotpotqa/hotpot_qa",
+  "revision": "1908d6afbbead072334abe2965f91bd2709910ab",
+  "license": "HotpotQA CC-BY-SA-4.0; authored incident fixtures CC0-1.0",
+  "source_url": "https://huggingface.co/datasets/hotpotqa/hotpot_qa",
+  "primary_records": 50000,
+  "synthetic_records": 85,
+  "records": 50085,
+  "questions": 108,
+  "category_counts": {
+    "multi_hop": 38,
+    "comparison": 24,
+    "contradictory": 14,
+    "direct": 14,
+    "prompt_injection": 4,
+    "unanswerable": 14
+  },
+  "split_counts": {
+    "test": 92,
+    "tuning": 12,
+    "security": 4
+  },
+  "record_unit": "One unique, independently attributable source passage; not a QA row or chunk.",
+  "deduplication": "NFKC Unicode, whitespace folding and casefold of complete passage text; SHA-256",
+  "sampling": "All selected validation contexts, then seeded training row-group and row order until target unique passage count. No question/answer text indexed.",
+  "validation_selection": "SHA-256(seed:question-id), alternating bridge/comparison",
+  "source_files": {
+    "distractor/train-00000-of-00002.parquet": {
+      "url": "https://huggingface.co/datasets/hotpotqa/hotpot_qa/resolve/1908d6afbbead072334abe2965f91bd2709910ab/distractor/train-00000-of-00002.parquet",
+      "sha256": "76d3bb3048a7cc73c1958107c0c5872a00d7e7d00c105b81e92f6769e7822e68",
+      "bytes": 165624177
+    },
+    "distractor/validation-00000-of-00001.parquet": {
+      "url": "https://huggingface.co/datasets/hotpotqa/hotpot_qa/resolve/1908d6afbbead072334abe2965f91bd2709910ab/distractor/validation-00000-of-00001.parquet",
+      "sha256": "c20b638ca82b21d04fe12e14ff417ad05153d4d215a65de54497fca4e972f7c6",
+      "bytes": 27452575
+    }
+  },
+  "corpus_sha256": "18126707ba892950e6bef9647fd07cfddfd4d7bb0ec853351a268c38c07910d3",
+  "cases_sha256": "6b844b39feb8741c2fce19af8fb1ff4dc1b7d778d414aa1b82e1681eecdc5606"
+}
