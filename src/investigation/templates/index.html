@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Trace a question through documents to verifiable evidence.">
+  <title>{{ app_name }}</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%2317212c'/%3E%3Cpath d='M8 9h16M8 16h11M8 23h7' stroke='%2394e0bd' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="/static/app.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#question">Skip to investigation</a>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="/" aria-label="Investigation Engine home"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span>Investigation<br><strong>Engine</strong></span></a>
+      <p class="sidebar-label">WORKSPACE</p>
+      <nav aria-label="Workspace navigation">
+        <button class="nav-button active" data-view="investigate"><span aria-hidden="true">⌕</span> Investigate <span class="nav-index">01</span></button>
+        <button class="nav-button" data-view="library"><span aria-hidden="true">▤</span> Document library <span class="nav-index">02</span></button>
+      </nav>
+      <div class="corpus-card"><span class="status-dot"></span><span>CONNECTED CORPUS</span><strong id="corpus-count">—</strong><small id="corpus-detail">Connecting to your sources…</small><div class="corpus-line"></div><div class="corpus-bottom"><span>Search</span><span id="search-mode">Hybrid</span></div></div>
+      <div class="sidebar-bottom"><button id="settings-button" class="subtle-button">⚙ &nbsp; Management access</button><a href="/docs" target="_blank" rel="noopener">API reference <span aria-hidden="true">↗</span></a><span class="build-label">APPLIED AI / RESEARCH WORKSPACE</span></div>
+    </aside>
+    <main>
+      <header class="topbar"><div><span class="breadcrumb">Workspace</span><span class="breadcrumb-slash">/</span><span id="breadcrumb-current">Investigation</span></div><div class="system-indicator"><span class="status-dot"></span><span id="system-status">Connecting</span><button id="mobile-settings-button" class="icon-button mobile-settings" aria-label="Management access">⚙</button></div></header>
+      <section id="investigate-view" class="workspace-view">
+        <div class="page-heading"><div><p class="eyebrow">FOLLOW THE EVIDENCE</p><h1>Ask a better question.<br><span>Build a clearer picture.</span></h1><p class="intro">Connect the facts across your documents. Every finding leads back to its source.</p></div><span class="edition-badge">INVESTIGATION<br><strong>01 / EVIDENCE</strong></span></div>
+        <form id="investigation-form" class="question-card">
+          <label class="question-label" for="question"><span aria-hidden="true">⌕</span> What would you like to investigate?</label>
+          <textarea id="question" name="question" rows="3" minlength="3" maxlength="2000" placeholder="Which changes caused the payment delay, and which documents support that conclusion?" required></textarea>
+          <div class="question-footer"><span class="input-hint"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> to investigate</span><button id="investigate-button" type="submit" class="primary-button">Start investigation <span aria-hidden="true">↗</span></button></div>
+        </form>
+        <div id="provider-notice" class="notice hidden" role="status"></div>
+        <div id="investigation-error" class="error-box hidden" role="alert"></div>
+        <div id="progress-panel" class="progress-panel hidden" aria-live="polite"><div class="progress-top"><span class="working-dot"></span><strong id="progress-label">Preparing investigation</strong><span id="progress-time">0s</span></div><ol id="progress-steps"></ol></div>
+        <section id="answer-panel" class="answer-panel hidden" aria-labelledby="answer-heading">
+          <div class="result-header"><div class="result-label"><span id="answer-status" class="result-status">FINDINGS</span><span id="answer-time"></span></div><button id="copy-answer" type="button" class="subtle-button">Copy findings</button></div>
+          <h2 id="answer-heading">Investigation findings</h2><p id="answer-question" class="answer-question"></p>
+          <div id="answer-text" class="answer-text"></div>
+          <div id="answer-conflicts" class="hidden"></div>
+          <div id="answer-warnings" class="hidden"></div>
+          <div id="claims-section" class="hidden"><h3 class="small-heading">SUPPORTED CLAIMS</h3><div id="answer-claims"></div></div>
+          <div class="sources-heading"><h3 class="small-heading">SOURCE EVIDENCE <span id="source-count">0</span></h3><span>Open a source to inspect the passage <span aria-hidden="true">↗</span></span></div><div id="answer-sources" class="source-grid"></div>
+          <details class="trace-panel"><summary>Investigation trace <span>Plan, retrieval &amp; verification</span></summary><div id="answer-plan"></div><ol id="answer-trace"></ol></details>
+        </section>
+        <section id="empty-state" class="getting-started"><div class="section-title"><h2>A starting point</h2><span>TRY A QUESTION FROM YOUR CORPUS</span></div><div class="suggestion-grid"><button class="suggestion" data-question="Which system change caused the Atlas payment delay on March 3, which service was affected, and what confirmed the cause?"><span class="suggestion-number">01</span><h3>Connect the dots <span aria-hidden="true">↗</span></h3><p>Find the chain of events behind an incident.</p><span class="suggestion-tag">MULTI-STEP REASONING</span></button><button class="suggestion" data-question="How many payment requests failed during Atlas incident INC-001, according to the two audit exports?"><span class="suggestion-number">02</span><h3>Compare the evidence <span aria-hidden="true">↗</span></h3><p>Surface differences and conflicting accounts.</p><span class="suggestion-tag">CONFLICT DETECTION</span></button><button class="suggestion" data-question="Which team owns the service affected by Atlas incident INC-001, and what change triggered that incident?"><span class="suggestion-number">03</span><h3>Check the sources <span aria-hidden="true">↗</span></h3><p>Inspect the documents behind each finding.</p><span class="suggestion-tag">SOURCE ATTRIBUTION</span></button></div><p class="demo-note">Example prompts require the demo incident corpus. Upload documents in the library or seed the provided dataset to begin.</p></section>
+        <footer class="workspace-footer"><span><span class="mini-mark" aria-hidden="true">≋</span> EVIDENCE OVER ASSUMPTIONS</span><span>Sources are evidence. Model responses are verified against retrieved passages.</span></footer>
+      </section>
+      <section id="library-view" class="workspace-view hidden">
+        <div class="library-heading"><div><p class="eyebrow">YOUR KNOWLEDGE BASE</p><h1>Document library</h1><p class="intro">Add sources, manage revisions, and keep your evidence current.</p></div><button id="refresh-library" class="secondary-button">Refresh <span aria-hidden="true">↻</span></button></div>
+        <div class="public-notice"><span aria-hidden="true">ⓘ</span><p>This workspace is a shared demo. Document text and source passages are publicly readable. Upload public, non-sensitive documents only.</p></div>
+        <form id="upload-form" class="upload-card"><div><span class="upload-icon" aria-hidden="true">↥</span><h2>Add a source document</h2><p>PDF, DOCX, TXT, or Markdown · <span id="upload-size">10</span> MB maximum</p></div><label for="upload-file" class="sr-only">Select a document to upload</label><input type="file" id="upload-file" accept=".pdf,.docx,.txt,.md" required><button type="submit" class="primary-button" id="upload-button">Upload &amp; index <span aria-hidden="true">+</span></button></form>
+        <div id="library-message" class="notice hidden" role="status"></div><div id="library-error" class="error-box hidden" role="alert"></div>
+        <div class="library-table-wrap"><div class="table-heading"><h2>Indexed sources</h2><span id="library-range"></span></div><table><thead><tr><th>DOCUMENT</th><th>FORMAT</th><th>REVISION</th><th>PASSAGES</th><th>STATUS</th><th><span class="sr-only">Actions</span></th></tr></thead><tbody id="document-list"></tbody></table><div id="library-empty" class="table-empty hidden">Your library is ready for its first source.</div><div class="pagination"><button id="previous-page" class="subtle-button" disabled>← Previous</button><span id="page-number">Page 1</span><button id="next-page" class="subtle-button">Next →</button></div></div>
+        <input type="file" id="replace-file" class="hidden" accept=".pdf,.docx,.txt,.md">
+      </section>
+    </main>
+  </div>
+  <dialog id="source-dialog" class="source-dialog"><div class="dialog-header"><span class="eyebrow">SOURCE INSPECTOR</span><button class="icon-button" id="close-source" aria-label="Close source">×</button></div><div id="source-meta" class="source-meta"></div><h2 id="source-title"></h2><div id="source-location" class="source-location"></div><blockquote id="source-quote"></blockquote><div id="source-content" class="source-content"></div><a id="source-original" class="source-original hidden" target="_blank" rel="noopener noreferrer">Open original source ↗</a></dialog>
+  <dialog id="settings-dialog" class="settings-dialog"><div class="dialog-header"><span class="eyebrow">WORKSPACE ACCESS</span><button class="icon-button" id="close-settings" aria-label="Close settings">×</button></div><h2>Management access</h2><p>Enter the management token to upload, replace, or remove documents. It is kept in this browser tab's session storage and sent only to this workspace.</p><form id="settings-form"><label for="management-token">Management token</label><input type="password" id="management-token" autocomplete="off" placeholder="Paste your token"><div class="settings-actions"><button type="button" class="subtle-button" id="clear-token">Clear token</button><button type="submit" class="primary-button">Save for this tab</button></div></form></dialog>
+  <div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+</body>
+</html>
