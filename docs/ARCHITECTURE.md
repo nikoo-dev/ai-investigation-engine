@@ -83,10 +83,10 @@ equivalence to a stemmed Lucene implementation.
    citations, usage, elapsed time, and an inspectable trace.
 
 Gemini's REST structured-output request uses `responseFormat.text`. The adapter
-resolves local schema references and omits nested string-length/array-count
+resolves local schema references and omits nested string-length/maximum-array-count
 constraints from the decoder schema after the full bounded schema was rejected
 by the live service. Types, required fields, enums and numeric ranges remain on
-the wire; the original Pydantic model then enforces all local bounds before the
+the wire, including minimum evidence counts; the original Pydantic model then enforces all local bounds before the
 engine accepts a draft. This is separate from exact quotation and entailment
 checks. See [Google's REST schema documentation](https://ai.google.dev/gemini-api/docs/generate-content/structured-output)
 and the retained initial failed run in `reports/evaluation/gemini-full-hybrid/`.

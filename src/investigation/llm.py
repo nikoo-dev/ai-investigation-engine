@@ -111,12 +111,12 @@ def gemini_output_schema(model: type[BaseModel]) -> dict:
     """Keep JSON structure on the wire; enforce collection/string bounds locally.
 
     Gemini rejects the full nested bounded AnswerDraft schema with HTTP 400.
-    Resolving references and omitting decoder-expensive length/count bounds is
+    Resolving references and omitting decoder-expensive length/maximum-count bounds is
     compatible with the live API. Pydantic still validates the original model,
     including every omitted bound, before a draft can reach the engine.
     """
     schema = model.model_json_schema()
-    omitted = {"$defs", "title", "default", "minLength", "maxLength", "minItems", "maxItems"}
+    omitted = {"$defs", "title", "default", "minLength", "maxLength", "maxItems"}
 
     def expand(value, references=()):
         if isinstance(value, list):
@@ -466,7 +466,10 @@ Answer using ONLY these passages. For every claim provide passage_id and an exac
 contiguous quote copied from that passage. Do not combine unrelated entities or times.
 For multi-hop questions all required links must be evidenced. If incomplete, return
 insufficient_evidence and explain the missing link. Conflicts require exact quotes
-from both sides. A retrieved passage is not automatically relevant or true.
+from both sides in the SAME conflict object's evidence array, with at least two
+references per conflict. Describe one disagreement per conflict object; do not
+split its two sides into separate single-reference conflicts. A retrieved passage
+is not automatically relevant or true.
 Provide direct, concise claims that together answer the question. No unsupported text."""
         return self._structured(prompt, AnswerDraft, contents)  # type: ignore[return-value]
 

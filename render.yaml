@@ -18,6 +18,8 @@ services:
         value: "1"
       - key: MAX_CONCURRENT_INVESTIGATIONS
         value: "1"
+      - key: REQUESTS_PER_MINUTE
+        value: "3"
       - key: QDRANT_URL
         sync: false
       - key: QDRANT_API_KEY

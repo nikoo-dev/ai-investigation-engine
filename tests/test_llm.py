@@ -174,6 +174,8 @@ def test_gemini_native_tools_roundtrip_preserves_model_content_and_uses_header_s
         ]
         claim = wire["properties"]["claims"]["items"]
         assert claim["required"] == ["text", "evidence"]
+        assert claim["properties"]["evidence"]["minItems"] == 1
+        assert wire["properties"]["conflicts"]["items"]["properties"]["evidence"]["minItems"] == 2
         assert claim["properties"]["evidence"]["items"]["properties"]["quote"] == {"type": "string"}
         assert "$ref" not in json.dumps(wire) and "maxItems" not in json.dumps(wire)
         assert client.usage == {"input_tokens": 14, "output_tokens": 6, "calls": 2, "retries": 0}

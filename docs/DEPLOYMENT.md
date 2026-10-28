@@ -92,6 +92,9 @@ not provision infrastructure or supply credentials.
 5. Verify `ENVIRONMENT=production`, `LLM_PROVIDER=gemini`, and the same
    `COLLECTION_PREFIX`, embedding model, dimension, and chunk settings used by the
    local import. Do not re-ingest the dataset during startup.
+   The blueprint allows one investigation at a time and three guarded requests
+   per minute. A query can make up to four model calls before bounded retries;
+   these limits keep the public demonstration conservative about free API quotas.
 6. Deploy and wait for `/health` to pass. Open the assigned `https://...onrender.com`
    URL. Confirm `/ready` can reach Qdrant and the UI shows the actual document count.
 7. Enter **only** `ADMIN_TOKEN` in the UI's management-access dialog. It stays in

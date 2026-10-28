@@ -72,6 +72,14 @@ final evaluation. The original 53-case partial run remains unchanged and cannot
 be presented as a completed held-out result. Reusing previously inspected test
 cases for the later run is regression evidence, not a claim of wholly unseen testing.
 
+A subsequent 45-case run stopped when the model split the two sides of a conflict
+into separate objects with one evidence reference each. Local validation rejected
+them. The agent verified that Gemini accepts minimum array counts while rejecting
+the earlier nested maximum constraints, retained the minimum evidence counts in
+the wire schema, and clarified that each conflict must pair both opposing quotes.
+A full local-corpus diagnostic then completed synthesis and independent conflict
+verification successfully. The previous partial artifacts remain unchanged.
+
 The API/UI was locally exercised with a real embedded Qdrant runtime. Its focused
 HTTP tests cover upload/search/source resolution, restart persistence, deletion,
 authorization, rate limits, source rendering, streaming validation and metrics.
