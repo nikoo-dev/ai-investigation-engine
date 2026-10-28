@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: ai-investigation-engine
+    runtime: docker
+    plan: free
+    healthCheckPath: /health
+    autoDeployTrigger: commit
+    envVars:
+      - key: ENVIRONMENT
+        value: production
+      - key: DATA_DIR
+        value: /app/data
+      - key: LLM_PROVIDER
+        value: gemini
+      - key: LLM_MODEL
+        value: gemini-3.5-flash-lite
+      - key: EMBEDDING_THREADS
+        value: "1"
+      - key: MAX_CONCURRENT_INVESTIGATIONS
+        value: "1"
+      - key: QDRANT_URL
+        sync: false
+      - key: QDRANT_API_KEY
+        sync: false
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: ADMIN_TOKEN
+        generateValue: true

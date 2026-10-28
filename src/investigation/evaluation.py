@@ -381,7 +381,7 @@ def render_report(report: dict[str, Any]) -> str:
     counts = report["aggregate"].get("sample_counts", {})
     for key, value in report["aggregate"].items():
         if isinstance(value, (int, float)):
-            lines.append(f"{key} | {value:.4f} | {counts.get(key, '-')} ")
+            lines.append(f"{key} | {value:.4f} | {counts.get(key, '-')}")
     lines.extend(
         [
             "",

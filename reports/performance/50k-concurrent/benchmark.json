@@ -1,0 +1,182 @@
+{
+  "created_at": "2026-10-27T14:58:49.726654+00:00",
+  "kind": "end_to_end_investigation",
+  "requests": 20,
+  "concurrency": 2,
+  "repeats": 2,
+  "warmup_requests": 1,
+  "answer_cache_enabled": false,
+  "retrieval_cache_enabled": false,
+  "embedding_cache_enabled": true,
+  "seconds": 25.58818419999443,
+  "requests_per_second": 0.7816107561084523,
+  "latency_p50_ms": 2482.9045999940718,
+  "latency_p95_ms": 2730.6967000185978,
+  "latency_min_ms": 2138.4322999801952,
+  "latency_max_ms": 3716.719199990621,
+  "errors": 0,
+  "rss_start_bytes": 2158260224,
+  "rss_peak_sampled_bytes": 2387140608,
+  "rss_sampling_interval_ms": 25.0,
+  "corpus_stats": {
+    "documents": 50085,
+    "chunks": 52243,
+    "corpus_revision": "9e48a0b3-7f60-483b-86d9-5e7149562bb6",
+    "backend": "qdrant_local"
+  },
+  "corpus_revision": "9e48a0b3-7f60-483b-86d9-5e7149562bb6",
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.14",
+    "cpu_count": 16,
+    "llm_provider": "extractive",
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2"
+  },
+  "limitations": [
+    "RSS is sampled every 25 ms and can miss shorter transient peaks; external Qdrant-server RSS is not included.",
+    "Local/client mode may use exact vector scans. Report server mode separately before extrapolating scale.",
+    "A run with fewer than 50,000 stored documents is a small-corpus benchmark, not evidence of 50,000-record performance."
+  ],
+  "rows": [
+    {
+      "question": "What is the date played of this college football game at Sun Life Stadium in Miami Gardens, Florida, where Clemson defeated the No. 4 Oklahoma Sooners, 37-17?",
+      "latency_ms": 2493.7669999781065,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": " Which attack resulted with the formal surrender of German forces, the Battle of Guam or the Spring 1945 offensive in Italy?",
+      "latency_ms": 3716.719199990621,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "Why does the City of Boston get their christmas tree from Ainslee Glen Nova Scotia?",
+      "latency_ms": 2385.5524999962654,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "Who has the highest scope in profession in  Rob Thomas or  James Dean Bradfield",
+      "latency_ms": 2471.2232000019867,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "In addition to his role in The Fattest Man in Britain, Bobby Ball is best known for his half of the doublt act Cannon and Ball with which other comedian?",
+      "latency_ms": 2503.2080999808386,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "Which genus of flowering plant is found in an environment further south, Crocosmia or Cimicifuga?",
+      "latency_ms": 2239.516300003743,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "What type of crab can be grown in a fishery and is known for its sweet and tender flesh?",
+      "latency_ms": 2249.0792000025976,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "What is the main difference between Aloinopsis and Washingtonia?",
+      "latency_ms": 2445.1107000058983,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "This singer of A Rather Blustery Day also voiced what hedgehog?",
+      "latency_ms": 2412.3991999949794,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "Which breed, Chinese Chongqing Dog or Kanni, is used for hunting?",
+      "latency_ms": 2560.110499995062,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "What is the date played of this college football game at Sun Life Stadium in Miami Gardens, Florida, where Clemson defeated the No. 4 Oklahoma Sooners, 37-17?",
+      "latency_ms": 2730.6967000185978,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": " Which attack resulted with the formal surrender of German forces, the Battle of Guam or the Spring 1945 offensive in Italy?",
+      "latency_ms": 2612.5565999827813,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "Why does the City of Boston get their christmas tree from Ainslee Glen Nova Scotia?",
+      "latency_ms": 2589.3515000061598,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "Who has the highest scope in profession in  Rob Thomas or  James Dean Bradfield",
+      "latency_ms": 2658.110199990915,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "In addition to his role in The Fattest Man in Britain, Bobby Ball is best known for his half of the doublt act Cannon and Ball with which other comedian?",
+      "latency_ms": 2503.230700007407,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "Which genus of flowering plant is found in an environment further south, Crocosmia or Cimicifuga?",
+      "latency_ms": 2213.458599988371,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "What type of crab can be grown in a fishery and is known for its sweet and tender flesh?",
+      "latency_ms": 2278.047500003595,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "What is the main difference between Aloinopsis and Washingtonia?",
+      "latency_ms": 2530.1118999777827,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "This singer of A Rather Blustery Day also voiced what hedgehog?",
+      "latency_ms": 2472.042200010037,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    },
+    {
+      "question": "Which breed, Chinese Chongqing Dog or Kanni, is used for hunting?",
+      "latency_ms": 2138.4322999801952,
+      "status": "answered",
+      "error": null,
+      "usage": {}
+    }
+  ]
+}

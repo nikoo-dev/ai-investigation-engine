@@ -1,0 +1,117 @@
+{
+  "status": "incomplete",
+  "checked_at": "2026-10-28T21:48:45.533819+00:00",
+  "check_urls": false,
+  "checks": [
+    {
+      "id": "submission_manifest",
+      "status": "pass",
+      "detail": "Submission manifest is readable.",
+      "evidence_level": "verified",
+      "evidence": {},
+      "required": true
+    },
+    {
+      "id": "documentation",
+      "status": "pass",
+      "detail": "Required project documents exist.",
+      "evidence_level": "verified",
+      "evidence": {
+        "missing": []
+      },
+      "required": true
+    },
+    {
+      "id": "git_history",
+      "status": "pass",
+      "detail": "A local committed history exists.",
+      "evidence_level": "verified",
+      "evidence": {
+        "commit": "d28ecaf69f4bdb4869cc119c3f88bdad1d5a832f"
+      },
+      "required": true
+    },
+    {
+      "id": "dataset_manifest",
+      "status": "pass",
+      "detail": "Preparation manifest records 50,000+ primary records with hashes/provenance. Actual corpus file verification is reported separately.",
+      "evidence_level": "preparation_manifest",
+      "evidence": {
+        "records": 50085,
+        "primary_records": 50000,
+        "file_hashes_verified": true,
+        "record_count_independently_recounted": false,
+        "corpus_sha256": "18126707ba892950e6bef9647fd07cfddfd4d7bb0ec853351a268c38c07910d3",
+        "cases_sha256": "6b844b39feb8741c2fce19af8fb1ff4dc1b7d778d414aa1b82e1681eecdc5606",
+        "revision": "1908d6afbbead072334abe2965f91bd2709910ab"
+      },
+      "required": true
+    },
+    {
+      "id": "active_corpus",
+      "status": "pass",
+      "detail": "Current Store reports at least 50,000 active documents.",
+      "evidence_level": "verified",
+      "evidence": {
+        "documents": 50085,
+        "chunks": 52243,
+        "corpus_revision": "9e48a0b3-7f60-483b-86d9-5e7149562bb6",
+        "backend": "qdrant_local"
+      },
+      "required": true
+    },
+    {
+      "id": "live_llm_evaluation",
+      "status": "incomplete",
+      "detail": "Artifact path is not configured.",
+      "evidence_level": "unverified",
+      "evidence": {},
+      "required": true
+    },
+    {
+      "id": "configuration_comparisons",
+      "status": "incomplete",
+      "detail": "A valid final evaluation is needed before comparing configurations.",
+      "evidence_level": "unverified",
+      "evidence": {},
+      "required": true
+    },
+    {
+      "id": "manual_answer_review",
+      "status": "incomplete",
+      "detail": "Artifact path is not configured.",
+      "evidence_level": "unverified",
+      "evidence": {},
+      "required": false
+    },
+    {
+      "id": "public_live_demo",
+      "status": "incomplete",
+      "detail": "Use a public HTTPS URL without credentials, query or fragment.",
+      "evidence_level": "unverified",
+      "evidence": {},
+      "required": true
+    },
+    {
+      "id": "published_repository",
+      "status": "incomplete",
+      "detail": "Use a public HTTPS URL without credentials, query or fragment.",
+      "evidence_level": "unverified",
+      "evidence": {},
+      "required": true
+    },
+    {
+      "id": "restart_persistence",
+      "status": "incomplete",
+      "detail": "Artifact path is not configured.",
+      "evidence_level": "unverified",
+      "evidence": {},
+      "required": true
+    }
+  ],
+  "limitations": [
+    "This audit validates supplied evidence and current observations; it does not independently rerun model evaluations or authenticate historical captures/human reviews.",
+    "A Store count verifies active records, not complete manifest-ID reconciliation or hosted vector-database performance.",
+    "Passing this package audit is not a guarantee of perfect answer quality or a particular assessment score."
+  ]
+}

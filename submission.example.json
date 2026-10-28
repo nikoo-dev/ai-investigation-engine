@@ -1,0 +1,9 @@
+{
+  "repository_url": "",
+  "live_demo_url": "",
+  "dataset_manifest": "data/manifests/hotpot-50k.json",
+  "evaluation_report": "",
+  "comparison_reports": [],
+  "deployment_evidence": "",
+  "manual_review_report": ""
+}

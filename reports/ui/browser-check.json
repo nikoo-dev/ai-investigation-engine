@@ -1,0 +1,45 @@
+{
+  "checked_at": "2026-10-28T21:46:50.729935+00:00",
+  "base_url": "http://127.0.0.1:8000",
+  "scope": "Read-only real full-corpus browser check, local extractive preview; no live LLM or public hosting claim.",
+  "health": {
+    "status": "ok",
+    "boot_id": "658158dc-a799-46a1-9284-2e1b37bb91b1",
+    "started_at": "2026-10-28T21:44:19.138202+00:00"
+  },
+  "ready": {
+    "status": "ready"
+  },
+  "status": {
+    "name": "Investigation Engine",
+    "provider": "extractive",
+    "model": "extractive",
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "retrieval_mode": "hybrid",
+    "management_protected": false,
+    "max_upload_mb": 10,
+    "corpus": {
+      "documents": 50085,
+      "chunks": 52243,
+      "corpus_revision": "9e48a0b3-7f60-483b-86d9-5e7149562bb6",
+      "backend": "qdrant_local"
+    }
+  },
+  "question": "Which system change caused the Atlas payment delay on March 3, which service was affected, and what confirmed the cause?",
+  "answer_status": "answered",
+  "citations": 5,
+  "stream_has_validated_fragments_and_final": true,
+  "first_quote_in_stored_passage": true,
+  "desktop_viewport": [
+    1440,
+    1000
+  ],
+  "mobile_viewport": [
+    390,
+    844
+  ],
+  "mobile_horizontal_overflow": false,
+  "mobile_library_horizontal_overflow": false,
+  "browser_page_errors": [],
+  "mutations_performed": false
+}

@@ -1,0 +1,19 @@
+{
+  "status": "pass",
+  "checked_at": "2026-10-27T14:51:10.943315+00:00",
+  "corpus_sha256": "18126707ba892950e6bef9647fd07cfddfd4d7bb0ec853351a268c38c07910d3",
+  "unique_source_ids": 50085,
+  "records_checked": 50085,
+  "missing": 0,
+  "checksum_mismatches": 0,
+  "source_uri_mismatches": 0,
+  "duplicate_source_ids": 0,
+  "store": {
+    "documents": 50085,
+    "chunks": 52243,
+    "corpus_revision": "9e48a0b3-7f60-483b-86d9-5e7149562bb6",
+    "backend": "qdrant_local"
+  },
+  "failure_examples": [],
+  "elapsed_seconds": 10.602505000017118
+}

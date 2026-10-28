@@ -26,7 +26,7 @@ investigate = "investigation.cli:app"
 packages = ["src/investigation"]
 
 [tool.hatch.build.targets.sdist]
-only-include = ["src", "tests", "docs", "data/evaluation", "data/manifests", "reports", "pyproject.toml", "uv.lock", "README.md", "THIRD_PARTY_NOTICES.md", "Dockerfile", "compose.yml", "render.yaml", ".env.example", ".dockerignore", ".gitignore", ".gitattributes", ".github"]
+only-include = ["src", "tests", "docs", "data/evaluation", "data/manifests", "reports", "pyproject.toml", "uv.lock", "README.md", "THIRD_PARTY_NOTICES.md", "Dockerfile", "compose.yml", "render.yaml", "submission.example.json", ".python-version", ".env.example", ".dockerignore", ".gitignore", ".gitattributes", ".github"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

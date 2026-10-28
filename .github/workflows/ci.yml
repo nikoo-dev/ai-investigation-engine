@@ -1,0 +1,21 @@
+name: Verify
+on:
+  push:
+  pull_request:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.10.4"
+      - run: uv sync --frozen --extra dev --extra data
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run mypy src/investigation
+      - run: uv run pytest --cov=investigation --cov-report=term-missing
+      - name: Build installable wheel
+        run: uv build
+      - name: Validate Docker image
+        run: docker build -t investigation-engine:ci .
