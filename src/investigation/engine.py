@@ -168,7 +168,12 @@ class Engine:
                 if call.name == "search_documents":
                     args = SearchArguments.model_validate(call.arguments)
                     hits = self.retriever.search(
-                        args.query, request.filters, args.limit, request.mode, request.rerank
+                        args.query,
+                        request.filters,
+                        args.limit,
+                        request.mode,
+                        request.rerank,
+                        use_cache=request.use_cache,
                     )
                     for hit in hits:
                         hit.subquestions = [index]
@@ -378,7 +383,9 @@ class Engine:
                     warnings.append(
                         "One or more model citations could not be verified; the answer was withheld."
                     )
-                elif status == "answered" and claims:
+                elif (status == "answered" and claims) or (
+                    status == "conflicting_evidence" and conflicts
+                ):
                     verification_started = time.perf_counter()
                     verification = llm.verify(request.question, draft, payload)
                     trace.append(
@@ -393,11 +400,16 @@ class Engine:
                         verification.unsupported_claim_indices
                         or not verification.answer_addresses_question
                     ):
-                        status, claims = "insufficient_evidence", []
+                        status, claims, conflicts = "insufficient_evidence", [], []
                         warnings.append(
                             "Independent evidence verification rejected the proposed answer."
                         )
-                    elif verification.unresolved_conflict:
+                    elif status == "conflicting_evidence" and not verification.unresolved_conflict:
+                        status, claims, conflicts = "insufficient_evidence", [], []
+                        warnings.append(
+                            "The independent verifier did not confirm a relevant source conflict."
+                        )
+                    elif status == "answered" and verification.unresolved_conflict:
                         status = "conflicting_evidence" if conflicts else "insufficient_evidence"
                 if status == "answered" and not claims:
                     status = "insufficient_evidence"

@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import json
+
 import pytest
 from fastapi.testclient import TestClient
 from pydantic import SecretStr
@@ -14,6 +16,7 @@ from investigation.models import (
     IngestionResult,
     InvestigationAnswer,
     InvestigationPlan,
+    InvestigationRequest,
     SourceLocation,
 )
 from investigation.web import RateLimiter, create_app
@@ -277,7 +280,58 @@ def test_invalid_final_stream_does_not_escape_validation(services):
         )
         assert "event: error" in response.text
         assert "event: final" not in response.text
+        assert "event: answer_fragment" not in response.text
         assert "Unchecked" not in response.text
+
+
+def test_stream_fragments_reconstruct_validated_answer_before_structured_final(services):
+    question = "Why are payments delayed?"
+    answer = services[2].investigate(InvestigationRequest(question=question))
+    answer.answer = ("Verified source finding [C1]. " * 13) + "\nUnicode evidence: ქართული ✓"
+    services[2].events = [
+        {
+            "event": "stage",
+            "data": {"stage": "verification", "message": "Checking source evidence"},
+        },
+        {"event": "token", "data": {"text": "UNVERIFIED_PROVIDER_TOKEN"}},
+        {"event": "answer_fragment", "data": {"text": "UNVALIDATED_ENGINE_FRAGMENT"}},
+        {"event": "answer", "data": answer.model_dump()},
+    ]
+    with client_for(services) as client:
+        response = client.post("/api/v1/investigations/stream", json={"question": question})
+    events = []
+    for block in response.text.strip().split("\n\n"):
+        lines = block.splitlines()
+        events.append(
+            (lines[0].removeprefix("event: "), json.loads(lines[1].removeprefix("data: ")))
+        )
+    fragments = [data["text"] for event, data in events if event == "answer_fragment"]
+    assert len(fragments) > 1
+    assert all(0 < len(fragment) <= 120 for fragment in fragments)
+    assert "".join(fragments) == answer.answer
+    assert events[0][0] == "stage"
+    assert all(event == "answer_fragment" for event, _ in events[1:-1])
+    assert events[-1][0] == "final"
+    assert events[-1][1]["answer"] == answer.answer
+    assert "UNVERIFIED_PROVIDER_TOKEN" not in response.text
+    assert "UNVALIDATED_ENGINE_FRAGMENT" not in response.text
+
+
+def test_invalid_final_does_not_allow_prior_engine_fragment_or_provider_token(services):
+    services[2].events = [
+        {"event": "token", "data": {"text": "UNVERIFIED_PROVIDER_TOKEN"}},
+        {"event": "answer_fragment", "data": {"text": "UNVALIDATED_ENGINE_FRAGMENT"}},
+        {"event": "answer", "data": {"answer": "Invalid incomplete final"}},
+    ]
+    with client_for(services) as client:
+        response = client.post(
+            "/api/v1/investigations/stream", json={"question": "Inspect source evidence"}
+        )
+    assert "event: error" in response.text
+    assert "event: answer_fragment" not in response.text
+    assert "event: final" not in response.text
+    assert "UNVALIDATED" not in response.text
+    assert "UNVERIFIED" not in response.text
 
 
 def test_server_error_does_not_disclose_internal_exception(services):

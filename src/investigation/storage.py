@@ -19,6 +19,7 @@ from uuid import NAMESPACE_URL, uuid4, uuid5
 from qdrant_client import QdrantClient, models
 
 from investigation.config import Settings
+from investigation.errors import ConflictError
 from investigation.models import Chunk, Document, Job, SearchFilters, SearchHit, utc_now
 
 
@@ -197,7 +198,9 @@ class Store:
             )
             self._touch()
 
-    def get_documents(self, document_ids: Sequence[str]) -> dict[str, Document]:
+    def get_documents(
+        self, document_ids: Sequence[str], *, include_deleted: bool = False
+    ) -> dict[str, Document]:
         if not document_ids:
             return {}
         with self.lock:
@@ -209,10 +212,34 @@ class Store:
             documents = [
                 Document.model_validate(record.payload) for record in records if record.payload
             ]
-            return {doc.id: doc for doc in documents if doc.status != "deleted"}
+            return {doc.id: doc for doc in documents if include_deleted or doc.status != "deleted"}
 
     def get_document(self, document_id: str) -> Document | None:
         return self.get_documents([document_id]).get(document_id)
+
+    def validate_publication(self, documents: Sequence[Document]) -> dict[str, Document]:
+        """Check prepared revisions against current markers, including tombstones.
+
+        The caller must hold ``lock`` through the subsequent passage/document
+        writes. This is an in-process single-writer guarantee, not a distributed
+        compare-and-swap operation across independently running applications.
+        """
+        with self.lock:
+            current = self.get_documents([doc.id for doc in documents], include_deleted=True)
+            for doc in documents:
+                previous = current.get(doc.id)
+                if doc.status != "ready":
+                    raise ConflictError("Only completed document revisions can be published")
+                if previous is None:
+                    if doc.revision != 1:
+                        raise ConflictError(
+                            "The document was removed while ingestion was processing. Reload and retry."
+                        )
+                elif previous.status != "ready" or doc.revision != previous.revision + 1:
+                    raise ConflictError(
+                        "The document changed or was deleted while ingestion was processing. Reload and retry."
+                    )
+            return current
 
     def list_documents(self, limit: int = 50, offset: int = 0) -> list[Document]:
         """Stable UUID ordering with bounded page size; offset is a UI cursor index."""
@@ -338,7 +365,7 @@ class Store:
     ) -> None:
         """Index first, publish second, then remove the previously visible revision."""
         with self.lock:
-            old = self.get_document(doc.id)
+            old = self.validate_publication([doc]).get(doc.id)
             try:
                 self.upsert_chunks(chunks, dense, sparse)
                 self.put_document(doc)

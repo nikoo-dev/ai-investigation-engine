@@ -14,6 +14,7 @@ from typing import Any, Protocol
 import numpy as np
 
 from investigation.config import Settings
+from investigation.model_assets import pinned_model_path
 
 STOPWORDS = frozenset(
     "a an and are as at be been being by for from had has have he her his i in is it its "
@@ -107,6 +108,9 @@ class DenseEmbedder(SparseMixin):
                 model_name=self.settings.embedding_model,
                 cache_dir=str(self.settings.data_dir / "cache" / "models"),
                 threads=self.settings.embedding_threads,
+                specific_model_path=pinned_model_path(
+                    self.settings.embedding_model, self.settings.data_dir / "cache" / "models"
+                ),
             )
         return self._model
 

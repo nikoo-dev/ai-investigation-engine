@@ -113,3 +113,22 @@ def test_retrieval_cache_is_filter_bound_and_invalidated_by_document_delete(tmp_
         assert retriever.search("Atlas gateway timeout", filters) == []
     finally:
         store.close()
+
+
+def test_cache_bypass_reaches_vector_store_and_does_not_populate_result_cache(tmp_path):
+    from types import SimpleNamespace
+
+    calls = []
+    store = SimpleNamespace(
+        corpus_revision=lambda: "unchanged",
+        query_dense=lambda *args: calls.append(args) or [hit("a", dense_score=0.8)],
+    )
+    settings = Settings(_env_file=None, data_dir=tmp_path, reranker_enabled=False)
+    retriever = Retriever(store, HashEmbedder(), settings)
+    for _ in range(2):
+        retriever.search("same query", mode="dense", use_cache=False)
+    assert len(calls) == 2
+    retriever.search("same query", mode="dense")
+    assert len(calls) == 3
+    retriever.search("same query", mode="dense")
+    assert len(calls) == 3

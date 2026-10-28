@@ -176,7 +176,7 @@ class LLMClient:
                         + self.usage["output_tokens"] * self.settings.llm_output_usd_per_million
                     ) / 1_000_000
                 return result
-            except (httpx.TimeoutException, httpx.NetworkError) as error:
+            except httpx.TransportError as error:
                 if attempt == self.settings.llm_max_retries:
                     raise ProviderError(
                         "The model could not be reached within its timeout. Try again later."

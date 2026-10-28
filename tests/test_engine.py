@@ -8,6 +8,7 @@ from investigation.ingestion import Ingestor
 from investigation.llm import (
     AnswerDraft,
     DraftClaim,
+    DraftConflict,
     EvidenceReference,
     ToolCall,
     ToolProposal,
@@ -87,6 +88,53 @@ class FixtureLLM:
 
     def close(self):
         self.closed = True
+
+
+@pytest.mark.parametrize("confirmed", [False, True])
+def test_conflict_requires_independent_semantic_confirmation_not_only_two_quotes(
+    components, confirmed
+):
+    settings, embedder, store, ingestion, _ = components
+    entity = "Atlas" if confirmed else "Birch"
+    ingestion.ingest("second.txt", f"{entity} gateway timeout was 700 milliseconds.".encode())
+    llm = FixtureLLM()
+    verifications = []
+
+    def synthesize(question, passages, proposal, tool_results):
+        first = next(p for p in passages if "250 milliseconds" in p["text"])
+        second = next(p for p in passages if "700 milliseconds" in p["text"])
+        return AnswerDraft(
+            status="conflicting_evidence",
+            conflicts=[
+                DraftConflict(
+                    description="The sources disagree about the Atlas gateway timeout.",
+                    evidence=[
+                        EvidenceReference(passage_id=first["passage_id"], quote="250 milliseconds"),
+                        EvidenceReference(
+                            passage_id=second["passage_id"], quote="700 milliseconds"
+                        ),
+                    ],
+                )
+            ],
+        )
+
+    def verify(*args):
+        verifications.append(1)
+        return Verification(
+            answer_addresses_question=True,
+            unresolved_conflict=confirmed,
+            reason="Same entity conflict"
+            if confirmed
+            else "Different entities do not contradict each other",
+        )
+
+    llm.synthesize, llm.verify = synthesize, verify
+    answer = Engine(settings, store, embedder, llm_factory=lambda: llm).investigate(
+        InvestigationRequest(question="What was the Atlas gateway timeout?")
+    )
+    assert verifications == [1]
+    assert answer.status == ("conflicting_evidence" if confirmed else "insufficient_evidence")
+    assert bool(answer.conflicts) is confirmed
 
 
 def test_llm_claim_citations_resolve_to_stored_passage_with_exact_quote(components):

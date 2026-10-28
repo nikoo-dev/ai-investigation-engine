@@ -316,3 +316,23 @@ def test_malformed_ollama_tool_envelope_is_a_provider_error(message):
             client.propose_tools("Atlas incident")
     finally:
         client.close()
+
+
+def test_upstream_protocol_disconnect_is_retried_then_reported_as_provider_error(monkeypatch):
+    attempts = []
+    monkeypatch.setattr("investigation.llm.time.sleep", lambda delay: None)
+
+    def disconnect(request):
+        attempts.append(1)
+        raise httpx.RemoteProtocolError("secret provider diagnostic", request=request)
+
+    configured = settings().model_copy(update={"llm_max_retries": 1})
+    client = LLMClient(configured, transport=httpx.MockTransport(disconnect))
+    try:
+        with pytest.raises(ProviderError) as error:
+            client.propose_tools("Atlas incident")
+        assert len(attempts) == 2
+        assert client.usage["retries"] == 1
+        assert "secret" not in str(error.value)
+    finally:
+        client.close()

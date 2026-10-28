@@ -1,7 +1,7 @@
 "use strict";
 
 const $ = (id) => document.getElementById(id);
-const state = { answer: null, offset: 0, pageSize: 25, replaceId: null, busy: false, timer: null, started: 0, sourceSequence: 0, token: sessionStorage.getItem("investigation-management-token") || "" };
+const state = { answer: null, streamedAnswer: "", offset: 0, pageSize: 25, replaceId: null, busy: false, timer: null, started: 0, sourceSequence: 0, token: sessionStorage.getItem("investigation-management-token") || "" };
 
 function node(tag, text, className) {
   const element = document.createElement(tag);
@@ -78,6 +78,9 @@ function setBusy(busy) {
   $("investigate-button").firstChild.textContent = busy ? "Investigating… " : "Start investigation ";
   show($("progress-panel"), busy);
   if (busy) {
+    state.streamedAnswer = "";
+    $("answer-preview").textContent = "";
+    show($("answer-preview"), false);
     state.started = performance.now();
     $("progress-time").textContent = "0s";
     state.timer = setInterval(() => $("progress-time").textContent = `${Math.round((performance.now() - state.started) / 1000)}s`, 1000);
@@ -94,6 +97,16 @@ function progress(data, event) {
 
 function dispatchEvent(event, data) {
   if (event === "error") throw new Error(data.message || data.error?.message || "The investigation could not be completed.");
+  if (event === "answer_fragment") {
+    if (typeof data.text === "string") {
+      state.streamedAnswer += data.text;
+      $("answer-preview").textContent = state.streamedAnswer;
+      show($("answer-preview"));
+      $("progress-label").textContent = "Receiving verified findings";
+      $("answer-preview").scrollTop = $("answer-preview").scrollHeight;
+    }
+    return;
+  }
   if (["final", "answer", "result"].includes(event)) renderAnswer(data);
   else progress(data, event);
 }
@@ -166,6 +179,7 @@ function citationButton(id, citations) {
 
 function renderAnswer(answer) {
   state.answer = answer;
+  show($("answer-preview"), false);
   $("answer-question").textContent = answer.question;
   $("answer-text").textContent = answer.answer;
   const status = $("answer-status");

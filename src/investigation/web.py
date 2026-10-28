@@ -475,6 +475,11 @@ def create_app(
             try:
                 for item in request.app.state.engine.stream(payload):
                     event = str(item.get("event", "progress"))
+                    # Fragments are generated only here from an accepted final
+                    # answer. Neither raw tokens nor engine-supplied fragments
+                    # can bypass the complete-answer validation below.
+                    if event in {"token", "answer_fragment"}:
+                        continue
                     # A small allowlist prevents control characters in the SSE field.
                     if event not in {
                         "progress",
@@ -486,7 +491,6 @@ def create_app(
                         "answer",
                         "result",
                         "error",
-                        "token",
                     }:
                         event = "progress"
                     data = item.get("data", {})
@@ -495,9 +499,13 @@ def create_app(
                         record_answer(answer)
                         data = answer.model_dump(mode="json")
                         event = "final"
-                    if event == "token":
-                        # Only final, citation-validated content may reach the browser.
-                        continue
+                        for offset in range(0, len(answer.answer), 120):
+                            fragment = {"text": answer.answer[offset : offset + 120]}
+                            yield (
+                                "event: answer_fragment\ndata: "
+                                + json.dumps(fragment, ensure_ascii=False)
+                                + "\n\n"
+                            )
                     yield f"event: {event}\ndata: {json.dumps(data, ensure_ascii=False)}\n\n"
             except EngineError as exc:
                 yield f"event: error\ndata: {json.dumps({'code': exc.code, 'message': str(exc)})}\n\n"

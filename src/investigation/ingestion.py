@@ -14,7 +14,7 @@ from uuid import uuid4
 
 from investigation.chunking import chunk_document
 from investigation.config import Settings
-from investigation.errors import InvalidDocument, NotFound
+from investigation.errors import ConflictError, InvalidDocument, NotFound
 from investigation.models import (
     Document,
     IngestionResult,
@@ -254,6 +254,11 @@ class Ingestor:
         )
 
     def ingest_record(self, record: dict[str, Any]) -> IngestionResult:
+        """Create/replace a stable source identity; deletion tombstones are final.
+
+        Replaying a dataset cannot silently restore a deliberately deleted source.
+        Restoring that content requires an explicitly new source identity.
+        """
         source_id = str(
             record.get("id")
             or content_checksum(
@@ -261,7 +266,13 @@ class Ingestor:
             )
         )
         with self._write_lock:
-            old = self.store.get_document(point_id(source_id))
+            old = self.store.get_documents([point_id(source_id)], include_deleted=True).get(
+                point_id(source_id)
+            )
+            if old is not None and old.status == "deleted":
+                raise ConflictError(
+                    "This source was deleted. Use a new source identity to intentionally restore its content."
+                )
             doc = self._record_document(record, old)
             if old and old.checksum == doc.checksum:
                 return IngestionResult(status="duplicate", document=old, duplicate_of=old.id)
@@ -287,6 +298,8 @@ class Ingestor:
         Completed batches are durable and can be replayed safely after interruption.
         Failed rows are counted/logged; a vector-store outage fails the operation
         rather than silently claiming successful ingestion.
+        Deliberately deleted source identities remain tombstoned on replay; those
+        rows count as failures and require a new identity for an intended restore.
         """
         if batch_size < 1 or batch_size > 512:
             raise ValueError("batch_size must be in 1..512")
@@ -338,7 +351,7 @@ class Ingestor:
             except (InvalidDocument, TypeError, ValueError) as exc:
                 counts["failed"] += 1
                 logger.warning("Skipping invalid source record: %s", exc)
-        old_docs = self.store.get_documents([doc.id for doc in candidates])
+        old_docs = self.store.get_documents([doc.id for doc in candidates], include_deleted=True)
         documents: list[Document] = []
         chunks = []
         pending_checksums: set[str] = set()
@@ -347,6 +360,12 @@ class Ingestor:
                 counts["duplicates"] += 1
                 continue
             old = old_docs.get(doc.id)
+            if old is not None and old.status == "deleted":
+                counts["failed"] += 1
+                logger.warning(
+                    "Skipping deleted source identity; dataset replay does not restore tombstones"
+                )
+                continue
             if old:
                 doc.revision = old.revision + 1
                 doc.created_at = old.created_at
@@ -362,6 +381,7 @@ class Ingestor:
             return
         dense, sparse = self._vectors(chunks)
         with self.store.lock:
+            self.store.validate_publication(documents)
             self.store.upsert_chunks(chunks, dense, sparse)
             self.store.put_documents(documents)
             for doc in documents:

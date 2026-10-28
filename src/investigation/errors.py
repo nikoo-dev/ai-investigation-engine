@@ -24,3 +24,8 @@ class ProviderError(EngineError):
 class BusyError(EngineError):
     code = "busy"
     status_code = 429
+
+
+class ConflictError(EngineError):
+    code = "document_conflict"
+    status_code = 409

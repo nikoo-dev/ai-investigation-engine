@@ -6,7 +6,7 @@ from docx import Document as WordDocument
 
 from investigation.config import Settings
 from investigation.embeddings import HashEmbedder
-from investigation.errors import InvalidDocument, NotFound
+from investigation.errors import ConflictError, InvalidDocument, NotFound
 from investigation.ingestion import Ingestor
 from investigation.models import SearchFilters
 from investigation.parsers import parse_document, safe_filename
@@ -181,3 +181,100 @@ def test_same_batch_repeated_identity_is_duplicate_only_if_content_matches(inges
     assert counts["created"] == 1
     assert counts["duplicates"] == 1
     assert counts["failed"] == 1
+
+
+def test_delete_during_embedding_does_not_resurrect_replacement(ingest, monkeypatch):
+    created = ingest.ingest("original.txt", b"The original document is active.")
+    original_vectors = ingest._vectors
+
+    def delete_then_embed(chunks):
+        assert ingest.store.delete_document(created.document.id)
+        return original_vectors(chunks)
+
+    monkeypatch.setattr(ingest, "_vectors", delete_then_embed)
+    with pytest.raises(ConflictError) as error:
+        ingest.ingest(
+            "replacement.txt",
+            b"A late replacement must remain unpublished.",
+            document_id=created.document.id,
+        )
+    assert error.value.status_code == 409
+    assert ingest.store.get_document(created.document.id) is None
+    assert ingest.store.stats()["documents"] == 0
+    assert ingest.store.stats()["chunks"] == 0
+
+
+def test_competing_revision_wins_and_stale_cleanup_does_not_remove_it(ingest, monkeypatch):
+    created = ingest.ingest("original.txt", b"The original document is active.")
+    original_vectors = ingest._vectors
+    competing = Ingestor(ingest.store, ingest.embedder, ingest.settings)
+    winner = []
+
+    def publish_competing_then_embed(chunks):
+        winner.append(
+            competing.ingest(
+                "winner.txt",
+                b"The competing revision was published first.",
+                document_id=created.document.id,
+            )
+        )
+        return original_vectors(chunks)
+
+    monkeypatch.setattr(ingest, "_vectors", publish_competing_then_embed)
+    with pytest.raises(ConflictError):
+        ingest.ingest(
+            "stale.txt",
+            b"A stale revision must not overwrite the competing update.",
+            document_id=created.document.id,
+        )
+    active = ingest.store.get_document(created.document.id)
+    assert active.revision == 2
+    assert active.text == winner[0].document.text
+    hits = ingest.store.query_dense(
+        ingest.embedder.embed(["competing revision"])[0], 10, SearchFilters()
+    )
+    assert hits
+    assert all(hit.chunk.revision == 2 and "competing revision" in hit.chunk.text for hit in hits)
+    assert ingest.store.stats()["chunks"] == winner[0].document.chunk_count
+
+
+def test_batch_delete_between_preparation_and_commit_is_conflict(ingest, monkeypatch):
+    source_id = str(uuid4())
+    created = ingest.ingest_record({"id": source_id, "text": "The existing dataset source."})
+    original_vectors = ingest._vectors
+
+    def delete_then_embed(chunks):
+        assert ingest.store.delete_document(created.document.id)
+        return original_vectors(chunks)
+
+    monkeypatch.setattr(ingest, "_vectors", delete_then_embed)
+    with pytest.raises(ConflictError):
+        ingest.ingest_records(
+            [{"id": source_id, "text": "The late dataset update cannot restore a deleted source."}]
+        )
+    assert ingest.store.stats()["documents"] == 0
+    assert ingest.store.stats()["chunks"] == 0
+
+
+def test_dataset_replay_does_not_restore_deleted_identity(ingest):
+    record = {"id": str(uuid4()), "text": "A deliberately deleted source document."}
+    created = ingest.ingest_record(record)
+    assert ingest.store.delete_document(created.document.id)
+    with pytest.raises(ConflictError, match="deleted"):
+        ingest.ingest_record(record)
+    counts = ingest.ingest_records([record])
+    assert counts["failed"] == 1
+    assert counts["created"] == 0
+    assert ingest.store.stats()["documents"] == 0
+
+
+def test_new_identity_cannot_overwrite_a_tombstone(ingest):
+    result = ingest.ingest("original.txt", b"Original source text.")
+    assert ingest.store.delete_document(result.document.id)
+    late = result.document.model_copy(update={"text": "Unexpected resurrection."})
+    chunks = ingest._chunks(late)
+    dense, sparse = ingest._vectors(chunks)
+    with pytest.raises(ConflictError):
+        ingest.store.commit_document(late, chunks, dense, sparse)
+    assert ingest.store.stats()["documents"] == 0
+    assert ingest.store.stats()["chunks"] == 0

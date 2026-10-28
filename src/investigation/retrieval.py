@@ -8,6 +8,7 @@ from typing import Any
 
 from investigation.config import Settings
 from investigation.embeddings import Embedder, fingerprint_json
+from investigation.model_assets import pinned_model_path
 from investigation.models import SearchFilters, SearchHit
 
 
@@ -86,6 +87,9 @@ class Reranker:
                     model_name=self.settings.reranker_model,
                     cache_dir=str(self.settings.data_dir / "cache" / "models"),
                     threads=self.settings.embedding_threads,
+                    specific_model_path=pinned_model_path(
+                        self.settings.reranker_model, self.settings.data_dir / "cache" / "models"
+                    ),
                 )
             reranked = list(
                 self._model.rerank(
@@ -124,6 +128,7 @@ class Retriever:
         limit: int | None = None,
         mode: str | None = None,
         rerank: bool | None = None,
+        use_cache: bool = True,
     ) -> list[SearchHit]:
         filters = filters or SearchFilters()
         limit = limit or self.settings.evidence_limit
@@ -143,7 +148,7 @@ class Retriever:
         now = time.monotonic()
         with self._lock:
             cached = self._cache.get(key)
-            if cached and now - cached[0] < self.settings.cache_ttl_seconds:
+            if use_cache and cached and now - cached[0] < self.settings.cache_ttl_seconds:
                 self._cache.move_to_end(key)
                 return [h.model_copy(deep=True) for h in cached[1]]
         rankings = []
@@ -160,8 +165,9 @@ class Retriever:
         if rerank:
             hits = self.reranker.rerank(query, hits[: self.settings.retrieval_limit])
         hits = diversify(hits, limit)
-        with self._lock:
-            self._cache[key] = (now, hits)
-            while len(self._cache) > 256:
-                self._cache.popitem(last=False)
+        if use_cache:
+            with self._lock:
+                self._cache[key] = (now, hits)
+                while len(self._cache) > 256:
+                    self._cache.popitem(last=False)
         return [h.model_copy(deep=True) for h in hits]
