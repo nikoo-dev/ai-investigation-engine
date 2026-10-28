@@ -18,11 +18,12 @@ and must be able to defend and modify it without AI in the practical interview.
 | Playwright with headless Microsoft Edge driven by Codex | Inspected desktop and 390px mobile layouts; exercised real local upload, question/SSE rendering, citation inspection, replacement/deletion and literal-markup handling | Lifecycle checks used an isolated corpus with test hash embeddings. A later read-only check used the real MiniLM/full 50,085-record corpus and verified answer fragments, source inspection and mobile layout; see `reports/ui/browser-check.json`. Both used extractive preview, not live Gemini or public hosting. |
 
 Gemini is an application runtime integration, distinct from the coding assistant.
-At this report's review point, no successful live Gemini evaluation has been
-verified because the user's API credential has not yet been configured and
-tested. An optional Ollama adapter exists; that does not mean an Ollama model has
-been deployed or evaluated. Report actual runtime model IDs and usage from the
-generated evaluation records after those runs occur.
+On 2026-10-29 the candidate supplied a Gemini credential, configured locally
+outside Git. Native tool calling and the first three full-corpus investigations
+with Gemini 3.5 Flash-Lite succeeded with actual token usage and exact source
+validation. The 92-case held-out run is underway; a partial run is not final
+evaluation evidence. An optional Ollama adapter exists, but no Ollama deployment
+or evaluation is claimed. Actual model IDs and usage remain in generated records.
 
 ## What AI drafted or changed
 
@@ -54,6 +55,14 @@ retention of failed cases, run-identity mismatch rejection, corpus invalidation,
 and reuse of completed comparison configurations without new model calls. These
 tests use synthetic/mocked outcomes and do not establish live Gemini success.
 
+Live Gemini testing exposed HTTP 400 rejection of the full nested bounded output
+schema. The coding agent checked Google's REST documentation, reproduced the
+failure with small synthetic inputs, simplified the wire schema, and retained all
+original Pydantic bounds for local output validation. The original failed test
+run is retained separately; the corrected run uses a new output folder and
+software fingerprint. This protocol fix was informed by a held-out run failure;
+it did not change reference labels or tune retrieval thresholds from those labels.
+
 The API/UI was locally exercised with a real embedded Qdrant runtime. Its focused
 HTTP tests cover upload/search/source resolution, restart persistence, deletion,
 authorization, rate limits, source rendering, streaming validation and metrics.
@@ -66,7 +75,8 @@ independent human review.
 
 The candidate supplied the assignment and the request to plan and implement it,
 and chose to configure a Gemini credential and free hosting/database accounts
-later. At this point, no independently written code changes or independent
+later, and subsequently supplied Gemini access and signed into GitHub. At this
+point, no independently written code changes or independent
 manual correctness review by the candidate have been verified in the workspace.
 This report therefore does **not** invent a statement that the candidate manually
 rewrote modules, independently fixed bugs or reviewed every generated line.

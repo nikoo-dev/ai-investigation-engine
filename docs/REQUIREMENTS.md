@@ -11,8 +11,9 @@ adapter with mocked HTTP tests does not prove a successful live LLM investigatio
 A dataset preparation command does not prove that 50,000 records are indexed.
 A deployment configuration does not prove a public URL is running.
 
-At this review, Gemini credentials and the user's hosting/database accounts have
-not been verified. Live Gemini evaluation, the public demo, hosted restart
+Gemini credentials, native tool calling and three full-corpus investigations have
+been verified; the complete held-out evaluation is underway. Hosting/database
+access is still pending. The full live evaluation, public demo and hosted restart
 persistence remain explicit external submission gates. A candidate's manual answer
 review is recommended preparation, not an extra assignment requirement.
 Generated reports and the final delivery checklist must be used to update

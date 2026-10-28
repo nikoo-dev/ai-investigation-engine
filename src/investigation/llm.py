@@ -103,6 +103,38 @@ class Verification(BaseModel):
     reason: str
 
 
+def gemini_output_schema(model: type[BaseModel]) -> dict:
+    """Keep JSON structure on the wire; enforce collection/string bounds locally.
+
+    Gemini rejects the full nested bounded AnswerDraft schema with HTTP 400.
+    Resolving references and omitting decoder-expensive length/count bounds is
+    compatible with the live API. Pydantic still validates the original model,
+    including every omitted bound, before a draft can reach the engine.
+    """
+    schema = model.model_json_schema()
+    omitted = {"$defs", "title", "default", "minLength", "maxLength", "minItems", "maxItems"}
+
+    def expand(value, references=()):
+        if isinstance(value, list):
+            return [expand(item, references) for item in value]
+        if not isinstance(value, dict):
+            return value
+        if "$ref" in value:
+            reference = value["$ref"]
+            if not reference.startswith("#/$defs/") or reference in references:
+                raise ValueError("Only nonrecursive local model schema references are supported")
+            return expand(schema["$defs"][reference.split("/")[-1]], (*references, reference))
+        return {
+            key: {name: expand(field, references) for name, field in item.items()}
+            if key == "properties"
+            else expand(item, references)
+            for key, item in value.items()
+            if key not in omitted
+        }
+
+    return expand(schema)
+
+
 class RequestPacer:
     """Space HTTP attempt start times, including retries, within one engine."""
 
@@ -328,8 +360,12 @@ class LLMClient:
                     "generationConfig": {
                         "temperature": 0,
                         "maxOutputTokens": 6000,
-                        "responseMimeType": "application/json",
-                        "responseJsonSchema": schema.model_json_schema(),
+                        "responseFormat": {
+                            "text": {
+                                "mimeType": "APPLICATION_JSON",
+                                "schema": gemini_output_schema(schema),
+                            }
+                        },
                     }
                 },
             )

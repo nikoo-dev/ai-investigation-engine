@@ -142,7 +142,7 @@ def test_judge_uses_actual_structured_provider_protocol_with_mocked_http(tmp_pat
     def handler(request):
         payload = json.loads(request.content)
         requests.append(payload)
-        schema = payload["generationConfig"]["responseJsonSchema"]
+        schema = payload["generationConfig"]["responseFormat"]["text"]["schema"]
         assert schema["properties"]["correctness"]["minimum"] == 0
         assert schema["properties"]["correctness"]["maximum"] == 1
         assert "tools" not in payload

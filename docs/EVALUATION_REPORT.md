@@ -2,9 +2,11 @@
 
 Reviewed on 2026-10-29. The measurements below were recorded on 2026-10-27;
 their original timestamps and individual predictions remain in the linked files.
-These are real local ONNX retrieval and extractive-preview runs. **No live Gemini
-evaluation or public deployment has been verified.** The preview is useful for
-retrieval inspection, but its answer scores do not satisfy the LLM requirement.
+The completed measurements below use real local ONNX retrieval and extractive
+preview. On 2026-10-29 Gemini access and three full-corpus investigations were
+verified; the 92-case live evaluation is underway. **A partial live run is not
+final evaluation evidence, and no public deployment is yet verified.** Preview
+answer scores do not satisfy the LLM requirement.
 
 ## Corpus integrity and provenance
 
@@ -141,7 +143,7 @@ actual hosted configuration before claiming the deployment meets its limits.
    provider quotas, and capture hosted restart-persistence evidence using the
    [deployment guide](DEPLOYMENT.md) and [submission checklist](SUBMISSION_CHECKLIST.md).
 
-The automated suite currently passes 191 tests; Ruff, formatting, mypy and
+The automated suite currently passes 192 tests; Ruff, formatting, mypy and
 JavaScript syntax checks also pass. Provider tests use mocked responses and do
 not substitute for step one. Docker runtime verification remains uncompleted on
 this host because the installed Docker Desktop engine failed to start; a Docker

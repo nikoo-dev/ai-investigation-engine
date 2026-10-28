@@ -1,0 +1,252 @@
+{
+  "configuration": "gemini-full-hybrid",
+  "evaluation_sha256": "f62286775e4f46c62e2165c9c8b71ace2e1b53f83c30781efd053e5dd67c5381",
+  "settings": {
+    "embedding_backend": "fastembed",
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "embedding_dimension": 384,
+    "chunk_strategy": "structure",
+    "chunk_tokens": 256,
+    "chunk_overlap": 40,
+    "bm25_avg_length": 150.0,
+    "retrieval_limit": 30,
+    "evidence_limit": 12,
+    "retrieval_mode": "hybrid",
+    "reranker_enabled": true,
+    "reranker_model": "Xenova/ms-marco-MiniLM-L-6-v2",
+    "llm_provider": "gemini",
+    "llm_model": "gemini-3.5-flash-lite",
+    "min_dense_score": 0.25,
+    "max_tool_calls": 6,
+    "max_subquestions": 4,
+    "max_context_chars": 22000
+  },
+  "request_overrides": {
+    "mode": null,
+    "rerank": null
+  },
+  "corpus_revision": "9e48a0b3-7f60-483b-86d9-5e7149562bb6",
+  "corpus_stats": {
+    "documents": 50085,
+    "chunks": 52243,
+    "corpus_revision": "9e48a0b3-7f60-483b-86d9-5e7149562bb6",
+    "backend": "qdrant_local"
+  },
+  "embedding_fingerprint": "fastembed:sentence-transformers/all-MiniLM-L6-v2:384:v1",
+  "software_fingerprint": "e30778a7085b04e37cb62ecb9d2197795643d9f6b1206affe1e57edf53924805",
+  "status": "partial",
+  "run_id": "692d8f5a-1f71-4a70-898e-34775b880ae7",
+  "created_at": "2026-10-28T22:16:18.870982+00:00",
+  "updated_at": "2026-10-28T22:16:24.807274+00:00",
+  "case_count": 1,
+  "planned_case_count": 92,
+  "duration_seconds": 5.9332221999939065,
+  "latest_session_policy": {
+    "llm_min_request_interval_seconds": 5.0,
+    "max_new_cases": 3,
+    "stop_on_error": true
+  },
+  "aggregate": {
+    "recall_at_5": 0.0,
+    "recall_at_10": 0.0,
+    "mrr": 0.0,
+    "all_support_at_10": 0.0,
+    "evidence_precision_at_10": 0.0,
+    "answer_token_f1": 0.0,
+    "answer_exact_match": 0.0,
+    "answer_fact_recall": 0.0,
+    "status_accuracy": 0.0,
+    "citation_gold_precision": 0.0,
+    "citation_gold_recall": 0.0,
+    "citation_source_validity": 0.0,
+    "error_rate": 1.0,
+    "elapsed_ms": 5923.74819998804,
+    "sample_counts": {
+      "recall_at_5": 1,
+      "recall_at_10": 1,
+      "mrr": 1,
+      "all_support_at_10": 1,
+      "evidence_precision_at_10": 1,
+      "answer_token_f1": 1,
+      "answer_exact_match": 1,
+      "answer_fact_recall": 1,
+      "status_accuracy": 1,
+      "citation_gold_precision": 1,
+      "citation_gold_recall": 1,
+      "citation_source_validity": 1,
+      "error_rate": 1,
+      "elapsed_ms": 1
+    },
+    "latency_p50_ms": 5923.74819998804,
+    "latency_p95_ms": 5923.74819998804
+  },
+  "by_category": {
+    "multi_hop": {
+      "recall_at_5": 0.0,
+      "recall_at_10": 0.0,
+      "mrr": 0.0,
+      "all_support_at_10": 0.0,
+      "evidence_precision_at_10": 0.0,
+      "answer_token_f1": 0.0,
+      "answer_exact_match": 0.0,
+      "answer_fact_recall": 0.0,
+      "status_accuracy": 0.0,
+      "citation_gold_precision": 0.0,
+      "citation_gold_recall": 0.0,
+      "citation_source_validity": 0.0,
+      "error_rate": 1.0,
+      "elapsed_ms": 5923.74819998804,
+      "sample_counts": {
+        "recall_at_5": 1,
+        "recall_at_10": 1,
+        "mrr": 1,
+        "all_support_at_10": 1,
+        "evidence_precision_at_10": 1,
+        "answer_token_f1": 1,
+        "answer_exact_match": 1,
+        "answer_fact_recall": 1,
+        "status_accuracy": 1,
+        "citation_gold_precision": 1,
+        "citation_gold_recall": 1,
+        "citation_source_validity": 1,
+        "error_rate": 1,
+        "elapsed_ms": 1
+      },
+      "latency_p50_ms": 5923.74819998804,
+      "latency_p95_ms": 5923.74819998804
+    }
+  },
+  "by_split": {
+    "test": {
+      "recall_at_5": 0.0,
+      "recall_at_10": 0.0,
+      "mrr": 0.0,
+      "all_support_at_10": 0.0,
+      "evidence_precision_at_10": 0.0,
+      "answer_token_f1": 0.0,
+      "answer_exact_match": 0.0,
+      "answer_fact_recall": 0.0,
+      "status_accuracy": 0.0,
+      "citation_gold_precision": 0.0,
+      "citation_gold_recall": 0.0,
+      "citation_source_validity": 0.0,
+      "error_rate": 1.0,
+      "elapsed_ms": 5923.74819998804,
+      "sample_counts": {
+        "recall_at_5": 1,
+        "recall_at_10": 1,
+        "mrr": 1,
+        "all_support_at_10": 1,
+        "evidence_precision_at_10": 1,
+        "answer_token_f1": 1,
+        "answer_exact_match": 1,
+        "answer_fact_recall": 1,
+        "status_accuracy": 1,
+        "citation_gold_precision": 1,
+        "citation_gold_recall": 1,
+        "citation_source_validity": 1,
+        "error_rate": 1,
+        "elapsed_ms": 1
+      },
+      "latency_p50_ms": 5923.74819998804,
+      "latency_p95_ms": 5923.74819998804
+    }
+  },
+  "by_source": {
+    "hotpotqa-validation": {
+      "recall_at_5": 0.0,
+      "recall_at_10": 0.0,
+      "mrr": 0.0,
+      "all_support_at_10": 0.0,
+      "evidence_precision_at_10": 0.0,
+      "answer_token_f1": 0.0,
+      "answer_exact_match": 0.0,
+      "answer_fact_recall": 0.0,
+      "status_accuracy": 0.0,
+      "citation_gold_precision": 0.0,
+      "citation_gold_recall": 0.0,
+      "citation_source_validity": 0.0,
+      "error_rate": 1.0,
+      "elapsed_ms": 5923.74819998804,
+      "sample_counts": {
+        "recall_at_5": 1,
+        "recall_at_10": 1,
+        "mrr": 1,
+        "all_support_at_10": 1,
+        "evidence_precision_at_10": 1,
+        "answer_token_f1": 1,
+        "answer_exact_match": 1,
+        "answer_fact_recall": 1,
+        "status_accuracy": 1,
+        "citation_gold_precision": 1,
+        "citation_gold_recall": 1,
+        "citation_source_validity": 1,
+        "error_rate": 1,
+        "elapsed_ms": 1
+      },
+      "latency_p50_ms": 5923.74819998804,
+      "latency_p95_ms": 5923.74819998804
+    }
+  },
+  "rows": [
+    {
+      "case": {
+        "id": "hotpot-5ae63b2255429908198fa526",
+        "category": "multi_hop",
+        "question": "What is the date played of this college football game at Sun Life Stadium in Miami Gardens, Florida, where Clemson defeated the No. 4 Oklahoma Sooners, 37-17?",
+        "expected_answers": [
+          "December 31, 2015"
+        ],
+        "required_facts": [
+          [
+            "December 31, 2015"
+          ]
+        ],
+        "gold_document_ids": [
+          "9025ca49-1926-54b3-941d-db509d683705",
+          "b823d0ba-8b75-577e-8e9e-0a91922e1808"
+        ],
+        "gold_passage_ids": [],
+        "expected_status": "answered",
+        "required_hops": 2,
+        "split": "test",
+        "source": "hotpotqa-validation",
+        "forbidden_output_patterns": [],
+        "forbidden_exact_answers": [],
+        "notes": "Official supporting-fact sentences: [('2015 Clemson Tigers football team', 0), ('2015 Clemson Tigers football team', 5), ('2015 Orange Bowl', 0)]"
+      },
+      "answer": null,
+      "error": "ProviderError",
+      "metrics": {
+        "recall_at_5": 0.0,
+        "recall_at_10": 0.0,
+        "mrr": 0.0,
+        "all_support_at_10": 0.0,
+        "evidence_precision_at_10": 0.0,
+        "answer_token_f1": 0.0,
+        "answer_exact_match": 0.0,
+        "answer_fact_recall": 0.0,
+        "status_accuracy": 0.0,
+        "abstention_accuracy": null,
+        "contradiction_accuracy": null,
+        "citation_gold_precision": 0.0,
+        "citation_gold_recall": 0.0,
+        "citation_source_validity": 0.0,
+        "claim_citation_id_validity": null,
+        "claim_citation_coverage": null,
+        "injection_output_safety": null,
+        "error_rate": 1.0,
+        "elapsed_ms": 5923.74819998804
+      }
+    }
+  ],
+  "limitations": [
+    "Token F1/exact match and required-fact recall are lexical diagnostics, not proof of semantic correctness.",
+    "Citation gold precision checks relevance against source-document labels; source validity checks exact quote, document and revision. Neither proves claim-level entailment.",
+    "Prompt-injection output checks catch specific probes only; mutation side effects and secret leakage require the separate integration tests.",
+    "The authored incident set is a controlled robustness fixture; HotpotQA held-out questions measure a different, open-domain task. Report them separately.",
+    "An extractive/hash test run does not satisfy the real LLM/semantic-search requirement. Provider and embedding configuration are recorded above.",
+    "Partial runs are not final evidence. Resume requires identical cases, behavior settings, software and corpus; previous failures are retained and never silently retried.",
+    "Session pacing and batch size can change on resume. Cumulative active duration includes pacing and checkpoint writes, not time between sessions. Only the latest session policy is shown."
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "status": "success",
+  "checked_at": "2026-10-28T22:15:23.741626+00:00",
+  "provider": "gemini",
+  "model": "gemini-3.5-flash-lite",
+  "tools": [
+    "search_documents"
+  ],
+  "usage": {
+    "input_tokens": 371,
+    "output_tokens": 20,
+    "calls": 1,
+    "retries": 0
+  }
+}

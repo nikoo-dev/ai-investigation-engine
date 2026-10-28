@@ -48,6 +48,26 @@ def test_shared_pacer_spaces_attempts_across_clients_and_includes_retries(monkey
     assert starts == [100, 112, 124]
 
 
+def test_simplified_provider_schema_does_not_relax_local_claim_bounds():
+    draft = {
+        "status": "answered",
+        "claims": [{"text": "x" * 2001, "evidence": [{"passage_id": "p1", "quote": "source"}]}],
+    }
+    client = LLMClient(
+        settings(),
+        transport=httpx.MockTransport(
+            lambda request: httpx.Response(200, json=result([{"text": json.dumps(draft)}]))
+        ),
+    )
+    try:
+        with pytest.raises(ProviderError, match="invalid structured output"):
+            client.synthesize(
+                "Question?", [{"passage_id": "p1", "text": "source"}], ToolProposal(calls=[]), []
+            )
+    finally:
+        client.close()
+
+
 def result(parts, **extra):
     return {
         "candidates": [{"content": {"role": "model", "parts": parts}, "finishReason": "STOP"}],
@@ -116,7 +136,18 @@ def test_gemini_native_tools_roundtrip_preserves_model_content_and_uses_header_s
         assert response["name"] == "search_documents"
         assert response["id"] == "native-search-1"
         assert response["response"]["passages"][0]["passage_id"] == "p1"
-        assert requests[1]["generationConfig"]["responseMimeType"] == "application/json"
+        output_format = requests[1]["generationConfig"]["responseFormat"]["text"]
+        assert output_format["mimeType"] == "APPLICATION_JSON"
+        wire = output_format["schema"]
+        assert wire["properties"]["status"]["enum"] == [
+            "answered",
+            "insufficient_evidence",
+            "conflicting_evidence",
+        ]
+        claim = wire["properties"]["claims"]["items"]
+        assert claim["required"] == ["text", "evidence"]
+        assert claim["properties"]["evidence"]["items"]["properties"]["quote"] == {"type": "string"}
+        assert "$ref" not in json.dumps(wire) and "maxItems" not in json.dumps(wire)
         assert client.usage == {"input_tokens": 14, "output_tokens": 6, "calls": 2, "retries": 0}
     finally:
         client.close()
