@@ -152,7 +152,14 @@ def test_liveness_readiness_status_and_metrics(services):
         status = client.get("/api/v1/status").json()
         assert status["corpus"]["documents"] == 1
         assert "api_key" not in str(status)
-        assert "investigation_http_requests_total" in client.get("/metrics").text
+        metrics = client.get("/metrics").text
+        assert "investigation_http_requests_total" in metrics
+        memory = next(
+            line
+            for line in metrics.splitlines()
+            if line.startswith("investigation_process_resident_memory_bytes ")
+        )
+        assert float(memory.split()[-1]) > 0
         services[0].unavailable = True
         assert client.get("/ready").status_code == 503
 

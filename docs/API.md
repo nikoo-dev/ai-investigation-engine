@@ -1,5 +1,10 @@
 # HTTP API
 
+Public base URL: <https://ai-investigation-engine-h233.onrender.com>.
+`/metrics` also reports `investigation_process_resident_memory_bytes` for the
+application's current RSS. It excludes external Qdrant, other container memory
+and unsampled transient peaks; it is an observation, not a memory-limit guarantee.
+
 Run `uvicorn investigation.web:create_app --factory --host 0.0.0.0 --port 8000`.
 The same origin serves the workstation at `/` and interactive OpenAPI documentation
 at `/docs`. All application API routes use `/api/v1`.

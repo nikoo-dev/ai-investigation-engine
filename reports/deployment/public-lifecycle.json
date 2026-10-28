@@ -1,0 +1,29 @@
+{
+  "checked_at": "2026-10-28T23:51:55.194980+00:00",
+  "base_url": "https://ai-investigation-engine-h233.onrender.com",
+  "operations": [
+    {
+      "operation": "upload",
+      "http_status": 201,
+      "document_id": "37872bc0-e40f-4d01-81d1-bfbbe74ffa00",
+      "revision": 1
+    },
+    {
+      "operation": "replace",
+      "http_status": 200,
+      "revision": 2
+    },
+    {
+      "operation": "delete",
+      "http_status": 204,
+      "later_get_status": 404
+    }
+  ],
+  "test_document_removed": true,
+  "final_corpus": {
+    "documents": 50085,
+    "chunks": 52243,
+    "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+    "backend": "qdrant_remote"
+  }
+}

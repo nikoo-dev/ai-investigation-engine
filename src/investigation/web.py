@@ -17,12 +17,13 @@ from threading import Lock
 from typing import Annotated, Any
 from uuid import uuid4
 
+import psutil
 from fastapi import Depends, FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse, JSONResponse, Response, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from prometheus_client import CollectorRegistry, Counter, Histogram, generate_latest
+from prometheus_client import CollectorRegistry, Counter, Gauge, Histogram, generate_latest
 from starlette.concurrency import run_in_threadpool
 from starlette.types import ASGIApp, Receive, Scope, Send
 
@@ -176,6 +177,13 @@ def create_app(
     app.state.rate_limiter = limiter
 
     registry = CollectorRegistry()
+    process = psutil.Process()
+    memory = Gauge(
+        "investigation_process_resident_memory_bytes",
+        "Current application process RSS; excludes external Qdrant and other container memory.",
+        registry=registry,
+    )
+    memory.set_function(lambda: process.memory_info().rss)
     request_count = Counter(
         "investigation_http_requests_total",
         "HTTP requests",

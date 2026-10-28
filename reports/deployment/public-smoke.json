@@ -1,0 +1,154 @@
+{
+  "checked_at": "2026-10-28T23:48:54.869818+00:00",
+  "base_url": "https://ai-investigation-engine-h233.onrender.com",
+  "unauthorized_upload_status": 401,
+  "investigation_http_status": 200,
+  "elapsed_seconds": 24.83274560001155,
+  "response": {
+    "id": "03b7eb97-3bc2-43f0-80e7-4b6bf46ec65b",
+    "question": "How many payment requests failed during Atlas incident INC-001, according to the two audit exports?",
+    "status": "conflicting_evidence",
+    "answer": "The sources contain unresolved conflicting evidence.\n\nAudit export A and audit export B disagree on the number of failed payment requests during Atlas incident INC-001. [C1] [C2]",
+    "claims": [],
+    "citations": [
+      {
+        "id": "C1",
+        "passage_id": "2df8c9ba-fd23-5526-bda9-19f78dcd247f",
+        "document_id": "390439d4-1936-51ed-9039-711d6b12a95e",
+        "revision": 1,
+        "title": "Atlas: audit export A",
+        "quote": "The number of failed payment requests was 101.",
+        "location": {
+          "page": null,
+          "section": null,
+          "start_char": 0,
+          "end_char": 187,
+          "sentence_ids": []
+        },
+        "source_uri": "urn:investigation:synthetic:atlas-conflict-a"
+      },
+      {
+        "id": "C2",
+        "passage_id": "f0688fe3-97a5-53ce-91cb-27072994fea0",
+        "document_id": "38f93669-cb6e-5bee-be19-02c6b0259b2b",
+        "revision": 1,
+        "title": "Atlas: audit export B",
+        "quote": "The number of failed payment requests was 301.",
+        "location": {
+          "page": null,
+          "section": null,
+          "start_char": 0,
+          "end_char": 237,
+          "sentence_ids": []
+        },
+        "source_uri": "urn:investigation:synthetic:atlas-conflict-b"
+      }
+    ],
+    "conflicts": [
+      {
+        "description": "Audit export A and audit export B disagree on the number of failed payment requests during Atlas incident INC-001.",
+        "citation_ids": [
+          "C1",
+          "C2"
+        ]
+      }
+    ],
+    "plan": {
+      "kind": "direct",
+      "subquestions": [
+        "Atlas incident INC-001 audit exports payment requests failed"
+      ],
+      "rationale": "Bounded retrieval followed by evidence validation."
+    },
+    "trace": [
+      {
+        "stage": "planning",
+        "detail": "Planned focused evidence searches",
+        "duration_ms": 719.0631958656013,
+        "metadata": {
+          "kind": "direct",
+          "subquestions": [
+            "Atlas incident INC-001 audit exports payment requests failed"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        }
+      },
+      {
+        "stage": "tool",
+        "detail": "Executed search_documents",
+        "duration_ms": 21318.1633988861,
+        "metadata": {
+          "tool": "search_documents",
+          "arguments": {
+            "query": "Atlas incident INC-001 audit exports payment requests failed"
+          },
+          "passage_count": 8
+        }
+      },
+      {
+        "stage": "synthesis",
+        "detail": "Generated a structured evidence-bound draft",
+        "duration_ms": 1284.7087499685585,
+        "metadata": {}
+      },
+      {
+        "stage": "citations",
+        "detail": "Resolved source identifiers and exact quotations",
+        "duration_ms": 256.89013907685876,
+        "metadata": {
+          "invalid": false,
+          "citations": 2
+        }
+      },
+      {
+        "stage": "verification",
+        "detail": "The proposed answer correctly identifies and cites the conflicting evidence between Audit export A and Audit export B for Atlas incident INC-001 (101 failed payment requests versus 301 failed payment requests). Because credible sources genuinely disagree on the fact and the conflict remains unresolved by any authoritative designation in the sources, unresolved_conflict is correctly set to true.",
+        "duration_ms": 876.5231990255415,
+        "metadata": {
+          "unsupported_claim_indices": [],
+          "answer_addresses_question": true,
+          "unresolved_conflict": true,
+          "reason": "The proposed answer correctly identifies and cites the conflicting evidence between Audit export A and Audit export B for Atlas incident INC-001 (101 failed payment requests versus 301 failed payment requests). Because credible sources genuinely disagree on the fact and the conflict remains unresolved by any authoritative designation in the sources, unresolved_conflict is correctly set to true."
+        }
+      }
+    ],
+    "retrieved_passage_ids": [
+      "f0688fe3-97a5-53ce-91cb-27072994fea0",
+      "2df8c9ba-fd23-5526-bda9-19f78dcd247f",
+      "208ec341-096b-5827-86cc-e93dc880fd84",
+      "84acac10-1658-51fa-bbad-1affd8d593a0",
+      "7dd1ab23-ef99-54ce-9241-25f28ed3d17e",
+      "1bea29d6-8769-5706-b327-b84e33c698ca",
+      "8cfe9f1e-8212-5323-9bb3-366af60086ef",
+      "52b1acf0-747f-5452-8701-e44618e95f46"
+    ],
+    "retrieved_document_ids": [
+      "38f93669-cb6e-5bee-be19-02c6b0259b2b",
+      "390439d4-1936-51ed-9039-711d6b12a95e",
+      "f527d349-e091-590a-b785-a8ecb9cebb95",
+      "c9144cd3-25c3-5f8e-9a41-7f34c4f614d1",
+      "afa81bb3-96ef-5ac2-a0b3-b95cebd000ef",
+      "09a51dc8-95ef-548e-9f48-ed0f5ff409ee",
+      "3afbd07c-7257-573a-8179-60c442010381",
+      "38e1f8e6-8242-513e-8e58-420759117316"
+    ],
+    "model": "gemini-3.5-flash-lite",
+    "provider": "gemini",
+    "corpus_revision": "4c27721b-c343-4eea-a2cc-a4dd8dcfc5b8",
+    "elapsed_ms": 24585.366235114634,
+    "usage": {
+      "input_tokens": 5846,
+      "output_tokens": 337,
+      "calls": 3,
+      "retries": 0
+    },
+    "cached": false,
+    "warnings": []
+  },
+  "health_after_query": {
+    "status": "ok",
+    "boot_id": "e194b90c-fefd-4c88-a644-1f954db078b0",
+    "started_at": "2026-10-28T23:42:40.026432+00:00"
+  },
+  "all_emitted_quotes_resolve": true
+}

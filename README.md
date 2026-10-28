@@ -2,6 +2,9 @@
 
 [Public source repository and history](https://github.com/nikoo-dev/ai-investigation-engine).
 
+[Live demo](https://ai-investigation-engine-h233.onrender.com) ·
+[CI checks](https://github.com/nikoo-dev/ai-investigation-engine/actions/workflows/ci.yml).
+
 An evidence-driven Python application that searches a versioned document corpus,
 follows reasoning links across sources, and produces attributable answers. Every
 published claim points to a real passage and an exact quotation. Missing evidence
@@ -150,9 +153,10 @@ The intended free deployment is Render + Qdrant Cloud + Gemini's free API tier.
 [`compose.yml`](compose.yml) are included. All durable source/index state is
 external to Render's ephemeral filesystem. Local model caches are disposable.
 
-Follow the exact [account setup and deployment guide](docs/DEPLOYMENT.md). A live
-URL must be created and checked before submission; code
-or a deployment manifest alone does not meet that requirement. Final evidence is
+Follow the [account setup and deployment guide](docs/DEPLOYMENT.md). The public
+app's readiness, real Gemini conflict investigation, exact quotes and protected
+document lifecycle have been verified. Full evaluation and hosted restart
+evidence still need to complete before submission. Final evidence is
 tracked in [the requirement matrix](docs/REQUIREMENTS.md).
 
 Submission material:
