@@ -7,9 +7,9 @@ only offline test fixtures and must not be presented as semantic retrieval.
 
 ## Prepare before the demonstration
 
-Use the README and deployment guide for account/secret setup. The public demo
-and live Gemini evaluation remain pending until actual credentials and accounts
-are configured and tested. Never display API keys or the management token while
+Use the README and deployment guide for account/secret setup. Gemini access and
+initial investigations are verified; the final evaluation and public hosted demo
+need their own completed evidence. Never display API keys or the management token while
 screen sharing.
 
 1. Install the locked environment:

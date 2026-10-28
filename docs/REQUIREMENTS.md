@@ -160,10 +160,10 @@ Bonus work does not waive any core requirement.
 
 | Required deliverable | What must be supplied |
 | --- | --- |
-| GitHub repository, full code and history | Publish the reviewed code and meaningful commit history to the user's repository. A local `.git` directory is not the required GitHub URL. |
+| GitHub repository, full code and history | [Published repository](https://github.com/nikoo-dev/ai-investigation-engine), with full source and meaningful history. The current published commit was verified through GitHub's public API; subsequent local changes still need to be pushed. |
 | Live demo | A publicly reachable hosted application, with a tested cold-start path and working persistent corpus. **Pending external account setup.** |
 | README | Purpose, architecture, setup, configuration, usage, evaluation, deployment, choices and limitations; link all reports and the actual demo. |
-| Evaluation report | Generated results, exact configurations/manifest hashes, methodology, comparison and failure analysis. Disclose any optional manual/model review. **Real Gemini evaluation pending key.** |
+| Evaluation report | Generated results, exact configurations/manifest hashes, methodology, comparison and failure analysis. Disclose any optional manual/model review. **Real Gemini evaluation is underway; required comparisons remain pending.** |
 | AI Usage Report | [`AI_USAGE_REPORT.md`](AI_USAGE_REPORT.md), describing actual AI assistance and clearly separating it from the candidate's own verified work. |
 
 ## 8. Interview and code defense

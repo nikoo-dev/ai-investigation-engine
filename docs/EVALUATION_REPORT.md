@@ -8,6 +8,17 @@ verified; the 92-case live evaluation is underway. **A partial live run is not
 final evaluation evidence, and no public deployment is yet verified.** Preview
 answer scores do not satisfy the LLM requirement.
 
+The initial corrected live run stopped after 53 recorded cases, including one
+provider-output error. Its verifier explanations also revealed a decision-schema
+ambiguity: explanations acknowledged conflicts while parsed decision flags were
+false. That run remains unchanged in `reports/evaluation/gemini-full-hybrid-v2/`.
+Decision flags are now mandatory, with explicit conflict semantics. The separate
+[12-case tuning run](../reports/evaluation/gemini-tuning-v3/report.md) completed
+with zero runtime errors, 100% expected-status accuracy, and both tuning conflicts
+confirmed. These are tuning diagnostics, not held-out semantic-correctness claims.
+The new 92-case run uses `reports/evaluation/gemini-full-hybrid-v3/`; its final
+results and controlled comparisons remain pending until their reports complete.
+
 ## Corpus integrity and provenance
 
 The persistent local Qdrant store contains **50,085 independent source records**
@@ -143,11 +154,17 @@ actual hosted configuration before claiming the deployment meets its limits.
    provider quotas, and capture hosted restart-persistence evidence using the
    [deployment guide](DEPLOYMENT.md) and [submission checklist](SUBMISSION_CHECKLIST.md).
 
-The automated suite currently passes 192 tests; Ruff, formatting, mypy and
+The automated suite currently passes 193 tests; Ruff, formatting, mypy and
 JavaScript syntax checks also pass. Provider tests use mocked responses and do
 not substitute for step one. Docker runtime verification remains uncompleted on
 this host because the installed Docker Desktop engine failed to start; a Docker
-build check is included in CI for verification after publication.
+build and nonroot runtime smoke have since passed on
+[GitHub Actions](https://github.com/nikoo-dev/ai-investigation-engine/actions/runs/40780475600).
+The runtime check imports the CPU ONNX provider, checks writable cache permissions,
+and exercises upload/query and persistence across app lifespans. It uses synthetic
+hash embeddings and extractive answers; real hosted model memory remains unverified.
+The [captured CI result](../reports/ci/github-actions-db764a3.json) identifies its
+actual source commit and individual check outcomes.
 
 The [read-only browser check](../reports/ui/browser-check.json) against the full
 corpus verified rendered findings, validated answer fragments followed by a final

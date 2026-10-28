@@ -97,6 +97,7 @@ class FixtureLLM:
         return Verification(
             unsupported_claim_indices=[0] if self.reject else [],
             answer_addresses_question=True,
+            unresolved_conflict=False,
             reason="Fixture verdict",
         )
 
@@ -135,6 +136,7 @@ def test_conflict_requires_independent_semantic_confirmation_not_only_two_quotes
     def verify(*args):
         verifications.append(1)
         return Verification(
+            unsupported_claim_indices=[],
             answer_addresses_question=True,
             unresolved_conflict=confirmed,
             reason="Same entity conflict"

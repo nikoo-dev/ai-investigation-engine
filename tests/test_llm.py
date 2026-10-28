@@ -5,7 +5,15 @@ import pytest
 
 from investigation.config import Settings
 from investigation.errors import ProviderError
-from investigation.llm import AnswerDraft, LLMClient, RequestPacer, ToolCall, ToolProposal
+from investigation.llm import (
+    AnswerDraft,
+    LLMClient,
+    RequestPacer,
+    ToolCall,
+    ToolProposal,
+    Verification,
+    gemini_output_schema,
+)
 
 
 def settings(**overrides):
@@ -64,6 +72,26 @@ def test_simplified_provider_schema_does_not_relax_local_claim_bounds():
             client.synthesize(
                 "Question?", [{"passage_id": "p1", "text": "source"}], ToolProposal(calls=[]), []
             )
+    finally:
+        client.close()
+
+
+def test_verification_requires_explicit_conflict_decision_instead_of_defaulting_false():
+    required = gemini_output_schema(Verification)["required"]
+    assert "unresolved_conflict" in required and "unsupported_claim_indices" in required
+    incomplete = {
+        "answer_addresses_question": True,
+        "reason": "The answer correctly reports a source conflict.",
+    }
+    client = LLMClient(
+        settings(),
+        transport=httpx.MockTransport(
+            lambda request: httpx.Response(200, json=result([{"text": json.dumps(incomplete)}]))
+        ),
+    )
+    try:
+        with pytest.raises(ProviderError, match="invalid structured output"):
+            client.verify("Question?", AnswerDraft(status="conflicting_evidence"), [])
     finally:
         client.close()
 

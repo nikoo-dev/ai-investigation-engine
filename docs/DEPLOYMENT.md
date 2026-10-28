@@ -77,6 +77,12 @@ gh repo create ai-investigation-engine --public --source=. --remote=origin --pus
 
 ## 4. Render free service
 
+After the Qdrant cluster is populated, this
+[preconfigured Render deployment link](https://render.com/deploy?repo=https%3A%2F%2Fgithub.com%2Fnikoo-dev%2Fai-investigation-engine)
+opens the published repository's Blueprint setup. Review the Free plan and enter
+the secret environment values in Render before deploying. The link itself does
+not provision infrastructure or supply credentials.
+
 1. Sign up at [Render](https://dashboard.render.com/) using the GitHub account.
 2. Choose **New -> Blueprint**, select the repository, and use its `render.yaml`.
 3. Verify the web service's plan is **Free**. The repository specifies Docker.

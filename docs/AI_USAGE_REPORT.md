@@ -63,6 +63,15 @@ run is retained separately; the corrected run uses a new output folder and
 software fingerprint. This protocol fix was informed by a held-out run failure;
 it did not change reference labels or tune retrieval thresholds from those labels.
 
+The next live run exposed contradictory verifier explanations and decision flags:
+the explanation acknowledged a source conflict while the parsed flag was false.
+The schema allowed omission with a false default. The agent made decision fields
+mandatory and clarified that reporting a conflict does not resolve the source
+disagreement. The separate tuning split is used to check the change before a new
+final evaluation. The original 53-case partial run remains unchanged and cannot
+be presented as a completed held-out result. Reusing previously inspected test
+cases for the later run is regression evidence, not a claim of wholly unseen testing.
+
 The API/UI was locally exercised with a real embedded Qdrant runtime. Its focused
 HTTP tests cover upload/search/source resolution, restart persistence, deletion,
 authorization, rate limits, source rendering, streaming validation and metrics.
