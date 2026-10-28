@@ -1,0 +1,9 @@
+{
+  "repository_url": "https://github.com/nikoo-dev/ai-investigation-engine",
+  "live_demo_url": "",
+  "dataset_manifest": "data/manifests/hotpot-50k.json",
+  "evaluation_report": "reports/evaluation/gemini-full-hybrid-v2/results.json",
+  "comparison_reports": [],
+  "deployment_evidence": "",
+  "manual_review_report": ""
+}

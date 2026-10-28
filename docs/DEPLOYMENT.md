@@ -55,6 +55,10 @@ See [the current cluster limits and lifecycle](https://qdrant.tech/documentation
 
 ## 3. GitHub repository
 
+The [submission repository](https://github.com/nikoo-dev/ai-investigation-engine)
+is already public for this workspace. The following publication steps also
+document how to reproduce that setup for another repository.
+
 1. Sign in to or create your [GitHub account](https://github.com/).
 2. Authenticate GitHub CLI with `gh auth login` (the system browser flow keeps the
    token out of shell history). Existing invalid authentication must be renewed.

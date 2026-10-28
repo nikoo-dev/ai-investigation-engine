@@ -19,3 +19,5 @@ jobs:
         run: uv build
       - name: Validate Docker image
         run: docker build -t investigation-engine:ci .
+      - name: Smoke-test container runtime with synthetic fixtures
+        run: docker run --rm -i --entrypoint python investigation-engine:ci < .github/scripts/docker_smoke.py
