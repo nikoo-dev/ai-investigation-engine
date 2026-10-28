@@ -43,6 +43,20 @@ def components(tmp_path):
     store.close()
 
 
+def test_engine_shares_provider_pacing_between_investigation_clients(components):
+    settings, embedder, store, _, _ = components
+    settings.llm_min_request_interval_seconds = 12
+    engine = Engine(settings, store, embedder)
+    first, second = engine.llm_factory(), engine.llm_factory()
+    try:
+        assert first.pacer is second.pacer
+        assert first.pacer.interval_seconds == 12
+    finally:
+        first.close()
+        second.close()
+        engine.close()
+
+
 class FixtureLLM:
     """Only a test double; never counted as a real provider evaluation."""
 

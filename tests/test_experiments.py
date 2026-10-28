@@ -140,13 +140,15 @@ def install_fake_runtime(monkeypatch, main_directory, fail_ingestion=False):
         def close(self):
             self.closed = True
 
-    def fake_evaluate(engine, cases, output_dir, name):
+    def fake_evaluate(engine, cases, output_dir, name, **options):
         evaluations.append((name, [question.id for question in cases]))
         digest = hashlib.sha256(
             "\n".join(question.model_dump_json() for question in cases).encode()
         ).hexdigest()
         report = {
             "configuration": name,
+            "status": "complete",
+            "case_count": len(cases),
             "evaluation_sha256": digest,
             "aggregate": {"recall_at_10": 0.5, "error_rate": 0.0},
             "by_source": {},
@@ -244,3 +246,61 @@ def test_runner_refuses_to_label_hash_fixtures_as_semantic(tmp_path):
             tmp_path / "missing-cases",
             tmp_path / "reports",
         )
+
+
+def test_runner_resumes_actual_checkpointed_evaluation_across_configurations(tmp_path, monkeypatch):
+    import investigation.experiments as module
+    from investigation.evaluation import evaluate
+    from investigation.models import InvestigationAnswer, InvestigationPlan
+
+    corpus = write_jsonl(tmp_path / "corpus.jsonl", records())
+    questions = write_jsonl(
+        tmp_path / "cases.jsonl", [case().model_dump(), case("other").model_dump()]
+    )
+    settings = Settings(_env_file=None, data_dir=tmp_path / "main", embedding_backend="fastembed")
+    runtimes, _ = install_fake_runtime(monkeypatch, settings.data_dir)
+    fake_factory = module._build_experiment_runtime
+    calls = []
+
+    def factory(config, cache_config):
+        runtime = fake_factory(config, cache_config)
+        runtime.store.corpus_revision = lambda: "fixture"
+        runtime.store.get_chunks = lambda ids: []
+        runtime.engine.embedder = runtime.embedder
+
+        def investigate(request):
+            calls.append(request.question)
+            return InvestigationAnswer(
+                question=request.question,
+                status="answered",
+                answer="synthetic fixture",
+                plan=InvestigationPlan(subquestions=[request.question]),
+                provider="extractive",
+                model="test-only",
+                corpus_revision="fixture",
+            )
+
+        runtime.engine.investigate = investigate
+        return runtime
+
+    monkeypatch.setattr(module, "_build_experiment_runtime", factory)
+    monkeypatch.setattr(module, "evaluate", evaluate)
+    options = dict(
+        minimum_records=5, include_alternative_model=False, index_root=tmp_path / "indexes"
+    )
+    output = tmp_path / "reports"
+    first = run_experiments(settings, corpus, questions, output, max_new_cases=1, **options)
+    assert first["status"] == "partial" and len(calls) == 1
+    assert not (output / "comparison.md").exists()
+    second = run_experiments(
+        settings, corpus, questions, output, resume=True, max_new_cases=1, **options
+    )
+    assert second["status"] == "partial" and len(calls) == 3
+    assert second["configurations"][0]["status"] == "complete"
+    assert second["configurations"][1]["case_count"] == 1
+    final = run_experiments(settings, corpus, questions, output, resume=True, **options)
+    assert final["status"] == "complete" and len(calls) == 8
+    assert len(final["configurations"]) == 4
+    assert all(runtime.closed for runtime in runtimes)
+    assert (output / "comparison.md").exists()
+    assert final["created_at"] == first["created_at"]

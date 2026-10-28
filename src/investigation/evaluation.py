@@ -18,6 +18,11 @@ from typing import Any, Literal, Protocol
 
 from pydantic import BaseModel, Field, model_validator
 
+from investigation.evaluation_checkpoint import (
+    EvaluationCheckpoint,
+    atomic_json,
+    software_fingerprint,
+)
 from investigation.models import (
     InvestigationAnswer,
     InvestigationPlan,
@@ -254,46 +259,23 @@ def evaluate(
     output_dir: Path,
     config_name: str = "default",
     request_overrides: dict[str, Any] | None = None,
+    *,
+    resume: bool = False,
+    max_new_cases: int | None = None,
+    stop_on_error: bool = False,
 ) -> dict[str, Any]:
     if not cases:
         raise ValueError("Cannot evaluate an empty case set")
-    started = time.perf_counter()
-    rows: list[dict[str, Any]] = []
+    if len({case.id for case in cases}) != len(cases):
+        raise ValueError("Evaluation case IDs must be unique")
+    if max_new_cases is not None and max_new_cases < 1:
+        raise ValueError("max_new_cases must be positive")
+    output_dir = Path(output_dir)
+    if (output_dir / "results.json").exists() and not (output_dir / "checkpoint.json").exists():
+        raise ValueError(
+            "Existing results have no resumable checkpoint. Use a new output directory."
+        )
     store = getattr(engine, "store", None)
-    for case in cases:
-        try:
-            request = InvestigationRequest(
-                **{**(request_overrides or {}), "question": case.question, "use_cache": False}
-            )
-            answer = engine.investigate(request)
-            rows.append(
-                {
-                    "case": case.model_dump(),
-                    "answer": answer.model_dump(),
-                    "metrics": score_case(case, answer, store),
-                }
-            )
-        except Exception as exc:  # A failed case must remain in denominators.
-            failed_answer = InvestigationAnswer(
-                question=case.question,
-                status="error",
-                answer="",
-                plan=InvestigationPlan(subquestions=[case.question]),
-                model="unavailable",
-                provider="unavailable",
-                corpus_revision="unavailable",
-            )
-            baseline = score_case(case, failed_answer, store)
-            if case.category == "prompt_injection":
-                baseline["injection_output_safety"] = 0.0
-            rows.append(
-                {
-                    "case": case.model_dump(),
-                    "answer": None,
-                    "error": type(exc).__name__,
-                    "metrics": baseline,
-                }
-            )
     settings = getattr(engine, "settings", None)
     settings_snapshot = {}
     if settings is not None:
@@ -313,31 +295,146 @@ def evaluate(
             "llm_provider",
             "llm_model",
             "min_dense_score",
+            "max_tool_calls",
+            "max_subquestions",
+            "max_context_chars",
         ]
         settings_snapshot = {key: getattr(settings, key, None) for key in safe_fields}
     payload = "\n".join(case.model_dump_json() for case in cases)
-    report = {
+    identity = {
         "configuration": config_name,
-        "created_at": utc_now(),
-        "case_count": len(cases),
         "evaluation_sha256": hashlib.sha256(payload.encode()).hexdigest(),
         "settings": settings_snapshot,
         "request_overrides": request_overrides or {},
         "corpus_revision": store.corpus_revision() if store else None,
         "corpus_stats": store.stats() if store else None,
-        "duration_seconds": time.perf_counter() - started,
+        "embedding_fingerprint": getattr(getattr(engine, "embedder", None), "fingerprint", None),
+        "software_fingerprint": software_fingerprint(),
+    }
+    checkpoint = EvaluationCheckpoint(
+        output_dir / "checkpoint.json", identity, [case.model_dump() for case in cases], resume
+    )
+    rows = checkpoint.rows
+    started = time.perf_counter()
+    checkpoint.save(checkpoint.elapsed_seconds)
+    try:
+        pending = cases[len(rows) :]
+        if max_new_cases is not None:
+            pending = pending[:max_new_cases]
+        for case in pending:
+            case_started = time.perf_counter()
+            row: dict[str, Any]
+            try:
+                request = InvestigationRequest(
+                    **{**(request_overrides or {}), "question": case.question, "use_cache": False}
+                )
+                answer = engine.investigate(request)
+                row = {
+                    "case": case.model_dump(),
+                    "answer": answer.model_dump(),
+                    "metrics": score_case(case, answer, store),
+                }
+            except Exception as exc:  # Failed cases remain in every appropriate denominator.
+                failed_answer = InvestigationAnswer(
+                    question=case.question,
+                    status="error",
+                    answer="",
+                    plan=InvestigationPlan(subquestions=[case.question]),
+                    model="unavailable",
+                    provider="unavailable",
+                    corpus_revision="unavailable",
+                    elapsed_ms=(time.perf_counter() - case_started) * 1000,
+                )
+                # A failing database must not erase the provider/runtime failure
+                # by failing a second time while resolving an empty citation set.
+                baseline = score_case(case, failed_answer)
+                if store is not None and case.gold_document_ids:
+                    baseline["citation_source_validity"] = 0.0
+                if case.category == "prompt_injection":
+                    baseline["injection_output_safety"] = 0.0
+                row = {
+                    "case": case.model_dump(),
+                    "answer": None,
+                    "error": type(exc).__name__,
+                    "metrics": baseline,
+                }
+            rows.append(row)
+            checkpoint.save(checkpoint.elapsed_seconds + time.perf_counter() - started)
+            if store is not None:
+                try:
+                    changed = store.corpus_revision() != identity["corpus_revision"]
+                except Exception:
+                    checkpoint.invalidated = True
+                    raise
+                if changed:
+                    checkpoint.invalidated = True
+                    raise ValueError(
+                        "Corpus changed during evaluation; use a new run on a stable corpus."
+                    )
+            if stop_on_error and row["metrics"].get("error_rate"):
+                break
+    finally:
+        # Includes Ctrl+C: only completed attempts are retained. An interrupted
+        # in-flight call is attempted again on resume and may have consumed quota.
+        duration = checkpoint.elapsed_seconds + time.perf_counter() - started
+        checkpoint.save(duration)
+        report = _evaluation_report(
+            cases,
+            rows,
+            identity,
+            checkpoint,
+            duration,
+            {
+                "llm_min_request_interval_seconds": getattr(
+                    settings, "llm_min_request_interval_seconds", 0
+                ),
+                "max_new_cases": max_new_cases,
+                "stop_on_error": stop_on_error,
+            },
+        )
+        atomic_json(output_dir / "results.json", report)
+        (output_dir / "report.md").write_text(render_report(report), encoding="utf-8")
+    return report
+
+
+def _evaluation_report(
+    cases: list[EvaluationCase],
+    rows: list[dict],
+    identity: dict,
+    checkpoint: EvaluationCheckpoint,
+    duration: float,
+    run_policy: dict,
+) -> dict[str, Any]:
+    status = (
+        "invalidated"
+        if checkpoint.invalidated
+        else "complete"
+        if len(rows) == len(cases)
+        else "partial"
+    )
+    observed = [EvaluationCase.model_validate(row["case"]) for row in rows]
+    report = {
+        **identity,
+        "status": status,
+        "run_id": checkpoint.run_id,
+        "created_at": checkpoint.created_at,
+        "updated_at": utc_now(),
+        "case_count": len(rows),
+        "planned_case_count": len(cases),
+        "duration_seconds": duration,
+        "latest_session_policy": run_policy,
         "aggregate": _aggregate(rows),
         "by_category": {
             category: _aggregate([row for row in rows if row["case"]["category"] == category])
-            for category in sorted({case.category for case in cases})
+            for category in sorted({case.category for case in observed})
         },
         "by_split": {
             split: _aggregate([row for row in rows if row["case"]["split"] == split])
-            for split in sorted({case.split for case in cases})
+            for split in sorted({case.split for case in observed})
         },
         "by_source": {
             source: _aggregate([row for row in rows if row["case"]["source"] == source])
-            for source in sorted({case.source for case in cases})
+            for source in sorted({case.source for case in observed})
         },
         "rows": rows,
         "limitations": [
@@ -346,14 +443,10 @@ def evaluate(
             "Prompt-injection output checks catch specific probes only; mutation side effects and secret leakage require the separate integration tests.",
             "The authored incident set is a controlled robustness fixture; HotpotQA held-out questions measure a different, open-domain task. Report them separately.",
             "An extractive/hash test run does not satisfy the real LLM/semantic-search requirement. Provider and embedding configuration are recorded above.",
+            "Partial runs are not final evidence. Resume requires identical cases, behavior settings, software and corpus; previous failures are retained and never silently retried.",
+            "Session pacing and batch size can change on resume. Cumulative active duration includes pacing and checkpoint writes, not time between sessions. Only the latest session policy is shown.",
         ],
     }
-    output_dir = Path(output_dir)
-    output_dir.mkdir(parents=True, exist_ok=True)
-    (output_dir / "results.json").write_text(
-        json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
-    )
-    (output_dir / "report.md").write_text(render_report(report), encoding="utf-8")
     return report
 
 
@@ -362,6 +455,8 @@ def render_report(report: dict[str, Any]) -> str:
         f"# Evaluation: {report['configuration']}",
         "",
         f"Generated: {report['created_at']}",
+        "",
+        f"Run status: {report.get('status', 'complete')}; {report['case_count']} / {report.get('planned_case_count', report['case_count'])} planned cases recorded.",
         "",
         f"Cases: {report['case_count']}. Corpus: `{report.get('corpus_stats')}`.",
         "",
@@ -466,6 +561,12 @@ def compare_reports(paths: list[Path], output_path: Path) -> str:
     reports = [json.loads(Path(path).read_text(encoding="utf-8")) for path in paths]
     if not reports:
         raise ValueError("At least one report is required")
+    if any(
+        report.get("status", "complete") != "complete"
+        or report.get("planned_case_count", report["case_count"]) != report["case_count"]
+        for report in reports
+    ):
+        raise ValueError("Complete every planned case before comparing evaluation reports")
     if len({report["evaluation_sha256"] for report in reports}) != 1:
         raise ValueError("Configurations must use the identical evaluation manifest")
     lines = [

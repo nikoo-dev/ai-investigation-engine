@@ -5,7 +5,7 @@ import pytest
 
 from investigation.config import Settings
 from investigation.errors import ProviderError
-from investigation.llm import AnswerDraft, LLMClient, ToolCall, ToolProposal
+from investigation.llm import AnswerDraft, LLMClient, RequestPacer, ToolCall, ToolProposal
 
 
 def settings(**overrides):
@@ -18,6 +18,34 @@ def settings(**overrides):
         llm_max_retries=0,
         **overrides,
     )
+
+
+def test_shared_pacer_spaces_attempts_across_clients_and_includes_retries(monkeypatch):
+    clock, starts = [100.0], []
+    monkeypatch.setattr("investigation.llm.time.monotonic", lambda: clock[0])
+    monkeypatch.setattr(
+        "investigation.llm.time.sleep", lambda seconds: clock.__setitem__(0, clock[0] + seconds)
+    )
+    monkeypatch.setattr("investigation.llm.random.uniform", lambda low, high: 0)
+
+    def handler(request):
+        starts.append(clock[0])
+        if len(starts) == 2:
+            return httpx.Response(429, headers={"Retry-After": "1"})
+        return httpx.Response(200, json={})
+
+    pacer = RequestPacer(12)
+    config = settings().model_copy(update={"llm_max_retries": 1})
+    clients = [
+        LLMClient(config, transport=httpx.MockTransport(handler), pacer=pacer) for _ in range(2)
+    ]
+    try:
+        for client in clients:
+            client._post("https://provider.example/generate", {})
+    finally:
+        for client in clients:
+            client.close()
+    assert starts == [100, 112, 124]
 
 
 def result(parts, **extra):

@@ -107,6 +107,11 @@ A reported runtime/provider error remains an evaluation failure; failures are
 not removed to reach 40 successful cases. Resolve missing evidence and rerun the
 audit rather than hand-editing its output.
 
+Partial or invalidated evaluation runs cannot pass, even if their current rows
+already include 40 questions. Finish every case planned for that run. At least
+40 completed live test cases and all required categories must remain; additional
+reported failures are retained in the error rate rather than silently excluded.
+
 Each check records `required`. An absent optional human review is shown as
 unverified with `required: false`; it does not block submission. If a review is
 supplied, its contents are checked rather than assumed to be authentic.

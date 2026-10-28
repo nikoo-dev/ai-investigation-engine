@@ -37,6 +37,7 @@ class Settings(BaseSettings):
     ollama_url: str = "http://localhost:11434"
     llm_timeout_seconds: float = Field(default=60, gt=0, le=180)
     llm_max_retries: int = Field(default=2, ge=0, le=4)
+    llm_min_request_interval_seconds: float = Field(default=0, ge=0, le=60)
     llm_input_usd_per_million: float = Field(default=0, ge=0)
     llm_output_usd_per_million: float = Field(default=0, ge=0)
     max_tool_calls: int = Field(default=6, ge=1, le=12)

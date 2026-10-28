@@ -198,6 +198,10 @@ def run_experiments(
     include_alternative_model: bool = True,
     seed: int = 42,
     index_root: Path | None = None,
+    *,
+    resume: bool = False,
+    max_new_cases: int | None = None,
+    stop_on_error: bool = False,
 ) -> dict[str, Any]:
     """Measure five configurations; retain complete predictions and exact provenance.
 
@@ -209,6 +213,8 @@ def run_experiments(
         raise ValueError(
             "Semantic experiments require EMBEDDING_BACKEND=fastembed; hash fixtures are not semantic results"
         )
+    if max_new_cases is not None and max_new_cases < 1:
+        raise ValueError("max_new_cases must be positive")
     corpus_path, cases_path, output_dir = Path(corpus_path), Path(cases_path), Path(output_dir)
     cases = [case for case in load_cases(cases_path) if case.split in {"test", "security"}]
     if not cases:
@@ -216,14 +222,38 @@ def run_experiments(
     records, selection = select_experiment_records(corpus_path, cases, minimum_records, seed)
     configs = experiment_configs(include_alternative_model)
     output_dir.mkdir(parents=True, exist_ok=True)
-    _write_summary(output_dir / "selection.json", selection)
     evaluation_digest = hashlib.sha256(
         "\n".join(case.model_dump_json() for case in cases).encode()
     ).hexdigest()
+    prior_summary = output_dir / "summary.json"
+    prior_created_at = None
+    if prior_summary.exists() and not resume:
+        raise ValueError("Experiment summary exists. Use --resume or a new output directory.")
+    for config in configs:
+        directory = output_dir / config.name
+        if (directory / "results.json").exists() and not (directory / "checkpoint.json").exists():
+            raise ValueError(
+                "Existing experiment results have no resumable checkpoint. Use a new output directory."
+            )
+    if resume and prior_summary.exists():
+        prior = json.loads(prior_summary.read_text(encoding="utf-8"))
+        if (
+            prior.get("evaluation_sha256") != evaluation_digest
+            or prior.get("selection", {}).get("selected_records_sha256")
+            != selection["selected_records_sha256"]
+            or prior.get("requested_llm_provider") != settings.llm_provider
+            or prior.get("requested_llm_model") != settings.llm_model
+            or prior.get("requested_configurations") != [asdict(config) for config in configs]
+        ):
+            raise ValueError(
+                "Cannot resume experiments with different cases, selected corpus or provider/model"
+            )
+        prior_created_at = prior.get("created_at")
+    _write_summary(output_dir / "selection.json", selection)
     result: dict[str, Any] = {
         "version": 1,
         "status": "running",
-        "created_at": utc_now(),
+        "created_at": prior_created_at or utc_now(),
         "selection": {
             key: value
             for key, value in selection.items()
@@ -236,6 +266,7 @@ def run_experiments(
         "split_counts": dict(Counter(case.split for case in cases)),
         "requested_llm_provider": settings.llm_provider,
         "requested_llm_model": settings.llm_model,
+        "requested_configurations": [asdict(config) for config in configs],
         "comparison_design": "One factor differs from the first configuration in each ablation.",
         "configurations": [],
         "limitations": [
@@ -298,14 +329,26 @@ def run_experiments(
                 )
             ingestion_seconds = time.perf_counter() - stage_began
             report_path = output_dir / config.name
-            report = evaluate(runtime.engine, cases, report_path, config.name)
+            report = evaluate(
+                runtime.engine,
+                cases,
+                report_path,
+                config.name,
+                resume=resume,
+                max_new_cases=max_new_cases,
+                stop_on_error=stop_on_error,
+            )
             if report["evaluation_sha256"] != evaluation_digest:
                 raise ValueError("Evaluation manifest changed during the experiment")
             row = {
                 "configuration": asdict(config),
-                "status": "completed_with_errors"
-                if report["aggregate"].get("error_rate", 0)
-                else "complete",
+                "status": report["status"]
+                if report["status"] != "complete"
+                else (
+                    "completed_with_errors"
+                    if report["aggregate"].get("error_rate", 0)
+                    else "complete"
+                ),
                 "actual_embedding_fingerprint": runtime.embedder.fingerprint,
                 "index_identity": identity,
                 "index_path": str(directory),
@@ -313,12 +356,22 @@ def run_experiments(
                 "ingestion_seconds": ingestion_seconds,
                 "corpus_stats": stats,
                 "aggregate": report["aggregate"],
+                "case_count": report["case_count"],
+                "planned_case_count": report.get("planned_case_count", report["case_count"]),
                 "by_source": report.get("by_source", {}),
                 "by_split": report.get("by_split", {}),
                 "report": str((Path(config.name) / "results.json").as_posix()),
                 **_usage_summary(report),
             }
             result["configurations"].append(row)
+            if report["status"] != "complete":
+                result["status"] = "partial"
+                result["duration_seconds"] = time.perf_counter() - began
+                _write_summary(summary_path, result)
+                (output_dir / "summary.md").write_text(
+                    render_experiment_summary(result), encoding="utf-8"
+                )
+                return result
             completed_report_paths.append(report_path / "results.json")
             _write_summary(summary_path, result)
         except Exception as exc:
@@ -351,12 +404,18 @@ def render_experiment_summary(report: dict[str, Any]) -> str:
         "",
         "The first row is the baseline. Every other row changes one factor only. Scores include failure cases in their applicable denominators.",
         "",
-        "Configuration | Contrast | Recall@10 | All-support@10 | MRR | Token F1 | Citation validity | Error rate | p95 ms",
-        "--- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---:",
+        "Partial configurations have not evaluated every planned case and are not final comparison evidence.",
+        "",
+        "Configuration | Recorded/planned cases | Contrast | Recall@10 | All-support@10 | MRR | Token F1 | Citation validity | Error rate | p95 ms",
+        "--- | ---: | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---:",
     ]
     for row in report["configurations"]:
         aggregate = row["aggregate"]
-        cells = [row["configuration"]["name"], row["configuration"]["contrast"]]
+        cells = [
+            row["configuration"]["name"],
+            f"{row.get('case_count', report['case_count'])}/{row.get('planned_case_count', report['case_count'])}",
+            row["configuration"]["contrast"],
+        ]
         cells += [
             f"{aggregate[key]:.4f}" if key in aggregate else "n/a"
             for key in [

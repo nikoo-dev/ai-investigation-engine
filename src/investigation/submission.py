@@ -155,6 +155,12 @@ def _dataset(path: Path, root: Path) -> dict[str, Any]:
 
 def _evaluation(path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
     report = _object(path)
+    if report.get("status", "complete") != "complete" or report.get(
+        "planned_case_count", report.get("case_count")
+    ) != report.get("case_count"):
+        raise ValueError(
+            "Final evaluation must complete every planned case; partial or invalidated runs do not qualify."
+        )
     rows = report.get("rows")
     if not isinstance(rows, list) or report.get("case_count") != len(rows):
         raise ValueError(
@@ -247,7 +253,7 @@ def _evaluation(path: Path) -> tuple[dict[str, Any], dict[str, Any]]:
         "provider": settings["llm_provider"],
         "model": settings.get("llm_model"),
     }
-    if errors or live_tests < 40 or not REQUIRED_CATEGORIES <= set(counts):
+    if live_tests < 40 or not REQUIRED_CATEGORIES <= set(counts):
         raise ValueError(
             f"Final evaluation needs 40+ completed live test cases covering required categories; recorded live={live_tests}, errors={errors}, categories={sorted(counts)}."
         )

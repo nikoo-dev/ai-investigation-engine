@@ -13,7 +13,7 @@ from pydantic import BaseModel, Field, ValidationError
 from investigation.config import Settings
 from investigation.embeddings import Embedder, fingerprint_json, lexical_tokens
 from investigation.errors import BusyError, ProviderError
-from investigation.llm import AnswerDraft, LLMClient, ToolCall, ToolProposal
+from investigation.llm import AnswerDraft, LLMClient, RequestPacer, ToolCall, ToolProposal
 from investigation.models import (
     Citation,
     Claim,
@@ -129,7 +129,8 @@ class Engine:
         self._slots = threading.BoundedSemaphore(settings.max_concurrent_investigations)
         self._cache: OrderedDict = OrderedDict()
         self._cache_lock = threading.Lock()
-        self.llm_factory = llm_factory or (lambda: LLMClient(settings))
+        self._llm_pacer = RequestPacer(settings.llm_min_request_interval_seconds)
+        self.llm_factory = llm_factory or (lambda: LLMClient(settings, pacer=self._llm_pacer))
 
     def close(self) -> None:
         self.retriever.reranker.close()

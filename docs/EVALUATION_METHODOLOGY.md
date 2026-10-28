@@ -34,7 +34,55 @@ The released `test` cases are held out from automated tuning. If changing thresh
 
 Each metric reports its applicable case count. Unanswerable questions have no retrieval gold labels and are excluded from retrieval metrics rather than given a misleading perfect score. Runtime/provider failures remain in applicable metric denominators. There is no answer-quality credit for returning an exception. Errors are recorded by exception type, not potentially secret-bearing request/response text.
 
-Manual review is required for claim-level entailment and semantic correctness. Review at least five answers per category, every citation used by those claims, and every detected conflict. State the reviewer and sampled case IDs. Do not describe token F1 as an LLM-judge or semantic correctness score.
+The automated metrics do not establish claim-level entailment or semantic correctness. An optional human review should inspect at least five answers per category, every citation used by those claims, and every detected conflict, stating the reviewer and sampled case IDs. Do not describe token F1 as an LLM-judge or semantic correctness score.
+
+## Checkpointed free-tier runs
+
+After configuring and testing Gemini, start a separate output directory for its
+real evaluation. The example below selects the same 92 held-out test questions on
+every invocation:
+
+```powershell
+uv run investigate evaluate data/corpus/hotpot/cases.jsonl --name gemini-full --output reports/gemini-full --max-new-cases 5 --request-interval-seconds 15 --stop-on-error
+uv run investigate evaluate data/corpus/hotpot/cases.jsonl --name gemini-full --output reports/gemini-full --max-new-cases 5 --request-interval-seconds 15 --stop-on-error --resume
+```
+
+Choose the interval and batch size from the quota actually available to the
+project. Fifteen seconds is illustrative, not a guarantee. Pacing spaces model
+HTTP attempt start times, including retries, across clients belonging to the same
+engine. It does not coordinate other processes or API users, predict token usage,
+or reset daily quotas. The CLI option avoids slowing the public application just
+to pace an offline evaluation. A batch counts investigated questions, not provider
+HTTP calls; one question can require several calls.
+
+`checkpoint.json` is replaced atomically after each completed attempt. Ctrl+C
+also writes a partial `results.json` and Markdown summary. A hard process kill
+may leave the summary behind the checkpoint; resume reads the checkpoint and
+rebuilds the summary. An interrupted in-flight provider request is not a completed
+case and may consume quota again when resumed. No exactly-once billing guarantee
+is made.
+
+`--resume` skips every retained attempt, including failed attempts. `--stop-on-error`
+records the failing case before stopping; after quota recovery, resuming proceeds
+to the next case. Failures stay in the final denominators. To evaluate a repaired
+system, use a new output directory and retain the original failed run. The audit
+requires at least 40 completed live test cases across the required categories;
+additional honestly recorded failures do not by themselves disqualify that evidence.
+
+Resume validates the entire ordered case manifest, behavior configuration,
+embedding fingerprint, Python source fingerprint, and exact corpus revision/count.
+It rejects mismatches rather than mixing experiments. Do not change code or mutate
+the corpus between sessions of the same run. A corpus change observed during a
+run invalidates it. Pacing and batch size may change between sessions; the report
+labels the latest session policy. A digest detects accidental checkpoint edits;
+it does not authenticate the origin of model predictions.
+
+Use one writer per output directory. Existing results without a checkpoint,
+including the retained historical preview reports, require a new output directory.
+Partial runs exit with code 2, show recorded/planned case counts, and cannot be
+used for final comparison or submission evidence. `--split test-security` includes
+the separate security probes alongside test questions, matching the experiment
+runner; default standalone evaluation remains test-only.
 
 ## Required controlled comparisons
 

@@ -48,6 +48,12 @@ citations and secret-bearing provider error bodies; preserving tool-call scope;
 bounding upload bodies before multipart parsing; and correcting a mobile table
 accessibility element that expanded the viewport.
 
+Later work added atomic, resumable evaluation checkpoints and paced model HTTP
+attempts for free-tier runs. Regression tests verify interruption recovery,
+retention of failed cases, run-identity mismatch rejection, corpus invalidation,
+and reuse of completed comparison configurations without new model calls. These
+tests use synthetic/mocked outcomes and do not establish live Gemini success.
+
 The API/UI was locally exercised with a real embedded Qdrant runtime. Its focused
 HTTP tests cover upload/search/source resolution, restart persistence, deletion,
 authorization, rate limits, source rendering, streaming validation and metrics.

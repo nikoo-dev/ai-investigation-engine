@@ -148,33 +148,56 @@ def evaluate_command(
     cases: Annotated[Path, typer.Argument(exists=True)],
     output: Path = Path("reports/evaluation/default"),
     name: str = "default",
-    mode: str | None = None,
+    mode: Literal["dense", "sparse", "hybrid"] | None = None,
     rerank: bool | None = None,
     limit: int | None = None,
     split: str = "test",
+    resume: bool = False,
+    max_new_cases: Annotated[int | None, typer.Option(min=1)] = None,
+    stop_on_error: bool = False,
+    request_interval_seconds: Annotated[float | None, typer.Option(min=0, max=60)] = None,
 ):
     """Record per-case predictions, citations, traces and quantitative metrics."""
     from investigation.evaluation import evaluate, load_cases
     from investigation.runtime import build_runtime
 
-    runtime = build_runtime()
+    settings = Settings()
+    if request_interval_seconds is not None:
+        settings.llm_min_request_interval_seconds = request_interval_seconds
+    runtime = build_runtime(settings)
     try:
         manifest = load_cases(cases)
         if split != "all":
-            if split not in ("test", "tuning", "security"):
-                raise typer.BadParameter("split must be test, tuning, security or all")
-            manifest = [case for case in manifest if case.split == split]
+            if split not in ("test", "tuning", "security", "test-security"):
+                raise typer.BadParameter(
+                    "split must be test, tuning, security, test-security or all"
+                )
+            splits = {"test", "security"} if split == "test-security" else {split}
+            manifest = [case for case in manifest if case.split in splits]
         if limit is not None:
             manifest = manifest[:limit]
-        report = evaluate(runtime.engine, manifest, output, name, {"mode": mode, "rerank": rerank})
+        report = evaluate(
+            runtime.engine,
+            manifest,
+            output,
+            name,
+            {"mode": mode, "rerank": rerank},
+            resume=resume,
+            max_new_cases=max_new_cases,
+            stop_on_error=stop_on_error,
+        )
         emit(
             {
                 "configuration": name,
+                "status": report["status"],
                 "case_count": report["case_count"],
+                "planned_case_count": report["planned_case_count"],
                 "aggregate": report["aggregate"],
                 "output": str(output),
             }
         )
+        if report["status"] != "complete":
+            raise typer.Exit(2)
     finally:
         runtime.close()
 
@@ -255,19 +278,31 @@ def experiments(
     output: Path = Path("reports/experiments"),
     records: int = 1000,
     alternative_model: bool = True,
+    resume: bool = False,
+    max_new_cases: Annotated[int | None, typer.Option(min=1)] = None,
+    stop_on_error: bool = False,
+    request_interval_seconds: Annotated[float | None, typer.Option(min=0, max=60)] = None,
 ):
     """Run isolated chunking, retrieval, reranking and semantic model comparisons."""
     from investigation.experiments import run_experiments
 
+    settings = Settings()
+    if request_interval_seconds is not None:
+        settings.llm_min_request_interval_seconds = request_interval_seconds
     result = run_experiments(
-        Settings(),
+        settings,
         corpus,
         cases,
         output,
         minimum_records=records,
         include_alternative_model=alternative_model,
+        resume=resume,
+        max_new_cases=max_new_cases,
+        stop_on_error=stop_on_error,
     )
     emit(result)
+    if result["status"] != "complete":
+        raise typer.Exit(2)
 
 
 @app.command("judge")

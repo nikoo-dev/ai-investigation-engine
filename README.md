@@ -133,6 +133,14 @@ See the [measured evaluation report](docs/EVALUATION_REPORT.md),
 [experiments](docs/EXPERIMENTS.md), and the generated `reports/` results. Preview
 and mocked-provider runs are never reported as real LLM evaluation.
 
+For free-tier runs, the harness saves an atomic checkpoint after each completed
+attempt. Use `--max-new-cases 5 --stop-on-error --request-interval-seconds 15`
+to work in small paced batches, then repeat the same command with `--resume`.
+Choose pacing and batch size from your project's actual quotas; these example
+values do not guarantee quota availability. Completed attempts, including errors,
+are retained. Partial runs are labeled and cannot pass the final evidence audit.
+See [checkpoint and resume rules](docs/EVALUATION_METHODOLOGY.md#checkpointed-free-tier-runs).
+
 ## Deployment and submission
 
 The intended free deployment is Render + Qdrant Cloud + Gemini's free API tier.

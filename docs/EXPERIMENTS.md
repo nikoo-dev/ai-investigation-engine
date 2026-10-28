@@ -56,3 +56,24 @@ The test/security and authored-incident/HotpotQA breakdowns must be read separat
 An `extractive` run measures retrieval and the evidence-only fallback; it does not satisfy the assignment's real LLM requirement. When Gemini or Ollama is configured, the runner records the actual provider and token usage for every prediction. Provider errors are retained rather than replaced by invented successful results. A completed experiment with errors is labeled accordingly per configuration.
 
 This 1,000-or-more-record controlled experiment complements the full 50,000-record ingestion, evaluation, and load test; it does not establish full-corpus performance. Cached models and reused compatible indexes also mean its latency is not a rigorous cold-start benchmark. Compare answer quality with the dedicated performance report before choosing a deployment default. Final test results are for reporting; use the separate tuning split for threshold changes.
+
+## Run real-provider comparisons in batches
+
+Use a fresh output folder to preserve the historical preview experiments:
+
+```powershell
+uv run investigate experiments data/corpus/hotpot/corpus.jsonl data/corpus/hotpot/cases.jsonl --output reports/gemini-experiments --records 1000 --max-new-cases 5 --request-interval-seconds 15 --stop-on-error
+uv run investigate experiments data/corpus/hotpot/corpus.jsonl data/corpus/hotpot/cases.jsonl --output reports/gemini-experiments --records 1000 --max-new-cases 5 --request-interval-seconds 15 --stop-on-error --resume
+```
+
+The batch cap applies per configuration. The runner stops at the first partial
+configuration, and subsequent invocations resume it before advancing. Completed
+configurations reuse their checkpoints without new model calls. Compatible
+indexes are reopened and idempotent ingestion is checked. Pacing starts anew when
+an engine is created for another configuration; it is not an account-wide limiter.
+Choose actual pacing/batch limits from the project's available quota.
+
+Keep software, selected corpus, configuration plan and provider/model unchanged
+throughout a resumed experiment. Partial summaries show recorded/planned counts;
+a final comparison is written only after all configurations finish. Error rows
+are retained. See the [checkpoint rules](EVALUATION_METHODOLOGY.md#checkpointed-free-tier-runs).

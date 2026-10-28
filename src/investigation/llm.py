@@ -6,6 +6,7 @@ extractive answer. Test doubles implement this small interface without network a
 
 import json
 import random
+import threading
 import time
 from typing import Any, Literal
 
@@ -102,10 +103,35 @@ class Verification(BaseModel):
     reason: str
 
 
+class RequestPacer:
+    """Space HTTP attempt start times, including retries, within one engine."""
+
+    def __init__(self, interval_seconds: float = 0):
+        self.interval_seconds = interval_seconds
+        self._lock = threading.Lock()
+        self._last_start: float | None = None
+
+    def wait(self) -> None:
+        if self.interval_seconds <= 0:
+            return
+        with self._lock:
+            if self._last_start is not None:
+                delay = self.interval_seconds - (time.monotonic() - self._last_start)
+                if delay > 0:
+                    time.sleep(delay)
+            self._last_start = time.monotonic()
+
+
 class LLMClient:
-    def __init__(self, settings: Settings, transport: httpx.BaseTransport | None = None):
+    def __init__(
+        self,
+        settings: Settings,
+        transport: httpx.BaseTransport | None = None,
+        pacer: RequestPacer | None = None,
+    ):
         self.settings = settings
         self.client = httpx.Client(timeout=settings.llm_timeout_seconds, transport=transport)
+        self.pacer = pacer or RequestPacer(settings.llm_min_request_interval_seconds)
         self.usage: dict[str, int | float] = {
             "input_tokens": 0,
             "output_tokens": 0,
@@ -116,6 +142,7 @@ class LLMClient:
     def _post(self, url: str, payload: dict, headers: dict | None = None) -> dict:
         for attempt in range(self.settings.llm_max_retries + 1):
             try:
+                self.pacer.wait()
                 response = self.client.post(url, json=payload, headers=headers)
                 if response.status_code in (429, 500, 502, 503, 504):
                     if attempt < self.settings.llm_max_retries:

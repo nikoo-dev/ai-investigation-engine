@@ -119,7 +119,9 @@ Run these in the deployed app and record the URL, commit SHA, date, and results:
    the cold-start page as an application failure.
 6. Run the test evaluation against the same remote collection with the same model
    configuration; save the real results and error rate. Free API quotas may require
-   pacing across multiple sessions/days. Preserve failures rather than deleting them.
+   pacing across multiple sessions/days. Use the [checkpointed evaluation commands](EVALUATION_METHODOLOGY.md#checkpointed-free-tier-runs)
+   to retain work across sessions, and the [batched comparison commands](EXPERIMENTS.md#run-real-provider-comparisons-in-batches)
+   for required configuration comparisons. Preserve failures rather than deleting them.
 7. Add the verified repository/live URLs and measured report links to the submission
    checklist. Do not submit a local-only URL as the live demo.
 

@@ -319,6 +319,38 @@ def test_errors_stay_in_case_count_and_prevent_false_success(project):
     assert "live=39" in detail and "errors=1" in detail
 
 
+def test_honest_retained_failure_does_not_disqualify_forty_completed_live_cases(project):
+    report = project["report"]
+    failed = deepcopy(report["rows"][0])
+    failed["case"]["id"] = "additional-failed-case"
+    failed["answer"] = None
+    failed["error"] = "ProviderError"
+    failed["metrics"] = {"error_rate": 1}
+    report["rows"].append(failed)
+    report["case_count"] = 41
+    report["aggregate"]["error_rate"] = 1 / 41
+    report["evaluation_sha256"] = hashlib.sha256(
+        "\n".join(
+            EvaluationCase.model_validate(row["case"]).model_dump_json() for row in report["rows"]
+        ).encode()
+    ).hexdigest()
+    write_json(project["root"] / "evaluation.json", report)
+    result = audit_submission(project["root"], Path("submission.json"), CountStore())
+    gate = checks(result)["live_llm_evaluation"]
+    assert gate["status"] == "pass", gate
+    assert gate["evidence"]["errors"] == 1
+    assert gate["evidence"]["live_test_cases"] == 40
+
+
+@pytest.mark.parametrize("status", ["partial", "invalidated"])
+def test_partial_or_invalidated_evaluation_cannot_pass_submission_gate(project, status):
+    report = project["report"]
+    report["status"] = status
+    write_json(project["root"] / "evaluation.json", report)
+    result = audit_submission(project["root"], Path("submission.json"), CountStore())
+    assert "every planned case" in checks(result)["live_llm_evaluation"]["detail"]
+
+
 def test_duplicate_case_ids_and_changed_hash_are_rejected(project):
     report = project["report"]
     report["rows"][1]["case"]["id"] = report["rows"][0]["case"]["id"]

@@ -141,7 +141,7 @@ actual hosted configuration before claiming the deployment meets its limits.
    provider quotas, and capture hosted restart-persistence evidence using the
    [deployment guide](DEPLOYMENT.md) and [submission checklist](SUBMISSION_CHECKLIST.md).
 
-The automated suite currently passes 173 tests; Ruff, formatting, mypy and
+The automated suite currently passes 191 tests; Ruff, formatting, mypy and
 JavaScript syntax checks also pass. Provider tests use mocked responses and do
 not substitute for step one. Docker runtime verification remains uncompleted on
 this host because the installed Docker Desktop engine failed to start; a Docker
@@ -153,3 +153,10 @@ object, a quote present in its stored passage, and desktop/mobile layouts withou
 horizontal page overflow or JavaScript page errors. It did not modify the corpus.
 Screenshots are retained in `reports/ui/`. This verifies transport and UI behavior,
 not the semantic correctness of the extractive preview.
+
+The [checkpoint smoke verification](../reports/evaluation-checkpoint-verification.json)
+used two actual CLI processes against the full local corpus: the first recorded
+one of three planned questions, and the second resumed to all three. The original
+completed prediction remained unchanged and both sessions used the same corpus
+revision and software fingerprint. This checks cross-process recovery with real
+retrieval and extractive answers; it makes no live Gemini claim.

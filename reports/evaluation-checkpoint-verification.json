@@ -1,0 +1,20 @@
+{
+  "checked_at": "2026-10-28T22:04:58.318000+00:00",
+  "scope": "Two real CLI processes on full local Qdrant corpus with real ONNX retrieval and extractive preview; no live LLM claim.",
+  "run_id": "a7aee9b1-66f1-444b-8a3c-865f7493f75b",
+  "software_fingerprint": "e30778a7085b04e37cb62ecb9d2197795643d9f6b1206affe1e57edf53924805",
+  "initial_case_count": 1,
+  "final_case_count": 3,
+  "planned_case_count": 3,
+  "first_completed_row_unchanged": true,
+  "first_row_sha256": "18772dec1a7028ab41975b55ef4631f7cb30520e419d05a4277fb7213633be0b",
+  "corpus": {
+    "documents": 50085,
+    "chunks": 52243,
+    "corpus_revision": "9e48a0b3-7f60-483b-86d9-5e7149562bb6",
+    "backend": "qdrant_local"
+  },
+  "initial_active_duration_seconds": 2.310206299996935,
+  "final_active_duration_seconds": 6.706023299993831,
+  "provider": "extractive"
+}
