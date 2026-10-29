@@ -1,0 +1,458 @@
+{
+  "captured_at": "2026-10-29T00:36:52.129135+00:00",
+  "base_url": "https://ai-investigation-engine-h233.onrender.com",
+  "health": {
+    "status": "ok",
+    "boot_id": "04fadc30-fccd-463b-a30f-635dbfc83546",
+    "started_at": "2026-10-29T00:31:19.191726+00:00"
+  },
+  "source": "Cached copies captured immediately after the separately recorded three fresh public-browser requests. Original generation usage is retained in cached responses; no new generation claimed for this capture.",
+  "browser_report": "reports/deployment/ui/browser-check.json",
+  "rows": [
+    {
+      "answer": {
+        "id": "79ed0537-052f-4c91-a2f0-0be14190324c",
+        "question": "Which system change caused the Atlas payment delay on March 3, which service was affected, and what confirmed the cause?",
+        "status": "answered",
+        "answer": "The Atlas payment delay on March 3 was caused by system change CHG-001, which reduced the database connection timeout from 2000 milliseconds to 250 milliseconds. [C1]\n\nThe affected service was payments-gateway. [C2]\n\nThe cause was confirmed by a verification note that documented how rolling back CHG-001 cleared the delay and replaying the workload with the change enabled reproduced the failures. [C3]",
+        "claims": [
+          {
+            "text": "The Atlas payment delay on March 3 was caused by system change CHG-001, which reduced the database connection timeout from 2000 milliseconds to 250 milliseconds.",
+            "citation_ids": [
+              "C1"
+            ],
+            "supported": true
+          },
+          {
+            "text": "The affected service was payments-gateway.",
+            "citation_ids": [
+              "C2"
+            ],
+            "supported": true
+          },
+          {
+            "text": "The cause was confirmed by a verification note that documented how rolling back CHG-001 cleared the delay and replaying the workload with the change enabled reproduced the failures.",
+            "citation_ids": [
+              "C3"
+            ],
+            "supported": true
+          }
+        ],
+        "citations": [
+          {
+            "id": "C1",
+            "passage_id": "c293f025-165a-503b-898f-d59468834a5c",
+            "document_id": "bd078292-4ffb-55d4-9b26-1c9d7c50c915",
+            "revision": 1,
+            "title": "Atlas: CHG-001 deployment log",
+            "quote": "Change CHG-001 reduced the database connection timeout from 2000 milliseconds to 250 milliseconds in payments-gateway.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 269,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:atlas-change"
+          },
+          {
+            "id": "C2",
+            "passage_id": "7030001b-a5f4-5124-b3fc-71e5caf72fd9",
+            "document_id": "db8ce5cf-3471-59b5-8467-9ea81fd95fb4",
+            "revision": 1,
+            "title": "Atlas: INC-001 incident report",
+            "quote": "The affected service was payments-gateway",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 328,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:atlas-incident"
+          },
+          {
+            "id": "C3",
+            "passage_id": "05861376-19ad-5ae9-9c7a-3bf4dea65317",
+            "document_id": "df1bb057-9358-56fe-a61f-5ed93a44d81f",
+            "revision": 1,
+            "title": "Atlas: rollback verification",
+            "quote": "Rollback of CHG-001 restored the connection timeout to 2000 milliseconds and cleared the payments-gateway payment delay. Replaying the same workload with CHG-001 enabled reproduced the failures. The verified cause was the 250 millisecond connection timeout.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 415,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:atlas-verification"
+          }
+        ],
+        "conflicts": [],
+        "plan": {
+          "kind": "multi_hop",
+          "subquestions": [
+            "Atlas payment delay March 3"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 699.9142020940781,
+            "metadata": {
+              "kind": "multi_hop",
+              "subquestions": [
+                "Atlas payment delay March 3"
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 23250.92038884759,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "Atlas payment delay March 3"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "follow_up",
+            "detail": "Checked evidence for missing reasoning links",
+            "duration_ms": 1034.2068150639534,
+            "metadata": {
+              "additional_tool_calls": 0
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 2306.7179657518864,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 317.0586507767439,
+            "metadata": {
+              "invalid": false,
+              "citations": 3
+            }
+          },
+          {
+            "stage": "verification",
+            "detail": "The proposed answer accurately reflects the evidence provided. The deployment log (c293f025) confirms the change details, the incident report (7030001b) identifies the service, and the verification note (05861376) confirms the cause through rollback and workload replay.",
+            "duration_ms": 3857.0404276251793,
+            "metadata": {
+              "unsupported_claim_indices": [],
+              "answer_addresses_question": true,
+              "unresolved_conflict": false,
+              "reason": "The proposed answer accurately reflects the evidence provided. The deployment log (c293f025) confirms the change details, the incident report (7030001b) identifies the service, and the verification note (05861376) confirms the cause through rollback and workload replay."
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "7030001b-a5f4-5124-b3fc-71e5caf72fd9",
+          "05861376-19ad-5ae9-9c7a-3bf4dea65317",
+          "c293f025-165a-503b-898f-d59468834a5c",
+          "2df8c9ba-fd23-5526-bda9-19f78dcd247f",
+          "f0688fe3-97a5-53ce-91cb-27072994fea0",
+          "09fd0a61-f17b-5670-9a3f-2e902ab6f6e9",
+          "173e1dd1-4c96-5b89-97fd-d1cdc77cc726",
+          "96bd1ed5-efdd-55da-aa9a-a1ba751aae9e"
+        ],
+        "retrieved_document_ids": [
+          "db8ce5cf-3471-59b5-8467-9ea81fd95fb4",
+          "df1bb057-9358-56fe-a61f-5ed93a44d81f",
+          "bd078292-4ffb-55d4-9b26-1c9d7c50c915",
+          "390439d4-1936-51ed-9039-711d6b12a95e",
+          "38f93669-cb6e-5bee-be19-02c6b0259b2b",
+          "35f381a7-3844-508b-9e21-94218d421938",
+          "df279fa0-3897-57cc-9410-1ff9791cad46",
+          "4932d17f-0377-55c3-9849-0ee66604f194"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 191.31392985582352,
+        "usage": {
+          "input_tokens": 8496,
+          "output_tokens": 665,
+          "calls": 4,
+          "retries": 0
+        },
+        "cached": true,
+        "warnings": []
+      },
+      "citation_checks": [
+        {
+          "citation_id": "C1",
+          "passage_id": "c293f025-165a-503b-898f-d59468834a5c",
+          "document_revision_and_quote_valid": true
+        },
+        {
+          "citation_id": "C2",
+          "passage_id": "7030001b-a5f4-5124-b3fc-71e5caf72fd9",
+          "document_revision_and_quote_valid": true
+        },
+        {
+          "citation_id": "C3",
+          "passage_id": "05861376-19ad-5ae9-9c7a-3bf4dea65317",
+          "document_revision_and_quote_valid": true
+        }
+      ]
+    },
+    {
+      "answer": {
+        "id": "aaf02ba0-9a16-423a-98f7-40533771e6ae",
+        "question": "How many payment requests failed during Atlas incident INC-001, according to the two audit exports?",
+        "status": "conflicting_evidence",
+        "answer": "The sources contain unresolved conflicting evidence.\n\nThe two audit exports for Atlas incident INC-001 report different numbers of failed payment requests. [C1] [C2]",
+        "claims": [],
+        "citations": [
+          {
+            "id": "C1",
+            "passage_id": "2df8c9ba-fd23-5526-bda9-19f78dcd247f",
+            "document_id": "390439d4-1936-51ed-9039-711d6b12a95e",
+            "revision": 1,
+            "title": "Atlas: audit export A",
+            "quote": "Audit export A for Atlas incident INC-001, captured at 2026-03-03 11:00 UTC. The number of failed payment requests was 101.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 187,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:atlas-conflict-a"
+          },
+          {
+            "id": "C2",
+            "passage_id": "f0688fe3-97a5-53ce-91cb-27072994fea0",
+            "document_id": "38f93669-cb6e-5bee-be19-02c6b0259b2b",
+            "revision": 1,
+            "title": "Atlas: audit export B",
+            "quote": "Audit export B for Atlas incident INC-001, captured at 2026-03-03 11:00 UTC. The number of failed payment requests was 301.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 237,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:atlas-conflict-b"
+          }
+        ],
+        "conflicts": [
+          {
+            "description": "The two audit exports for Atlas incident INC-001 report different numbers of failed payment requests.",
+            "citation_ids": [
+              "C1",
+              "C2"
+            ]
+          }
+        ],
+        "plan": {
+          "kind": "direct",
+          "subquestions": [
+            "\"INC-001\" Atlas incident payment requests failed audit exports"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 843.2930875569582,
+            "metadata": {
+              "kind": "direct",
+              "subquestions": [
+                "\"INC-001\" Atlas incident payment requests failed audit exports"
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 4803.007123991847,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"INC-001\" Atlas incident payment requests failed audit exports"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 1552.2550791502,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 252.2894162684679,
+            "metadata": {
+              "invalid": false,
+              "citations": 2
+            }
+          },
+          {
+            "stage": "verification",
+            "detail": "The proposed answer correctly identifies that the two audit exports provide conflicting data regarding the number of failed payment requests for Atlas incident INC-001 (101 vs 301). The evidence confirms this conflict and notes that neither export is authoritative.",
+            "duration_ms": 11318.015348166227,
+            "metadata": {
+              "unsupported_claim_indices": [],
+              "answer_addresses_question": true,
+              "unresolved_conflict": true,
+              "reason": "The proposed answer correctly identifies that the two audit exports provide conflicting data regarding the number of failed payment requests for Atlas incident INC-001 (101 vs 301). The evidence confirms this conflict and notes that neither export is authoritative."
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "f0688fe3-97a5-53ce-91cb-27072994fea0",
+          "2df8c9ba-fd23-5526-bda9-19f78dcd247f",
+          "208ec341-096b-5827-86cc-e93dc880fd84",
+          "52b1acf0-747f-5452-8701-e44618e95f46",
+          "84acac10-1658-51fa-bbad-1affd8d593a0",
+          "1bea29d6-8769-5706-b327-b84e33c698ca",
+          "8cfe9f1e-8212-5323-9bb3-366af60086ef",
+          "239af118-82d5-5062-add8-8c72de7e6b69"
+        ],
+        "retrieved_document_ids": [
+          "38f93669-cb6e-5bee-be19-02c6b0259b2b",
+          "390439d4-1936-51ed-9039-711d6b12a95e",
+          "f527d349-e091-590a-b785-a8ecb9cebb95",
+          "38e1f8e6-8242-513e-8e58-420759117316",
+          "c9144cd3-25c3-5f8e-9a41-7f34c4f614d1",
+          "09a51dc8-95ef-548e-9f48-ed0f5ff409ee",
+          "3afbd07c-7257-573a-8179-60c442010381",
+          "afc9707e-1551-5bef-bdbe-958cdccf5a43"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 63.57499025762081,
+        "usage": {
+          "input_tokens": 5907,
+          "output_tokens": 380,
+          "calls": 3,
+          "retries": 0
+        },
+        "cached": true,
+        "warnings": []
+      },
+      "citation_checks": [
+        {
+          "citation_id": "C1",
+          "passage_id": "2df8c9ba-fd23-5526-bda9-19f78dcd247f",
+          "document_revision_and_quote_valid": true
+        },
+        {
+          "citation_id": "C2",
+          "passage_id": "f0688fe3-97a5-53ce-91cb-27072994fea0",
+          "document_revision_and_quote_valid": true
+        }
+      ]
+    },
+    {
+      "answer": {
+        "id": "7eb3e939-6b81-485d-afcc-bc1acb6b32db",
+        "question": "What was the exact financial loss in dollars from the Atlas incident?",
+        "status": "insufficient_evidence",
+        "answer": "The available sources do not establish a reliable answer. Missing evidence: The provided documents identify that the Atlas incident (INC-001) resulted in failed payment requests, but they do not provide a monetary value for the financial loss associated with these failures.",
+        "claims": [],
+        "citations": [],
+        "conflicts": [],
+        "plan": {
+          "kind": "direct",
+          "subquestions": [
+            "\"Atlas incident\" financial loss dollars"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 682.1545157581568,
+            "metadata": {
+              "kind": "direct",
+              "subquestions": [
+                "\"Atlas incident\" financial loss dollars"
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 11643.68419162929,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"Atlas incident\" financial loss dollars"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 1073.215113952756,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 0.012509524822235107,
+            "metadata": {
+              "invalid": false,
+              "citations": 0
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "7030001b-a5f4-5124-b3fc-71e5caf72fd9",
+          "2df8c9ba-fd23-5526-bda9-19f78dcd247f",
+          "f0688fe3-97a5-53ce-91cb-27072994fea0",
+          "05861376-19ad-5ae9-9c7a-3bf4dea65317",
+          "1dffdd4f-bdfe-54ea-8cf8-0def51b12782",
+          "1ac95b76-e595-5466-b72f-206090c329a8",
+          "09fd0a61-f17b-5670-9a3f-2e902ab6f6e9",
+          "0035ba64-0471-5a7b-8568-0eaa010bb301"
+        ],
+        "retrieved_document_ids": [
+          "db8ce5cf-3471-59b5-8467-9ea81fd95fb4",
+          "390439d4-1936-51ed-9039-711d6b12a95e",
+          "38f93669-cb6e-5bee-be19-02c6b0259b2b",
+          "df1bb057-9358-56fe-a61f-5ed93a44d81f",
+          "47c532af-895c-5a94-9783-b130e9e289a2",
+          "67cfcfde-a5ee-554c-8bf4-f69602f3e06f",
+          "35f381a7-3844-508b-9e21-94218d421938",
+          "025755aa-3ff3-5cd2-967e-5aa1090a336a"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 63.20283003151417,
+        "usage": {
+          "input_tokens": 4480,
+          "output_tokens": 82,
+          "calls": 2,
+          "retries": 0
+        },
+        "cached": true,
+        "warnings": []
+      },
+      "citation_checks": []
+    }
+  ]
+}

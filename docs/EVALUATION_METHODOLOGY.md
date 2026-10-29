@@ -86,7 +86,7 @@ runner; default standalone evaluation remains test-only.
 
 ## Required controlled comparisons
 
-Run fixed-window and structure-aware chunking in separate collection prefixes with the same source corpus, embedding model, LLM and question manifest. Run dense-only and custom hybrid retrieval on each. Additional experiments compare reranking on/off and a second embedding/LLM configuration. Separate indexes are required when vector dimensions, models or chunking change; reusing an incompatible collection invalidates the experiment.
+The five-configuration runner changes one factor at a time. Compare fixed-window and structure-aware chunking with hybrid retrieval, then dense-only and custom hybrid retrieval with structure chunks. Both comparisons keep the source corpus, embedding model, LLM and question manifest constant. Further configurations compare reranking on/off and a second embedding model. This is not a full factorial study of every combination. Separate indexes are required when vector dimensions, models or chunking change; reusing an incompatible collection invalidates the experiment.
 
 Save each run's `results.json` and `report.md`, then use the comparison command. Compare retrieval coverage, answer diagnostics, citation accuracy, abstention/conflict decisions, latency and cost together. Document failures and mechanisms before selecting a default. A configuration is not a winner because one aggregate metric improved while multi-hop coverage or safety regressed.
 

@@ -61,9 +61,16 @@ This 1,000-or-more-record controlled experiment complements the full 50,000-reco
 
 Use a fresh output folder to preserve the historical preview experiments:
 
+The current selected provider/model is `gemini` / `gemini-3.1-flash-lite`.
+The matching full-cloud evaluation uses `--split test-security` (96 cases).
+Keep the 1,000-record controlled comparison separate from that full-scale run:
+corpus size changes retrieval difficulty, so compare the five controlled
+configurations with each other rather than attributing differences between
+the 1,000- and 50,085-record corpora to the chunker or retrieval mode.
+
 ```powershell
-uv run investigate experiments data/corpus/hotpot/corpus.jsonl data/corpus/hotpot/cases.jsonl --output reports/gemini-experiments --records 1000 --max-new-cases 5 --request-interval-seconds 15 --stop-on-error
-uv run investigate experiments data/corpus/hotpot/corpus.jsonl data/corpus/hotpot/cases.jsonl --output reports/gemini-experiments --records 1000 --max-new-cases 5 --request-interval-seconds 15 --stop-on-error --resume
+uv run investigate experiments data/corpus/hotpot/corpus.jsonl data/corpus/hotpot/cases.jsonl --output reports/gemini-3.1-experiments --records 1000 --max-new-cases 5 --request-interval-seconds 15 --stop-on-error
+uv run investigate experiments data/corpus/hotpot/corpus.jsonl data/corpus/hotpot/cases.jsonl --output reports/gemini-3.1-experiments --records 1000 --max-new-cases 5 --request-interval-seconds 15 --stop-on-error --resume
 ```
 
 The batch cap applies per configuration. The runner stops at the first partial

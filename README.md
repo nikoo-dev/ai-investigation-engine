@@ -156,9 +156,10 @@ external to Render's ephemeral filesystem. Local model caches are disposable.
 Follow the [account setup and deployment guide](docs/DEPLOYMENT.md). The public
 app's readiness, real Gemini conflict investigation, exact quotes, protected
 document lifecycle and hosted restart persistence have been verified. The remote
-store contains 50,085 documents and 52,243 chunks. A hosted process RSS observation
-after model inference is about 443 MiB; this is not a peak or container-wide limit
-measurement. Full live evaluation and matching configuration comparisons remain
+store contains 50,085 documents and 52,243 chunks. Three fresh public Gemini 3.1
+answers passed causal, conflict and abstention checks. The highest hosted process
+RSS among 180 one-second samples was 451.8 MiB; sampling can miss shorter peaks
+and does not measure total container memory. Full live evaluation and matching configuration comparisons remain
 incomplete. Gemini 3.5 Flash-Lite reached this project's daily free quota during
 the run; the checkpoint preserves every attempted case. Final evidence is
 tracked in [the requirement matrix](docs/REQUIREMENTS.md).

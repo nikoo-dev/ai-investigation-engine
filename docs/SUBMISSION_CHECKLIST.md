@@ -122,8 +122,8 @@ reconciliation, and lexical metrics do not replace human semantic review.
 Before submission also inspect the full [requirements matrix](REQUIREMENTS.md),
 actual benchmark/model-comparison artifacts and [AI disclosure](AI_USAGE_REPORT.md).
 
-The public demo, source reconciliation, protected TXT lifecycle and hosted
-restart now have actual observations in `reports/deployment/`. The full live
+The three-question public demo, source reconciliation, protected TXT lifecycle,
+sampled hosted memory and restart now have actual observations in `reports/deployment/`. The full live
 Gemini evaluation and matching comparisons remain incomplete; the current
 progress audit deliberately reports those gaps. The provider's daily free quota
 must recover, or a separately recorded, explicitly configured free-model run

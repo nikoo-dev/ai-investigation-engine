@@ -177,9 +177,9 @@ actual hosted configuration before claiming the deployment meets its limits.
 3. Inspect semantic entailment and missing evidence in the resulting answers.
    The [optional judge/review workflow](ANSWER_REVIEW.md) can assist, but valid
    quotations and lexical scores alone do not establish correctness.
-4. Complete the public causal/conflict/abstention acceptance after model quota
-   recovery or an explicitly configured tested model. Publication, remote corpus
-   reconciliation and hosted restart persistence are already verified below.
+4. Publish the final completed reports and rerun the evidence audit against the
+   actual public service. Publication, all three public answer checks, remote
+   corpus reconciliation and hosted restart persistence are verified below.
 
 The automated suite currently passes 193 tests; Ruff, formatting, mypy and
 JavaScript syntax checks also pass. Provider tests use mocked responses and do
@@ -222,6 +222,8 @@ replacement to revision two, deletion and 404 on the deleted source.
 After the candidate manually deployed commit `5ed377d`,
 [restart observations](../reports/deployment/restart-evidence.json) recorded a
 new process boot ID with the same source ID, revision and content checksum.
+The original transition remains in `restart-5ed377d.json`; `restart-evidence.json`
+now captures the later explicit model-change restart to commit `01328c6`.
 Health and remote readiness both returned 200 after restart. The
 [memory observation](../reports/deployment/hosted-memory.json) reports about
 443 MiB of process RSS after model inference. This is one process observation,
@@ -230,7 +232,21 @@ not peak RSS, total container memory, or a guarantee of staying below a host lim
 The [public read-only browser check](../reports/deployment/ui/browser-readonly-check.json)
 verified the real 50,085-document status, desktop/mobile layouts and mobile
 document library without page errors or horizontal overflow. It makes no model
-availability claim. A separate answer-browser attempt rendered causal and
-conflict findings and opened an exact source quote, but stopped at the
-unanswerable question when Gemini returned its quota error. Its partial
-screenshots are retained; it is not a completed three-question acceptance test.
+availability claim. The initial Gemini 3.5 answer-browser attempt stopped at the
+unanswerable question when that model reached its daily quota. After explicitly
+configuring Gemini 3.1, the separate
+[three-question public browser run](../reports/deployment/ui/browser-check.json)
+completed with `answered`, `conflicting_evidence` and `insufficient_evidence`,
+zero request failures and zero JavaScript page errors. The causal answer names
+CHG-001, the 250-millisecond timeout, payments-gateway, rollback and replay evidence.
+The conflict answer quotes both audit exports; the unanswerable question invents
+no financial-loss amount. Desktop/mobile screenshots show the actual outcomes.
+
+[Cached copies captured immediately afterward](../reports/deployment/public-acceptance-gemini-3.1.json)
+retain the complete answers and verify all five emitted source quotes against
+their public stored passage and revision. These capture requests hit the answer
+cache; the separate browser artifact records the original fresh generation calls.
+The [hosted memory sampling](../reports/deployment/hosted-memory-sampled.json)
+observed 180 successful one-second samples with a highest process RSS of 451.8
+MiB during browser acceptance, on one unchanged boot. This can miss shorter
+allocation peaks and excludes external Qdrant and container overhead.

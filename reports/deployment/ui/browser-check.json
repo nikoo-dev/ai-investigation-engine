@@ -1,0 +1,47 @@
+{
+  "checked_at": "2026-10-29T00:35:46.726064+00:00",
+  "base_url": "https://ai-investigation-engine-h233.onrender.com",
+  "outcomes": [
+    {
+      "question": "Which system change caused the Atlas payment delay on March 3, which service was affected, and what confirmed the cause?",
+      "status": "answered",
+      "cached": false,
+      "citations": 3,
+      "usage": {
+        "input_tokens": 8496,
+        "output_tokens": 665,
+        "calls": 4,
+        "retries": 0
+      }
+    },
+    {
+      "question": "How many payment requests failed during Atlas incident INC-001, according to the two audit exports?",
+      "status": "conflicting_evidence",
+      "cached": false,
+      "citations": 2,
+      "usage": {
+        "input_tokens": 5907,
+        "output_tokens": 380,
+        "calls": 3,
+        "retries": 0
+      }
+    },
+    {
+      "question": "What was the exact financial loss in dollars from the Atlas incident?",
+      "status": "insufficient_evidence",
+      "cached": false,
+      "citations": 0,
+      "usage": {
+        "input_tokens": 4480,
+        "output_tokens": 82,
+        "calls": 2,
+        "retries": 0
+      }
+    }
+  ],
+  "request_failures_before_retry": [],
+  "page_errors": [],
+  "mobile_horizontal_overflow": false,
+  "source_quote_resolved": true,
+  "mutations_performed": false
+}

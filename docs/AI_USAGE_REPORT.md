@@ -119,16 +119,21 @@ all 12 reserved tuning cases with Gemini 3.1 Flash-Lite, then explicitly selecte
 it for a new 96-case full-cloud test/security run. This does not silently replace a failed response or relabel
 the original run as another model. Model-specific runs must keep separate outputs.
 
+After the candidate changed the Render model setting and redeployed `01328c6`,
+all three public browser checks completed with fresh Gemini 3.1 responses:
+causal answer, conflicting evidence and correct abstention. Cached copies captured
+immediately afterward resolved every emitted quote to its actual stored passage.
+The agent also recorded 180 hosted process-RSS samples during acceptance; their
+maximum was 451.8 MiB. These samples can miss shorter peaks and do not measure
+the whole container. Neither this check nor the tuning split substitutes for the
+complete test/security evaluation and configuration comparisons.
+
 ## Remaining review and external work
 
 Do not represent the following as completed until their evidence is available:
 
 - Real Gemini investigations and the final category-level evaluation. A named
   human's claim/citation entailment review is recommended and remains unverified.
-- Completion of fresh-answer public acceptance after provider quota recovery or
-  an explicitly configured, tested free model. GitHub publication, remote corpus,
-  actual hosted query and restart persistence are already verified. The single
-  hosted memory observation is not a peak-memory or quota-availability guarantee.
 - Any model-comparison or large-corpus performance result not present in the
   generated artifacts with its exact configuration and corpus counts.
 - Independent candidate practice of code explanation, debugging and feature

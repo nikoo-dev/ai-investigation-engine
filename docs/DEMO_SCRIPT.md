@@ -7,10 +7,12 @@ only offline test fixtures and must not be presented as semantic retrieval.
 
 ## Prepare before the demonstration
 
-Use the README and deployment guide for account/secret setup. Gemini access and
-initial investigations are verified; the final evaluation and public hosted demo
-need their own completed evidence. Never display API keys or the management token while
-screen sharing.
+Use the README and deployment guide for account/secret setup. The public app,
+remote corpus and restart persistence are verified in `reports/deployment/`.
+Gemini 3.1 Flash-Lite passed all 12 reserved tuning cases; the full evaluation
+and matching live configuration comparisons still need complete reports.
+Check current provider quota before the timed demonstration. Never display
+API keys or the management token while screen sharing.
 
 1. Install the locked environment:
 

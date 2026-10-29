@@ -120,7 +120,7 @@ extractive answers; they do not establish live Gemini quality or hosted behavior
 
 | Assignment bullet | Implementation / selected approach | Required external evidence |
 | --- | --- | --- |
-| Real public application URL | Containerized FastAPI/UI on Render free web service | [Live app](https://ai-investigation-engine-h233.onrender.com); actual HTTP investigation and desktop/mobile page checks in `reports/deployment/`. Provider daily quota currently restricts fresh answers. |
+| Real public application URL | Containerized FastAPI/UI on Render free web service | [Live app](https://ai-investigation-engine-h233.onrender.com); three fresh Gemini 3.1 browser answers, source resolution and desktop/mobile checks in `reports/deployment/`. Daily model quotas still apply. |
 | Working host/database integration | Remote Qdrant Cloud; production requires `QDRANT_URL` | Upload, query, citation, update and delete on the hosted app using the actual remote store. |
 | Data survives application restart | Durable documents/chunks/jobs/state in Qdrant; local caches may be rebuilt | `reports/deployment/restart-evidence.json` records different actual boot IDs with the same document ID, revision and checksum. |
 | Protect API keys and secrets | Environment/secret settings, `SecretStr`, management bearer token, generic provider errors | Secret-safe HTTP tests; verify repository history and deployed client assets contain no credentials. |
@@ -162,7 +162,7 @@ Bonus work does not waive any core requirement.
 | Required deliverable | What must be supplied |
 | --- | --- |
 | GitHub repository, full code and history | [Published repository](https://github.com/nikoo-dev/ai-investigation-engine), with full source and meaningful history. The current published commit was verified through GitHub's public API; subsequent local changes still need to be pushed. |
-| Live demo | [Public app](https://ai-investigation-engine-h233.onrender.com), real Cloud/Gemini conflict query, document lifecycle and restart persistence verified. Unanswerable browser acceptance is incomplete because the provider reached its daily quota. |
+| Live demo | [Public app](https://ai-investigation-engine-h233.onrender.com), fresh causal/conflict/abstention answers, source resolution, document lifecycle and restart persistence verified. 180 hosted RSS samples observed a 451.8 MiB sample maximum; this is not a total-container peak guarantee. |
 | README | Purpose, architecture, setup, configuration, usage, evaluation, deployment, choices and limitations; link all reports and the actual demo. |
 | Evaluation report | Generated results, exact configurations/manifest hashes, methodology, comparison and failure analysis. Disclose any optional manual/model review. **Real Gemini evaluation is underway; required comparisons remain pending.** |
 | AI Usage Report | [`AI_USAGE_REPORT.md`](AI_USAGE_REPORT.md), describing actual AI assistance and clearly separating it from the candidate's own verified work. |
