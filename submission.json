@@ -2,7 +2,7 @@
   "repository_url": "https://github.com/nikoo-dev/ai-investigation-engine",
   "live_demo_url": "https://ai-investigation-engine-h233.onrender.com",
   "dataset_manifest": "data/manifests/hotpot-50k.json",
-  "evaluation_report": "reports/evaluation/gemini-cloud-hybrid-v4/results.json",
+  "evaluation_report": "reports/evaluation/gemini-3.1-cloud-hybrid/results.json",
   "comparison_reports": [],
   "deployment_evidence": "reports/deployment/restart-evidence.json",
   "manual_review_report": ""

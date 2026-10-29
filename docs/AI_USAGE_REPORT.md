@@ -104,14 +104,31 @@ specific activities here with their dates and commit references. Add only work
 that was performed. If no independent code changes were needed, state that
 honestly and describe the independent validation instead.
 
+The candidate subsequently created Qdrant Cloud and Render accounts, configured
+the deployment, supplied the public URL and management credential, and manually
+redeployed commit `5ed377d`. AI-operated HTTP checks verified a real public Gemini
+conflict answer, protected document lifecycle and source persistence across that
+restart. A full cloud reconciliation checked all 50,085 source records. Browser
+automation checked the public desktop/mobile layout without page errors or page
+overflow. These are recorded tool observations, not independent human review.
+
+The Gemini 3.5 Flash-Lite run then reached the project's actual 500-request daily
+free quota. The partial 25/92-case run remains unchanged, including its provider
+error. The agent checked official free-tier pricing and separately verified
+all 12 reserved tuning cases with Gemini 3.1 Flash-Lite, then explicitly selected
+it for a new 96-case full-cloud test/security run. This does not silently replace a failed response or relabel
+the original run as another model. Model-specific runs must keep separate outputs.
+
 ## Remaining review and external work
 
 Do not represent the following as completed until their evidence is available:
 
 - Real Gemini investigations and the final category-level evaluation. A named
   human's claim/citation entailment review is recommended and remains unverified.
-- A published GitHub repository and public live demo with verified hosted
-  database integration, restart persistence and free-tier limits.
+- Completion of fresh-answer public acceptance after provider quota recovery or
+  an explicitly configured, tested free model. GitHub publication, remote corpus,
+  actual hosted query and restart persistence are already verified. The single
+  hosted memory observation is not a peak-memory or quota-availability guarantee.
 - Any model-comparison or large-corpus performance result not present in the
   generated artifacts with its exact configuration and corpus counts.
 - Independent candidate practice of code explanation, debugging and feature

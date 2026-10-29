@@ -1,0 +1,13 @@
+{
+  "checked_at": "2026-10-29T00:24:38.626970+00:00",
+  "base_url": "https://ai-investigation-engine-h233.onrender.com",
+  "displayed_model": "gemini-3.5-flash-lite \u00b7 grounded synthesis with source citations",
+  "document_count": 50085,
+  "page_errors": [],
+  "desktop_horizontal_overflow": false,
+  "mobile_horizontal_overflow": false,
+  "mobile_library_horizontal_overflow": false,
+  "mutations_performed": false,
+  "llm_requests_performed": false,
+  "scope": "Public desktop/mobile page, status and library; does not establish answer quality or provider availability."
+}

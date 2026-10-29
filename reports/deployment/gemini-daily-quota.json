@@ -1,0 +1,80 @@
+{
+  "diagnostic_file_modified_at": "2026-10-29T00:18:16.126199+00:00",
+  "model": "gemini-3.5-flash-lite",
+  "provider": "gemini",
+  "source": "Actual provider error details from the configured full pipeline; secrets and prompts excluded.",
+  "diagnostic": {
+    "stages": [
+      {
+        "stage": "propose_tools",
+        "tool_calls": 1
+      },
+      {
+        "http_status": 429,
+        "error_status": "RESOURCE_EXHAUSTED",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaValue": "500",
+            "quotaDimensions": {
+              "model": "gemini-3.5-flash-lite",
+              "location": "global"
+            }
+          }
+        ],
+        "retry_delay": [
+          "24111s"
+        ]
+      },
+      {
+        "http_status": 429,
+        "error_status": "RESOURCE_EXHAUSTED",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaValue": "500",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-3.5-flash-lite"
+            }
+          }
+        ],
+        "retry_delay": [
+          "24106s"
+        ]
+      },
+      {
+        "http_status": 429,
+        "error_status": "RESOURCE_EXHAUSTED",
+        "violations": [
+          {
+            "quotaMetric": "generativelanguage.googleapis.com/generate_content_free_tier_requests",
+            "quotaId": "GenerateRequestsPerDayPerProjectPerModel-FreeTier",
+            "quotaValue": "500",
+            "quotaDimensions": {
+              "location": "global",
+              "model": "gemini-3.5-flash-lite"
+            }
+          }
+        ],
+        "retry_delay": [
+          "24101s"
+        ]
+      },
+      {
+        "stage": "synthesize",
+        "error_type": "ProviderError",
+        "message": "The model is rate limited or temporarily unavailable. Try again later."
+      }
+    ],
+    "outcome": {
+      "error_type": "ProviderError",
+      "message": "The model is rate limited or temporarily unavailable. Try again later."
+    }
+  },
+  "policy": "Partial evaluation retained unchanged. No paid billing, automatic model substitution, or repeated quota retry loop enabled.",
+  "pricing_reference": "https://ai.google.dev/gemini-api/docs/pricing",
+  "rate_limits_reference": "https://ai.google.dev/gemini-api/docs/rate-limits"
+}

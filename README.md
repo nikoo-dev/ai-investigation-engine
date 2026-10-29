@@ -33,7 +33,7 @@ To enable the full investigation workflow, edit the untracked `.env` file:
 
 ```dotenv
 LLM_PROVIDER=gemini
-LLM_MODEL=gemini-3.5-flash-lite
+LLM_MODEL=gemini-3.1-flash-lite
 GEMINI_API_KEY=your-key-from-google-ai-studio
 ```
 
@@ -154,9 +154,13 @@ The intended free deployment is Render + Qdrant Cloud + Gemini's free API tier.
 external to Render's ephemeral filesystem. Local model caches are disposable.
 
 Follow the [account setup and deployment guide](docs/DEPLOYMENT.md). The public
-app's readiness, real Gemini conflict investigation, exact quotes and protected
-document lifecycle have been verified. Full evaluation and hosted restart
-evidence still need to complete before submission. Final evidence is
+app's readiness, real Gemini conflict investigation, exact quotes, protected
+document lifecycle and hosted restart persistence have been verified. The remote
+store contains 50,085 documents and 52,243 chunks. A hosted process RSS observation
+after model inference is about 443 MiB; this is not a peak or container-wide limit
+measurement. Full live evaluation and matching configuration comparisons remain
+incomplete. Gemini 3.5 Flash-Lite reached this project's daily free quota during
+the run; the checkpoint preserves every attempted case. Final evidence is
 tracked in [the requirement matrix](docs/REQUIREMENTS.md).
 
 Submission material:

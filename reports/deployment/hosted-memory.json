@@ -1,0 +1,15 @@
+{
+  "observed_at": "2026-10-29T00:25:39.582047+00:00",
+  "base_url": "https://ai-investigation-engine-h233.onrender.com",
+  "health": {
+    "status": "ok",
+    "boot_id": "bd381639-dbbd-41eb-b2fb-e17764d3863e",
+    "started_at": "2026-10-29T00:03:06.782705+00:00"
+  },
+  "metric": "investigation_process_resident_memory_bytes",
+  "process_rss_bytes": 464658432.0,
+  "process_rss_mib": 443.1328125,
+  "measurement": "Single psutil process RSS observation after a real hosted model query; not peak memory, container total or a budget guarantee.",
+  "deployment_commit": "5ed377d40a6225ef2bb1770dc951420c888dc40e",
+  "deployment_commit_source": "User-supplied Render checkout/build log; observed boot matches restart evidence."
+}

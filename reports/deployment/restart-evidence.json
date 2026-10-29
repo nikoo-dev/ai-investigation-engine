@@ -1,0 +1,88 @@
+{
+  "base_url": "https://ai-investigation-engine-h233.onrender.com",
+  "captured_by": "Codex HTTP verification",
+  "observed_before_at": "2026-10-28T23:48:29.075759+00:00",
+  "health_before": {
+    "status": "ok",
+    "boot_id": "e194b90c-fefd-4c88-a644-1f954db078b0",
+    "started_at": "2026-10-28T23:42:40.026432+00:00"
+  },
+  "document_before": {
+    "id": "db8ce5cf-3471-59b5-8467-9ea81fd95fb4",
+    "revision": 1,
+    "title": "Atlas: INC-001 incident report",
+    "filename": "db8ce5cf-3471-59b5-8467-9ea81fd95fb4.txt",
+    "format": "record",
+    "source_uri": "urn:investigation:synthetic:atlas-incident",
+    "checksum": "aface0f23876dfb44428db6d2ff602a894cb5e2e802b322085df87880f406b2c",
+    "text": "Atlas incident INC-001 began on 2026-03-03 at 09:05 UTC. The affected service was payments-gateway; customer payments were delayed for 17 minutes. Operators observed database connection failures immediately after change CHG-001. The incident report records correlation only; the cause was confirmed in a later verification note.",
+    "blocks": [
+      {
+        "text": "Atlas incident INC-001 began on 2026-03-03 at 09:05 UTC. The affected service was payments-gateway; customer payments were delayed for 17 minutes. Operators observed database connection failures immediately after change CHG-001. The incident report records correlation only; the cause was confirmed in a later verification note.",
+        "location": {
+          "page": null,
+          "section": null,
+          "start_char": 0,
+          "end_char": 328,
+          "sentence_ids": []
+        }
+      }
+    ],
+    "metadata": {
+      "dataset": "synthetic_incidents",
+      "fixture_version": "2026-10-27-v1",
+      "license": "CC0-1.0",
+      "project": "Atlas",
+      "source_record_id": "atlas-incident",
+      "source_type": "incident",
+      "synthetic": true,
+      "embedding_fingerprint": "fastembed:sentence-transformers/all-MiniLM-L6-v2:384:v1"
+    },
+    "status": "ready",
+    "chunk_count": 1,
+    "created_at": "2026-10-28T23:42:02.593517+00:00",
+    "updated_at": "2026-10-28T23:42:02.593517+00:00"
+  },
+  "observed_after_at": "2026-10-29T00:09:27.750126+00:00",
+  "health_after": {
+    "status": "ok",
+    "boot_id": "bd381639-dbbd-41eb-b2fb-e17764d3863e",
+    "started_at": "2026-10-29T00:03:06.782705+00:00"
+  },
+  "document_after": {
+    "id": "db8ce5cf-3471-59b5-8467-9ea81fd95fb4",
+    "revision": 1,
+    "title": "Atlas: INC-001 incident report",
+    "filename": "db8ce5cf-3471-59b5-8467-9ea81fd95fb4.txt",
+    "format": "record",
+    "source_uri": "urn:investigation:synthetic:atlas-incident",
+    "checksum": "aface0f23876dfb44428db6d2ff602a894cb5e2e802b322085df87880f406b2c",
+    "text": "Atlas incident INC-001 began on 2026-03-03 at 09:05 UTC. The affected service was payments-gateway; customer payments were delayed for 17 minutes. Operators observed database connection failures immediately after change CHG-001. The incident report records correlation only; the cause was confirmed in a later verification note.",
+    "blocks": [
+      {
+        "text": "Atlas incident INC-001 began on 2026-03-03 at 09:05 UTC. The affected service was payments-gateway; customer payments were delayed for 17 minutes. Operators observed database connection failures immediately after change CHG-001. The incident report records correlation only; the cause was confirmed in a later verification note.",
+        "location": {
+          "page": null,
+          "section": null,
+          "start_char": 0,
+          "end_char": 328,
+          "sentence_ids": []
+        }
+      }
+    ],
+    "metadata": {
+      "dataset": "synthetic_incidents",
+      "fixture_version": "2026-10-27-v1",
+      "license": "CC0-1.0",
+      "project": "Atlas",
+      "source_record_id": "atlas-incident",
+      "source_type": "incident",
+      "synthetic": true,
+      "embedding_fingerprint": "fastembed:sentence-transformers/all-MiniLM-L6-v2:384:v1"
+    },
+    "status": "ready",
+    "chunk_count": 1,
+    "created_at": "2026-10-28T23:42:02.593517+00:00",
+    "updated_at": "2026-10-28T23:42:02.593517+00:00"
+  }
+}

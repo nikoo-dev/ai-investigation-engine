@@ -1,0 +1,2906 @@
+{
+  "configuration": "gemini-3.1-tuning",
+  "evaluation_sha256": "d4a77d8c8bd1ec11bc9c26103808b6c94b63b2e2199f2e099fec60827af1302e",
+  "settings": {
+    "embedding_backend": "fastembed",
+    "embedding_model": "sentence-transformers/all-MiniLM-L6-v2",
+    "embedding_dimension": 384,
+    "chunk_strategy": "structure",
+    "chunk_tokens": 256,
+    "chunk_overlap": 40,
+    "bm25_avg_length": 150.0,
+    "retrieval_limit": 30,
+    "evidence_limit": 12,
+    "retrieval_mode": "hybrid",
+    "reranker_enabled": true,
+    "reranker_model": "Xenova/ms-marco-MiniLM-L-6-v2",
+    "llm_provider": "gemini",
+    "llm_model": "gemini-3.1-flash-lite",
+    "min_dense_score": 0.25,
+    "max_tool_calls": 6,
+    "max_subquestions": 4,
+    "max_context_chars": 22000
+  },
+  "request_overrides": {
+    "mode": null,
+    "rerank": null
+  },
+  "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+  "corpus_stats": {
+    "documents": 50085,
+    "chunks": 52243,
+    "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+    "backend": "qdrant_remote"
+  },
+  "embedding_fingerprint": "fastembed:sentence-transformers/all-MiniLM-L6-v2:384:v1",
+  "software_fingerprint": "a8c285e0fe25f683b53ca91976eaefd11020bee0190204a520954bafd70aedb8",
+  "status": "complete",
+  "run_id": "444384e9-47a3-461e-9ed6-83727dfa5c83",
+  "created_at": "2026-10-29T00:23:42.545538+00:00",
+  "updated_at": "2026-10-29T00:27:36.895959+00:00",
+  "case_count": 12,
+  "planned_case_count": 12,
+  "duration_seconds": 234.3427243999904,
+  "latest_session_policy": {
+    "llm_min_request_interval_seconds": 5.0,
+    "max_new_cases": null,
+    "stop_on_error": true
+  },
+  "aggregate": {
+    "recall_at_5": 0.9666666666666666,
+    "recall_at_10": 1.0,
+    "mrr": 0.8833333333333334,
+    "all_support_at_10": 1.0,
+    "evidence_precision_at_10": 0.22999999999999998,
+    "answer_token_f1": 0.3750549450549451,
+    "answer_exact_match": 0.0,
+    "answer_fact_recall": 0.8,
+    "status_accuracy": 1.0,
+    "citation_gold_precision": 0.925,
+    "citation_gold_recall": 1.0,
+    "citation_source_validity": 1.0,
+    "claim_citation_id_validity": 1.0,
+    "claim_citation_coverage": 1.0,
+    "error_rate": 0.0,
+    "elapsed_ms": 19087.425149999035,
+    "contradiction_accuracy": 1.0,
+    "abstention_accuracy": 1.0,
+    "sample_counts": {
+      "recall_at_5": 10,
+      "recall_at_10": 10,
+      "mrr": 10,
+      "all_support_at_10": 10,
+      "evidence_precision_at_10": 10,
+      "answer_token_f1": 10,
+      "answer_exact_match": 10,
+      "answer_fact_recall": 10,
+      "status_accuracy": 12,
+      "citation_gold_precision": 10,
+      "citation_gold_recall": 10,
+      "citation_source_validity": 10,
+      "claim_citation_id_validity": 8,
+      "claim_citation_coverage": 8,
+      "error_rate": 12,
+      "elapsed_ms": 12,
+      "contradiction_accuracy": 2,
+      "abstention_accuracy": 2
+    },
+    "latency_p50_ms": 18509.635049995268,
+    "latency_p95_ms": 28690.26109999686
+  },
+  "by_category": {
+    "comparison": {
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "mrr": 0.6666666666666666,
+      "all_support_at_10": 1.0,
+      "evidence_precision_at_10": 0.2,
+      "answer_token_f1": 0.4571428571428572,
+      "answer_exact_match": 0.0,
+      "answer_fact_recall": 1.0,
+      "status_accuracy": 1.0,
+      "citation_gold_precision": 1.0,
+      "citation_gold_recall": 1.0,
+      "citation_source_validity": 1.0,
+      "claim_citation_id_validity": 1.0,
+      "claim_citation_coverage": 1.0,
+      "error_rate": 0.0,
+      "elapsed_ms": 25292.933950004226,
+      "sample_counts": {
+        "recall_at_5": 2,
+        "recall_at_10": 2,
+        "mrr": 2,
+        "all_support_at_10": 2,
+        "evidence_precision_at_10": 2,
+        "answer_token_f1": 2,
+        "answer_exact_match": 2,
+        "answer_fact_recall": 2,
+        "status_accuracy": 2,
+        "citation_gold_precision": 2,
+        "citation_gold_recall": 2,
+        "citation_source_validity": 2,
+        "claim_citation_id_validity": 2,
+        "claim_citation_coverage": 2,
+        "error_rate": 2,
+        "elapsed_ms": 2
+      },
+      "latency_p50_ms": 25292.933950004226,
+      "latency_p95_ms": 28690.26109999686
+    },
+    "contradictory": {
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "mrr": 1.0,
+      "all_support_at_10": 1.0,
+      "evidence_precision_at_10": 0.25,
+      "answer_token_f1": 0.2222222222222222,
+      "answer_exact_match": 0.0,
+      "answer_fact_recall": 0.0,
+      "status_accuracy": 1.0,
+      "contradiction_accuracy": 1.0,
+      "citation_gold_precision": 1.0,
+      "citation_gold_recall": 1.0,
+      "citation_source_validity": 1.0,
+      "error_rate": 0.0,
+      "elapsed_ms": 13300.314899992372,
+      "sample_counts": {
+        "recall_at_5": 2,
+        "recall_at_10": 2,
+        "mrr": 2,
+        "all_support_at_10": 2,
+        "evidence_precision_at_10": 2,
+        "answer_token_f1": 2,
+        "answer_exact_match": 2,
+        "answer_fact_recall": 2,
+        "status_accuracy": 2,
+        "contradiction_accuracy": 2,
+        "citation_gold_precision": 2,
+        "citation_gold_recall": 2,
+        "citation_source_validity": 2,
+        "error_rate": 2,
+        "elapsed_ms": 2
+      },
+      "latency_p50_ms": 13300.314899992372,
+      "latency_p95_ms": 13916.597199990065
+    },
+    "direct": {
+      "recall_at_5": 1.0,
+      "recall_at_10": 1.0,
+      "mrr": 0.75,
+      "all_support_at_10": 1.0,
+      "evidence_precision_at_10": 0.125,
+      "answer_token_f1": 0.32051282051282054,
+      "answer_exact_match": 0.0,
+      "answer_fact_recall": 1.0,
+      "status_accuracy": 1.0,
+      "citation_gold_precision": 1.0,
+      "citation_gold_recall": 1.0,
+      "citation_source_validity": 1.0,
+      "claim_citation_id_validity": 1.0,
+      "claim_citation_coverage": 1.0,
+      "error_rate": 0.0,
+      "elapsed_ms": 17049.758199995267,
+      "sample_counts": {
+        "recall_at_5": 2,
+        "recall_at_10": 2,
+        "mrr": 2,
+        "all_support_at_10": 2,
+        "evidence_precision_at_10": 2,
+        "answer_token_f1": 2,
+        "answer_exact_match": 2,
+        "answer_fact_recall": 2,
+        "status_accuracy": 2,
+        "citation_gold_precision": 2,
+        "citation_gold_recall": 2,
+        "citation_source_validity": 2,
+        "claim_citation_id_validity": 2,
+        "claim_citation_coverage": 2,
+        "error_rate": 2,
+        "elapsed_ms": 2
+      },
+      "latency_p50_ms": 17049.758199995267,
+      "latency_p95_ms": 18957.257100002607
+    },
+    "multi_hop": {
+      "recall_at_5": 0.9166666666666666,
+      "recall_at_10": 1.0,
+      "mrr": 1.0,
+      "all_support_at_10": 1.0,
+      "evidence_precision_at_10": 0.2875,
+      "answer_token_f1": 0.43769841269841275,
+      "answer_exact_match": 0.0,
+      "answer_fact_recall": 1.0,
+      "status_accuracy": 1.0,
+      "citation_gold_precision": 0.8125,
+      "citation_gold_recall": 1.0,
+      "citation_source_validity": 1.0,
+      "claim_citation_id_validity": 1.0,
+      "claim_citation_coverage": 1.0,
+      "error_rate": 0.0,
+      "elapsed_ms": 21451.07310000094,
+      "sample_counts": {
+        "recall_at_5": 4,
+        "recall_at_10": 4,
+        "mrr": 4,
+        "all_support_at_10": 4,
+        "evidence_precision_at_10": 4,
+        "answer_token_f1": 4,
+        "answer_exact_match": 4,
+        "answer_fact_recall": 4,
+        "status_accuracy": 4,
+        "citation_gold_precision": 4,
+        "citation_gold_recall": 4,
+        "citation_source_validity": 4,
+        "claim_citation_id_validity": 4,
+        "claim_citation_coverage": 4,
+        "error_rate": 4,
+        "elapsed_ms": 4
+      },
+      "latency_p50_ms": 21014.48870000604,
+      "latency_p95_ms": 25713.30200000375
+    },
+    "unanswerable": {
+      "status_accuracy": 1.0,
+      "abstention_accuracy": 1.0,
+      "error_rate": 0.0,
+      "elapsed_ms": 15979.397650000465,
+      "sample_counts": {
+        "status_accuracy": 2,
+        "abstention_accuracy": 2,
+        "error_rate": 2,
+        "elapsed_ms": 2
+      },
+      "latency_p50_ms": 15979.397650000465,
+      "latency_p95_ms": 16974.556999994093
+    }
+  },
+  "by_split": {
+    "tuning": {
+      "recall_at_5": 0.9666666666666666,
+      "recall_at_10": 1.0,
+      "mrr": 0.8833333333333334,
+      "all_support_at_10": 1.0,
+      "evidence_precision_at_10": 0.22999999999999998,
+      "answer_token_f1": 0.3750549450549451,
+      "answer_exact_match": 0.0,
+      "answer_fact_recall": 0.8,
+      "status_accuracy": 1.0,
+      "citation_gold_precision": 0.925,
+      "citation_gold_recall": 1.0,
+      "citation_source_validity": 1.0,
+      "claim_citation_id_validity": 1.0,
+      "claim_citation_coverage": 1.0,
+      "error_rate": 0.0,
+      "elapsed_ms": 19087.425149999035,
+      "contradiction_accuracy": 1.0,
+      "abstention_accuracy": 1.0,
+      "sample_counts": {
+        "recall_at_5": 10,
+        "recall_at_10": 10,
+        "mrr": 10,
+        "all_support_at_10": 10,
+        "evidence_precision_at_10": 10,
+        "answer_token_f1": 10,
+        "answer_exact_match": 10,
+        "answer_fact_recall": 10,
+        "status_accuracy": 12,
+        "citation_gold_precision": 10,
+        "citation_gold_recall": 10,
+        "citation_source_validity": 10,
+        "claim_citation_id_validity": 8,
+        "claim_citation_coverage": 8,
+        "error_rate": 12,
+        "elapsed_ms": 12,
+        "contradiction_accuracy": 2,
+        "abstention_accuracy": 2
+      },
+      "latency_p50_ms": 18509.635049995268,
+      "latency_p95_ms": 28690.26109999686
+    }
+  },
+  "by_source": {
+    "authored-incidents": {
+      "recall_at_5": 0.9666666666666666,
+      "recall_at_10": 1.0,
+      "mrr": 0.8833333333333334,
+      "all_support_at_10": 1.0,
+      "evidence_precision_at_10": 0.22999999999999998,
+      "answer_token_f1": 0.3750549450549451,
+      "answer_exact_match": 0.0,
+      "answer_fact_recall": 0.8,
+      "status_accuracy": 1.0,
+      "citation_gold_precision": 0.925,
+      "citation_gold_recall": 1.0,
+      "citation_source_validity": 1.0,
+      "claim_citation_id_validity": 1.0,
+      "claim_citation_coverage": 1.0,
+      "error_rate": 0.0,
+      "elapsed_ms": 19087.425149999035,
+      "contradiction_accuracy": 1.0,
+      "abstention_accuracy": 1.0,
+      "sample_counts": {
+        "recall_at_5": 10,
+        "recall_at_10": 10,
+        "mrr": 10,
+        "all_support_at_10": 10,
+        "evidence_precision_at_10": 10,
+        "answer_token_f1": 10,
+        "answer_exact_match": 10,
+        "answer_fact_recall": 10,
+        "status_accuracy": 12,
+        "citation_gold_precision": 10,
+        "citation_gold_recall": 10,
+        "citation_source_validity": 10,
+        "claim_citation_id_validity": 8,
+        "claim_citation_coverage": 8,
+        "error_rate": 12,
+        "elapsed_ms": 12,
+        "contradiction_accuracy": 2,
+        "abstention_accuracy": 2
+      },
+      "latency_p50_ms": 18509.635049995268,
+      "latency_p95_ms": 28690.26109999686
+    }
+  },
+  "rows": [
+    {
+      "case": {
+        "id": "cause-13",
+        "category": "multi_hop",
+        "question": "Which system change caused the Morrow payment delay on March 15, which service was affected, and what confirmed the cause?",
+        "expected_answers": [
+          "CHG-013 affected authorization-service; rollback and controlled replay confirmed the 850 millisecond connection timeout caused the delay."
+        ],
+        "required_facts": [
+          [
+            "CHG-013"
+          ],
+          [
+            "authorization-service"
+          ],
+          [
+            "rollback"
+          ],
+          [
+            "replay",
+            "reproduced"
+          ]
+        ],
+        "gold_document_ids": [
+          "d1c0398b-d7ea-5578-9186-52a4689684e6",
+          "d5f31e30-8602-5789-a163-1b3877db51dc",
+          "df279fa0-3897-57cc-9410-1ff9791cad46"
+        ],
+        "gold_passage_ids": [],
+        "expected_status": "answered",
+        "required_hops": 3,
+        "split": "tuning",
+        "source": "authored-incidents",
+        "forbidden_output_patterns": [],
+        "forbidden_exact_answers": [],
+        "notes": ""
+      },
+      "answer": {
+        "id": "8dc3cf89-5440-467f-9066-6f41ddca8386",
+        "question": "Which system change caused the Morrow payment delay on March 15, which service was affected, and what confirmed the cause?",
+        "status": "answered",
+        "answer": "The Morrow payment delay on March 15 was caused by system change CHG-013, which reduced the database connection timeout in the authorization-service. [C1] [C2]\n\nThe cause was confirmed by a controlled replay of the workload with CHG-013 enabled, which reproduced the failures, and by a rollback of the change that cleared the delay. [C3]",
+        "claims": [
+          {
+            "text": "The Morrow payment delay on March 15 was caused by system change CHG-013, which reduced the database connection timeout in the authorization-service.",
+            "citation_ids": [
+              "C1",
+              "C2"
+            ],
+            "supported": true
+          },
+          {
+            "text": "The cause was confirmed by a controlled replay of the workload with CHG-013 enabled, which reproduced the failures, and by a rollback of the change that cleared the delay.",
+            "citation_ids": [
+              "C3"
+            ],
+            "supported": true
+          }
+        ],
+        "citations": [
+          {
+            "id": "C1",
+            "passage_id": "284bd437-ba6b-5fbe-b3e6-d274ab04e425",
+            "document_id": "d1c0398b-d7ea-5578-9186-52a4689684e6",
+            "revision": 1,
+            "title": "Morrow: CHG-013 deployment log",
+            "quote": "Change CHG-013 reduced the database connection timeout from 2000 milliseconds to 850 milliseconds in authorization-service.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 277,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:morrow-change"
+          },
+          {
+            "id": "C2",
+            "passage_id": "f380e591-53f7-55fa-9c2d-fe86bcab6249",
+            "document_id": "d5f31e30-8602-5789-a163-1b3877db51dc",
+            "revision": 1,
+            "title": "Morrow: INC-013 incident report",
+            "quote": "The affected service was authorization-service; customer payments were delayed for 53 minutes.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 334,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:morrow-incident"
+          },
+          {
+            "id": "C3",
+            "passage_id": "173e1dd1-4c96-5b89-97fd-d1cdc77cc726",
+            "document_id": "df279fa0-3897-57cc-9410-1ff9791cad46",
+            "revision": 1,
+            "title": "Morrow: rollback verification",
+            "quote": "Rollback of CHG-013 restored the connection timeout to 2000 milliseconds and cleared the authorization-service payment delay. Replaying the same workload with CHG-013 enabled reproduced the failures. The verified cause was the 850 millisecond connection timeout.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 421,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:morrow-verification"
+          }
+        ],
+        "conflicts": [],
+        "plan": {
+          "kind": "multi_hop",
+          "subquestions": [
+            "Morrow payment delay March 15"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 708.4670000040205,
+            "metadata": {
+              "kind": "multi_hop",
+              "subquestions": [
+                "Morrow payment delay March 15"
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 1944.7299000021303,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "Morrow payment delay March 15"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "follow_up",
+            "detail": "Checked evidence for missing reasoning links",
+            "duration_ms": 3429.84600001364,
+            "metadata": {
+              "additional_tool_calls": 0
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 5522.337100002915,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 795.134899992263,
+            "metadata": {
+              "invalid": false,
+              "citations": 3
+            }
+          },
+          {
+            "stage": "verification",
+            "detail": "The proposed answer accurately reflects the evidence provided. The deployment log (284bd437) confirms CHG-013 reduced the timeout, the incident report (f380e591) identifies the affected service, and the verification note (173e1dd1) confirms the cause via workload replay and rollback.",
+            "duration_ms": 7521.389400004409,
+            "metadata": {
+              "unsupported_claim_indices": [],
+              "answer_addresses_question": true,
+              "unresolved_conflict": false,
+              "reason": "The proposed answer accurately reflects the evidence provided. The deployment log (284bd437) confirms CHG-013 reduced the timeout, the incident report (f380e591) identifies the affected service, and the verification note (173e1dd1) confirms the cause via workload replay and rollback."
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "f380e591-53f7-55fa-9c2d-fe86bcab6249",
+          "173e1dd1-4c96-5b89-97fd-d1cdc77cc726",
+          "1876cd13-315e-5910-aaa2-cea6e6263e81",
+          "8cfe9f1e-8212-5323-9bb3-366af60086ef",
+          "284bd437-ba6b-5fbe-b3e6-d274ab04e425",
+          "c2434ac1-6f65-5e3e-b522-cb12bcee3b5b",
+          "05861376-19ad-5ae9-9c7a-3bf4dea65317",
+          "3091d145-e2c7-5071-9b9a-744a6ed44eb5"
+        ],
+        "retrieved_document_ids": [
+          "d5f31e30-8602-5789-a163-1b3877db51dc",
+          "df279fa0-3897-57cc-9410-1ff9791cad46",
+          "2d6f2e6b-e808-5a15-8d8a-fe6436cc6195",
+          "3afbd07c-7257-573a-8179-60c442010381",
+          "d1c0398b-d7ea-5578-9186-52a4689684e6",
+          "38516da4-866e-5049-ada3-0b14714ea2f6",
+          "df1bb057-9358-56fe-a61f-5ed93a44d81f",
+          "0cc305b7-78a1-53f0-baab-ab6bc36f6d41"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 20561.46880000597,
+        "usage": {
+          "input_tokens": 8532,
+          "output_tokens": 646,
+          "calls": 4,
+          "retries": 0
+        },
+        "cached": false,
+        "warnings": []
+      },
+      "metrics": {
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "mrr": 1.0,
+        "all_support_at_10": 1.0,
+        "evidence_precision_at_10": 0.375,
+        "answer_token_f1": 0.4333333333333334,
+        "answer_exact_match": 0.0,
+        "answer_fact_recall": 1.0,
+        "status_accuracy": 1.0,
+        "abstention_accuracy": null,
+        "contradiction_accuracy": null,
+        "citation_gold_precision": 1.0,
+        "citation_gold_recall": 1.0,
+        "citation_source_validity": 1.0,
+        "claim_citation_id_validity": 1.0,
+        "claim_citation_coverage": 1.0,
+        "injection_output_safety": null,
+        "error_rate": 0.0,
+        "elapsed_ms": 20561.46880000597
+      }
+    },
+    {
+      "case": {
+        "id": "cause-14",
+        "category": "multi_hop",
+        "question": "Which system change caused the Nova payment delay on March 16, which service was affected, and what confirmed the cause?",
+        "expected_answers": [
+          "CHG-014 affected merchant-router; rollback and controlled replay confirmed the 900 millisecond connection timeout caused the delay."
+        ],
+        "required_facts": [
+          [
+            "CHG-014"
+          ],
+          [
+            "merchant-router"
+          ],
+          [
+            "rollback"
+          ],
+          [
+            "replay",
+            "reproduced"
+          ]
+        ],
+        "gold_document_ids": [
+          "aa2d81f0-6382-5b5b-985f-25641ca86b2d",
+          "c1b03e22-e324-5039-9dab-5093ffc96c76",
+          "4932d17f-0377-55c3-9849-0ee66604f194"
+        ],
+        "gold_passage_ids": [],
+        "expected_status": "answered",
+        "required_hops": 3,
+        "split": "tuning",
+        "source": "authored-incidents",
+        "forbidden_output_patterns": [],
+        "forbidden_exact_answers": [],
+        "notes": ""
+      },
+      "answer": {
+        "id": "49928637-9a31-4234-b9b2-3b5771ad1ef5",
+        "question": "Which system change caused the Nova payment delay on March 16, which service was affected, and what confirmed the cause?",
+        "status": "answered",
+        "answer": "The Nova payment delay on March 16 was caused by system change CHG-014, which reduced the database connection timeout from 2000 milliseconds to 900 milliseconds. [C1]\n\nThe affected service was the merchant-router. [C2]\n\nThe cause was confirmed by a controlled replay of the workload with CHG-014 enabled, which reproduced the failures, and by a rollback that restored the connection timeout and cleared the delay. [C3]",
+        "claims": [
+          {
+            "text": "The Nova payment delay on March 16 was caused by system change CHG-014, which reduced the database connection timeout from 2000 milliseconds to 900 milliseconds.",
+            "citation_ids": [
+              "C1"
+            ],
+            "supported": true
+          },
+          {
+            "text": "The affected service was the merchant-router.",
+            "citation_ids": [
+              "C2"
+            ],
+            "supported": true
+          },
+          {
+            "text": "The cause was confirmed by a controlled replay of the workload with CHG-014 enabled, which reproduced the failures, and by a rollback that restored the connection timeout and cleared the delay.",
+            "citation_ids": [
+              "C3"
+            ],
+            "supported": true
+          }
+        ],
+        "citations": [
+          {
+            "id": "C1",
+            "passage_id": "3d0ff02e-753a-5535-887c-0760e85a3089",
+            "document_id": "aa2d81f0-6382-5b5b-985f-25641ca86b2d",
+            "revision": 1,
+            "title": "Nova: CHG-014 deployment log",
+            "quote": "Change CHG-014 reduced the database connection timeout from 2000 milliseconds to 900 milliseconds in merchant-router.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 267,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:nova-change"
+          },
+          {
+            "id": "C2",
+            "passage_id": "1e2bd54d-ecfb-5514-b037-a431978288c3",
+            "document_id": "c1b03e22-e324-5039-9dab-5093ffc96c76",
+            "revision": 1,
+            "title": "Nova: INC-014 incident report",
+            "quote": "The affected service was merchant-router",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 326,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:nova-incident"
+          },
+          {
+            "id": "C3",
+            "passage_id": "96bd1ed5-efdd-55da-aa9a-a1ba751aae9e",
+            "document_id": "4932d17f-0377-55c3-9849-0ee66604f194",
+            "revision": 1,
+            "title": "Nova: rollback verification",
+            "quote": "Rollback of CHG-014 restored the connection timeout to 2000 milliseconds and cleared the merchant-router payment delay. Replaying the same workload with CHG-014 enabled reproduced the failures. The verified cause was the 900 millisecond connection timeout.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 413,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:nova-verification"
+          }
+        ],
+        "conflicts": [],
+        "plan": {
+          "kind": "multi_hop",
+          "subquestions": [
+            "\"Nova\" payment delay \"March 16\""
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 6480.264700003318,
+            "metadata": {
+              "kind": "multi_hop",
+              "subquestions": [
+                "\"Nova\" payment delay \"March 16\""
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 2259.1488000034587,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"Nova\" payment delay \"March 16\""
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "follow_up",
+            "detail": "Checked evidence for missing reasoning links",
+            "duration_ms": 2459.5503000018653,
+            "metadata": {
+              "additional_tool_calls": 0
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 6202.955400003702,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 808.3791000099154,
+            "metadata": {
+              "invalid": false,
+              "citations": 3
+            }
+          },
+          {
+            "stage": "verification",
+            "detail": "The proposed answer accurately reflects the evidence provided in the incident report and verification note. The cause (CHG-014 reducing the database connection timeout to 900ms), the affected service (merchant-router), and the confirmation method (controlled workload replay and rollback) are all directly supported by the cited passages.",
+            "duration_ms": 2939.5517999946605,
+            "metadata": {
+              "unsupported_claim_indices": [],
+              "answer_addresses_question": true,
+              "unresolved_conflict": false,
+              "reason": "The proposed answer accurately reflects the evidence provided in the incident report and verification note. The cause (CHG-014 reducing the database connection timeout to 900ms), the affected service (merchant-router), and the confirmation method (controlled workload replay and rollback) are all directly supported by the cited passages."
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "1e2bd54d-ecfb-5514-b037-a431978288c3",
+          "96bd1ed5-efdd-55da-aa9a-a1ba751aae9e",
+          "ffc35a15-41ca-539a-8d3f-0da1c576bcaa",
+          "838b1e8b-1ff2-52da-ad1e-b5378a219d6a",
+          "10bc8214-21d1-510f-bd59-10b2bd6da845",
+          "3d0ff02e-753a-5535-887c-0760e85a3089",
+          "05861376-19ad-5ae9-9c7a-3bf4dea65317",
+          "a1c0736a-0cad-5641-b26e-e3613291e205"
+        ],
+        "retrieved_document_ids": [
+          "c1b03e22-e324-5039-9dab-5093ffc96c76",
+          "4932d17f-0377-55c3-9849-0ee66604f194",
+          "f9516fdc-a962-56b2-a74e-f7d72658f160",
+          "24f55828-a9aa-5d79-b248-cc5b5312e080",
+          "379d0c77-f784-55be-a985-085dba57c7ba",
+          "aa2d81f0-6382-5b5b-985f-25641ca86b2d",
+          "df1bb057-9358-56fe-a61f-5ed93a44d81f",
+          "241e337a-c520-5094-b65b-9f174ce9efc0"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 21467.508600006113,
+        "usage": {
+          "input_tokens": 9534,
+          "output_tokens": 649,
+          "calls": 4,
+          "retries": 1
+        },
+        "cached": false,
+        "warnings": []
+      },
+      "metrics": {
+        "recall_at_5": 0.6666666666666666,
+        "recall_at_10": 1.0,
+        "mrr": 1.0,
+        "all_support_at_10": 1.0,
+        "evidence_precision_at_10": 0.375,
+        "answer_token_f1": 0.42857142857142866,
+        "answer_exact_match": 0.0,
+        "answer_fact_recall": 1.0,
+        "status_accuracy": 1.0,
+        "abstention_accuracy": null,
+        "contradiction_accuracy": null,
+        "citation_gold_precision": 1.0,
+        "citation_gold_recall": 1.0,
+        "citation_source_validity": 1.0,
+        "claim_citation_id_validity": 1.0,
+        "claim_citation_coverage": 1.0,
+        "injection_output_safety": null,
+        "error_rate": 0.0,
+        "elapsed_ms": 21467.508600006113
+      }
+    },
+    {
+      "case": {
+        "id": "comparison-13",
+        "category": "comparison",
+        "question": "Which incident delayed payments longer, Morrow or Nova, and for how many minutes each?",
+        "expected_answers": [
+          "Nova had the longer delay. Morrow lasted 53 minutes and Nova lasted 59 minutes."
+        ],
+        "required_facts": [
+          [
+            "Nova"
+          ],
+          [
+            "53"
+          ],
+          [
+            "59"
+          ]
+        ],
+        "gold_document_ids": [
+          "d5f31e30-8602-5789-a163-1b3877db51dc",
+          "c1b03e22-e324-5039-9dab-5093ffc96c76"
+        ],
+        "gold_passage_ids": [],
+        "expected_status": "answered",
+        "required_hops": 2,
+        "split": "tuning",
+        "source": "authored-incidents",
+        "forbidden_output_patterns": [],
+        "forbidden_exact_answers": [],
+        "notes": ""
+      },
+      "answer": {
+        "id": "c628fa20-4379-4874-a023-cfefc041aa28",
+        "question": "Which incident delayed payments longer, Morrow or Nova, and for how many minutes each?",
+        "status": "answered",
+        "answer": "The Nova incident delayed payments longer than the Morrow incident. [C1] [C2]\n\nThe Morrow incident delayed payments for 53 minutes. [C3]\n\nThe Nova incident delayed payments for 59 minutes. [C4]",
+        "claims": [
+          {
+            "text": "The Nova incident delayed payments longer than the Morrow incident.",
+            "citation_ids": [
+              "C1",
+              "C2"
+            ],
+            "supported": true
+          },
+          {
+            "text": "The Morrow incident delayed payments for 53 minutes.",
+            "citation_ids": [
+              "C3"
+            ],
+            "supported": true
+          },
+          {
+            "text": "The Nova incident delayed payments for 59 minutes.",
+            "citation_ids": [
+              "C4"
+            ],
+            "supported": true
+          }
+        ],
+        "citations": [
+          {
+            "id": "C1",
+            "passage_id": "f380e591-53f7-55fa-9c2d-fe86bcab6249",
+            "document_id": "d5f31e30-8602-5789-a163-1b3877db51dc",
+            "revision": 1,
+            "title": "Morrow: INC-013 incident report",
+            "quote": "Morrow incident INC-013 began on 2026-03-15 at 09:05 UTC. The affected service was authorization-service; customer payments were delayed for 53 minutes.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 334,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:morrow-incident"
+          },
+          {
+            "id": "C2",
+            "passage_id": "1e2bd54d-ecfb-5514-b037-a431978288c3",
+            "document_id": "c1b03e22-e324-5039-9dab-5093ffc96c76",
+            "revision": 1,
+            "title": "Nova: INC-014 incident report",
+            "quote": "Nova incident INC-014 began on 2026-03-16 at 09:05 UTC. The affected service was merchant-router; customer payments were delayed for 59 minutes.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 326,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:nova-incident"
+          },
+          {
+            "id": "C3",
+            "passage_id": "f380e591-53f7-55fa-9c2d-fe86bcab6249",
+            "document_id": "d5f31e30-8602-5789-a163-1b3877db51dc",
+            "revision": 1,
+            "title": "Morrow: INC-013 incident report",
+            "quote": "customer payments were delayed for 53 minutes.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 334,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:morrow-incident"
+          },
+          {
+            "id": "C4",
+            "passage_id": "1e2bd54d-ecfb-5514-b037-a431978288c3",
+            "document_id": "c1b03e22-e324-5039-9dab-5093ffc96c76",
+            "revision": 1,
+            "title": "Nova: INC-014 incident report",
+            "quote": "customer payments were delayed for 59 minutes.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 326,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:nova-incident"
+          }
+        ],
+        "conflicts": [],
+        "plan": {
+          "kind": "multi_hop",
+          "subquestions": [
+            "Morrow incident payment delay minutes",
+            "Nova incident payment delay minutes"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 4035.4101000120863,
+            "metadata": {
+              "kind": "multi_hop",
+              "subquestions": [
+                "Morrow incident payment delay minutes",
+                "Nova incident payment delay minutes"
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 1760.381400003098,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "Morrow incident payment delay minutes"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 1392.432499997085,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "Nova incident payment delay minutes"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "follow_up",
+            "detail": "Checked evidence for missing reasoning links",
+            "duration_ms": 2010.922900008154,
+            "metadata": {
+              "additional_tool_calls": 0
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 16899.33509999537,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 971.4582000015071,
+            "metadata": {
+              "invalid": false,
+              "citations": 4
+            }
+          },
+          {
+            "stage": "verification",
+            "detail": "The proposed answer correctly identifies that the Nova incident (59 minutes) delayed payments longer than the Morrow incident (53 minutes) based on the provided incident reports.",
+            "duration_ms": 1298.2425000082003,
+            "metadata": {
+              "unsupported_claim_indices": [],
+              "answer_addresses_question": true,
+              "unresolved_conflict": false,
+              "reason": "The proposed answer correctly identifies that the Nova incident (59 minutes) delayed payments longer than the Morrow incident (53 minutes) based on the provided incident reports."
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "a0a6d47c-cc11-552a-93a2-357d475fa853",
+          "7030001b-a5f4-5124-b3fc-71e5caf72fd9",
+          "1e2bd54d-ecfb-5514-b037-a431978288c3",
+          "f380e591-53f7-55fa-9c2d-fe86bcab6249",
+          "173e1dd1-4c96-5b89-97fd-d1cdc77cc726",
+          "96bd1ed5-efdd-55da-aa9a-a1ba751aae9e",
+          "1876cd13-315e-5910-aaa2-cea6e6263e81",
+          "ffc35a15-41ca-539a-8d3f-0da1c576bcaa",
+          "838b1e8b-1ff2-52da-ad1e-b5378a219d6a",
+          "8cfe9f1e-8212-5323-9bb3-366af60086ef",
+          "51b5a260-afad-5074-ad49-fa9d5a4310d4",
+          "5bd6fc1c-18a3-58e5-b489-9b4d01fac3e2"
+        ],
+        "retrieved_document_ids": [
+          "ce9ccd98-b508-50fd-b64c-6d70fd0bf40e",
+          "db8ce5cf-3471-59b5-8467-9ea81fd95fb4",
+          "c1b03e22-e324-5039-9dab-5093ffc96c76",
+          "d5f31e30-8602-5789-a163-1b3877db51dc",
+          "df279fa0-3897-57cc-9410-1ff9791cad46",
+          "4932d17f-0377-55c3-9849-0ee66604f194",
+          "2d6f2e6b-e808-5a15-8d8a-fe6436cc6195",
+          "f9516fdc-a962-56b2-a74e-f7d72658f160",
+          "24f55828-a9aa-5d79-b248-cc5b5312e080",
+          "3afbd07c-7257-573a-8179-60c442010381",
+          "9c800582-b1a3-583a-a8e4-969b879f43ec",
+          "472fdc6d-b5d1-58de-9e92-6ef45fcf14a3"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 28690.26109999686,
+        "usage": {
+          "input_tokens": 13491,
+          "output_tokens": 626,
+          "calls": 4,
+          "retries": 0
+        },
+        "cached": false,
+        "warnings": []
+      },
+      "metrics": {
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "mrr": 0.3333333333333333,
+        "all_support_at_10": 1.0,
+        "evidence_precision_at_10": 0.2,
+        "answer_token_f1": 0.4571428571428572,
+        "answer_exact_match": 0.0,
+        "answer_fact_recall": 1.0,
+        "status_accuracy": 1.0,
+        "abstention_accuracy": null,
+        "contradiction_accuracy": null,
+        "citation_gold_precision": 1.0,
+        "citation_gold_recall": 1.0,
+        "citation_source_validity": 1.0,
+        "claim_citation_id_validity": 1.0,
+        "claim_citation_coverage": 1.0,
+        "injection_output_safety": null,
+        "error_rate": 0.0,
+        "elapsed_ms": 28690.26109999686
+      }
+    },
+    {
+      "case": {
+        "id": "comparison-14",
+        "category": "comparison",
+        "question": "Which incident delayed payments longer, Nova or Morrow, and for how many minutes each?",
+        "expected_answers": [
+          "Nova had the longer delay. Nova lasted 59 minutes and Morrow lasted 53 minutes."
+        ],
+        "required_facts": [
+          [
+            "Nova"
+          ],
+          [
+            "59"
+          ],
+          [
+            "53"
+          ]
+        ],
+        "gold_document_ids": [
+          "c1b03e22-e324-5039-9dab-5093ffc96c76",
+          "d5f31e30-8602-5789-a163-1b3877db51dc"
+        ],
+        "gold_passage_ids": [],
+        "expected_status": "answered",
+        "required_hops": 2,
+        "split": "tuning",
+        "source": "authored-incidents",
+        "forbidden_output_patterns": [],
+        "forbidden_exact_answers": [],
+        "notes": ""
+      },
+      "answer": {
+        "id": "e5a5a8c8-1f91-494a-a510-4e38537f49ac",
+        "question": "Which incident delayed payments longer, Nova or Morrow, and for how many minutes each?",
+        "status": "answered",
+        "answer": "The Nova incident delayed payments for 59 minutes. [C1]\n\nThe Morrow incident delayed payments for 53 minutes. [C2]\n\nThe Nova incident delayed payments longer than the Morrow incident. [C1] [C2]",
+        "claims": [
+          {
+            "text": "The Nova incident delayed payments for 59 minutes.",
+            "citation_ids": [
+              "C1"
+            ],
+            "supported": true
+          },
+          {
+            "text": "The Morrow incident delayed payments for 53 minutes.",
+            "citation_ids": [
+              "C2"
+            ],
+            "supported": true
+          },
+          {
+            "text": "The Nova incident delayed payments longer than the Morrow incident.",
+            "citation_ids": [
+              "C1",
+              "C2"
+            ],
+            "supported": true
+          }
+        ],
+        "citations": [
+          {
+            "id": "C1",
+            "passage_id": "1e2bd54d-ecfb-5514-b037-a431978288c3",
+            "document_id": "c1b03e22-e324-5039-9dab-5093ffc96c76",
+            "revision": 1,
+            "title": "Nova: INC-014 incident report",
+            "quote": "customer payments were delayed for 59 minutes.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 326,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:nova-incident"
+          },
+          {
+            "id": "C2",
+            "passage_id": "f380e591-53f7-55fa-9c2d-fe86bcab6249",
+            "document_id": "d5f31e30-8602-5789-a163-1b3877db51dc",
+            "revision": 1,
+            "title": "Morrow: INC-013 incident report",
+            "quote": "customer payments were delayed for 53 minutes.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 334,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:morrow-incident"
+          }
+        ],
+        "conflicts": [],
+        "plan": {
+          "kind": "multi_hop",
+          "subquestions": [
+            "\"Nova\" payment delay incident minutes",
+            "\"Morrow\" payment delay incident minutes"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 3832.3060999973677,
+            "metadata": {
+              "kind": "multi_hop",
+              "subquestions": [
+                "\"Nova\" payment delay incident minutes",
+                "\"Morrow\" payment delay incident minutes"
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 1720.8864999993239,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"Nova\" payment delay incident minutes"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 1386.5316000010353,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"Morrow\" payment delay incident minutes"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "follow_up",
+            "detail": "Checked evidence for missing reasoning links",
+            "duration_ms": 2518.9504999871133,
+            "metadata": {
+              "additional_tool_calls": 0
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 6783.222800004296,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 722.0284000068204,
+            "metadata": {
+              "invalid": false,
+              "citations": 2
+            }
+          },
+          {
+            "stage": "verification",
+            "detail": "The evidence confirms the Nova incident delayed payments for 59 minutes (passage 1e2bd54d) and the Morrow incident delayed payments for 53 minutes (passage f380e591). Therefore, the Nova incident delayed payments longer than the Morrow incident.",
+            "duration_ms": 4604.722699994454,
+            "metadata": {
+              "unsupported_claim_indices": [],
+              "answer_addresses_question": true,
+              "unresolved_conflict": false,
+              "reason": "The evidence confirms the Nova incident delayed payments for 59 minutes (passage 1e2bd54d) and the Morrow incident delayed payments for 53 minutes (passage f380e591). Therefore, the Nova incident delayed payments longer than the Morrow incident."
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "1e2bd54d-ecfb-5514-b037-a431978288c3",
+          "7030001b-a5f4-5124-b3fc-71e5caf72fd9",
+          "f380e591-53f7-55fa-9c2d-fe86bcab6249",
+          "173e1dd1-4c96-5b89-97fd-d1cdc77cc726",
+          "96bd1ed5-efdd-55da-aa9a-a1ba751aae9e",
+          "1876cd13-315e-5910-aaa2-cea6e6263e81",
+          "ffc35a15-41ca-539a-8d3f-0da1c576bcaa",
+          "838b1e8b-1ff2-52da-ad1e-b5378a219d6a",
+          "8cfe9f1e-8212-5323-9bb3-366af60086ef",
+          "a0a6d47c-cc11-552a-93a2-357d475fa853",
+          "2246ee11-6660-518f-8e05-63511cd111eb",
+          "5bd6fc1c-18a3-58e5-b489-9b4d01fac3e2"
+        ],
+        "retrieved_document_ids": [
+          "c1b03e22-e324-5039-9dab-5093ffc96c76",
+          "db8ce5cf-3471-59b5-8467-9ea81fd95fb4",
+          "d5f31e30-8602-5789-a163-1b3877db51dc",
+          "df279fa0-3897-57cc-9410-1ff9791cad46",
+          "4932d17f-0377-55c3-9849-0ee66604f194",
+          "2d6f2e6b-e808-5a15-8d8a-fe6436cc6195",
+          "f9516fdc-a962-56b2-a74e-f7d72658f160",
+          "24f55828-a9aa-5d79-b248-cc5b5312e080",
+          "3afbd07c-7257-573a-8179-60c442010381",
+          "ce9ccd98-b508-50fd-b64c-6d70fd0bf40e",
+          "03461452-736f-5ea1-8c90-e209a90033f9",
+          "472fdc6d-b5d1-58de-9e92-6ef45fcf14a3"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 21895.606800011592,
+        "usage": {
+          "input_tokens": 13440,
+          "output_tokens": 567,
+          "calls": 4,
+          "retries": 0
+        },
+        "cached": false,
+        "warnings": []
+      },
+      "metrics": {
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "mrr": 1.0,
+        "all_support_at_10": 1.0,
+        "evidence_precision_at_10": 0.2,
+        "answer_token_f1": 0.4571428571428572,
+        "answer_exact_match": 0.0,
+        "answer_fact_recall": 1.0,
+        "status_accuracy": 1.0,
+        "abstention_accuracy": null,
+        "contradiction_accuracy": null,
+        "citation_gold_precision": 1.0,
+        "citation_gold_recall": 1.0,
+        "citation_source_validity": 1.0,
+        "claim_citation_id_validity": 1.0,
+        "claim_citation_coverage": 1.0,
+        "injection_output_safety": null,
+        "error_rate": 0.0,
+        "elapsed_ms": 21895.606800011592
+      }
+    },
+    {
+      "case": {
+        "id": "conflict-13",
+        "category": "contradictory",
+        "question": "How many payment requests failed during Morrow incident INC-013, according to the two audit exports?",
+        "expected_answers": [
+          "The audit exports conflict: 113 versus 313 requests."
+        ],
+        "required_facts": [
+          [
+            "113"
+          ],
+          [
+            "313"
+          ]
+        ],
+        "gold_document_ids": [
+          "2d6f2e6b-e808-5a15-8d8a-fe6436cc6195",
+          "3afbd07c-7257-573a-8179-60c442010381"
+        ],
+        "gold_passage_ids": [],
+        "expected_status": "conflicting_evidence",
+        "required_hops": 2,
+        "split": "tuning",
+        "source": "authored-incidents",
+        "forbidden_output_patterns": [],
+        "forbidden_exact_answers": [],
+        "notes": ""
+      },
+      "answer": {
+        "id": "3a620dcd-9690-47a6-bb07-ed9c9707c9a8",
+        "question": "How many payment requests failed during Morrow incident INC-013, according to the two audit exports?",
+        "status": "conflicting_evidence",
+        "answer": "The sources contain unresolved conflicting evidence.\n\nThe two audit exports for Morrow incident INC-013 report different numbers of failed payment requests. [C1] [C2]",
+        "claims": [],
+        "citations": [
+          {
+            "id": "C1",
+            "passage_id": "1876cd13-315e-5910-aaa2-cea6e6263e81",
+            "document_id": "2d6f2e6b-e808-5a15-8d8a-fe6436cc6195",
+            "revision": 1,
+            "title": "Morrow: audit export A",
+            "quote": "Audit export A for Morrow incident INC-013, captured at 2026-03-15 11:00 UTC. The number of failed payment requests was 113.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 188,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:morrow-conflict-a"
+          },
+          {
+            "id": "C2",
+            "passage_id": "8cfe9f1e-8212-5323-9bb3-366af60086ef",
+            "document_id": "3afbd07c-7257-573a-8179-60c442010381",
+            "revision": 1,
+            "title": "Morrow: audit export B",
+            "quote": "Audit export B for Morrow incident INC-013, captured at 2026-03-15 11:00 UTC. The number of failed payment requests was 313.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 238,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:morrow-conflict-b"
+          }
+        ],
+        "conflicts": [
+          {
+            "description": "The two audit exports for Morrow incident INC-013 report different numbers of failed payment requests.",
+            "citation_ids": [
+              "C1",
+              "C2"
+            ]
+          }
+        ],
+        "plan": {
+          "kind": "direct",
+          "subquestions": [
+            "\"INC-013\" payment requests failed audit exports"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 2010.0238000013633,
+            "metadata": {
+              "kind": "direct",
+              "subquestions": [
+                "\"INC-013\" payment requests failed audit exports"
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 2120.1400000136346,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"INC-013\" payment requests failed audit exports"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 3018.5731000092346,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 327.4995999963721,
+            "metadata": {
+              "invalid": false,
+              "citations": 2
+            }
+          },
+          {
+            "stage": "verification",
+            "detail": "The proposed answer correctly identifies that the two audit exports provide conflicting data regarding the number of failed payment requests for Morrow incident INC-013 (113 vs 313). The evidence confirms this conflict and notes that neither export is authoritative.",
+            "duration_ms": 4879.34650000534,
+            "metadata": {
+              "unsupported_claim_indices": [],
+              "answer_addresses_question": true,
+              "unresolved_conflict": true,
+              "reason": "The proposed answer correctly identifies that the two audit exports provide conflicting data regarding the number of failed payment requests for Morrow incident INC-013 (113 vs 313). The evidence confirms this conflict and notes that neither export is authoritative."
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "8cfe9f1e-8212-5323-9bb3-366af60086ef",
+          "1876cd13-315e-5910-aaa2-cea6e6263e81",
+          "a3448e33-4844-5d68-9dae-a52a4b772e84",
+          "4fb479de-0faa-5a49-895b-1c1c84ec261c",
+          "208ec341-096b-5827-86cc-e93dc880fd84",
+          "838b1e8b-1ff2-52da-ad1e-b5378a219d6a",
+          "84acac10-1658-51fa-bbad-1affd8d593a0",
+          "52b1acf0-747f-5452-8701-e44618e95f46"
+        ],
+        "retrieved_document_ids": [
+          "3afbd07c-7257-573a-8179-60c442010381",
+          "2d6f2e6b-e808-5a15-8d8a-fe6436cc6195",
+          "040645d3-e040-5703-9a9f-01ea1729425a",
+          "7c8adb74-edee-54f6-96a3-89d66e43221c",
+          "f527d349-e091-590a-b785-a8ecb9cebb95",
+          "24f55828-a9aa-5d79-b248-cc5b5312e080",
+          "c9144cd3-25c3-5f8e-9a41-7f34c4f614d1",
+          "38e1f8e6-8242-513e-8e58-420759117316"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 12684.03259999468,
+        "usage": {
+          "input_tokens": 5941,
+          "output_tokens": 378,
+          "calls": 3,
+          "retries": 0
+        },
+        "cached": false,
+        "warnings": []
+      },
+      "metrics": {
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "mrr": 1.0,
+        "all_support_at_10": 1.0,
+        "evidence_precision_at_10": 0.25,
+        "answer_token_f1": 0.2222222222222222,
+        "answer_exact_match": 0.0,
+        "answer_fact_recall": 0.0,
+        "status_accuracy": 1.0,
+        "abstention_accuracy": null,
+        "contradiction_accuracy": 1.0,
+        "citation_gold_precision": 1.0,
+        "citation_gold_recall": 1.0,
+        "citation_source_validity": 1.0,
+        "claim_citation_id_validity": null,
+        "claim_citation_coverage": null,
+        "injection_output_safety": null,
+        "error_rate": 0.0,
+        "elapsed_ms": 12684.03259999468
+      }
+    },
+    {
+      "case": {
+        "id": "conflict-14",
+        "category": "contradictory",
+        "question": "How many payment requests failed during Nova incident INC-014, according to the two audit exports?",
+        "expected_answers": [
+          "The audit exports conflict: 114 versus 314 requests."
+        ],
+        "required_facts": [
+          [
+            "114"
+          ],
+          [
+            "314"
+          ]
+        ],
+        "gold_document_ids": [
+          "f9516fdc-a962-56b2-a74e-f7d72658f160",
+          "24f55828-a9aa-5d79-b248-cc5b5312e080"
+        ],
+        "gold_passage_ids": [],
+        "expected_status": "conflicting_evidence",
+        "required_hops": 2,
+        "split": "tuning",
+        "source": "authored-incidents",
+        "forbidden_output_patterns": [],
+        "forbidden_exact_answers": [],
+        "notes": ""
+      },
+      "answer": {
+        "id": "6d3caaac-4875-4e0d-a505-19c4a1b785fb",
+        "question": "How many payment requests failed during Nova incident INC-014, according to the two audit exports?",
+        "status": "conflicting_evidence",
+        "answer": "The sources contain unresolved conflicting evidence.\n\nThe two audit exports for Nova incident INC-014 report different numbers of failed payment requests. [C1] [C2]",
+        "claims": [],
+        "citations": [
+          {
+            "id": "C1",
+            "passage_id": "ffc35a15-41ca-539a-8d3f-0da1c576bcaa",
+            "document_id": "f9516fdc-a962-56b2-a74e-f7d72658f160",
+            "revision": 1,
+            "title": "Nova: audit export A",
+            "quote": "Audit export A for Nova incident INC-014, captured at 2026-03-16 11:00 UTC. The number of failed payment requests was 114.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 186,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:nova-conflict-a"
+          },
+          {
+            "id": "C2",
+            "passage_id": "838b1e8b-1ff2-52da-ad1e-b5378a219d6a",
+            "document_id": "24f55828-a9aa-5d79-b248-cc5b5312e080",
+            "revision": 1,
+            "title": "Nova: audit export B",
+            "quote": "Audit export B for Nova incident INC-014, captured at 2026-03-16 11:00 UTC. The number of failed payment requests was 314.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 236,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:nova-conflict-b"
+          }
+        ],
+        "conflicts": [
+          {
+            "description": "The two audit exports for Nova incident INC-014 report different numbers of failed payment requests.",
+            "citation_ids": [
+              "C1",
+              "C2"
+            ]
+          }
+        ],
+        "plan": {
+          "kind": "direct",
+          "subquestions": [
+            "\"INC-014\" payment requests failed audit exports"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 3216.233099999954,
+            "metadata": {
+              "kind": "direct",
+              "subquestions": [
+                "\"INC-014\" payment requests failed audit exports"
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 3181.3222999917343,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"INC-014\" payment requests failed audit exports"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 2417.031399992993,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 333.12590001150966,
+            "metadata": {
+              "invalid": false,
+              "citations": 2
+            }
+          },
+          {
+            "stage": "verification",
+            "detail": "The proposed answer correctly identifies that the two audit exports provide conflicting data regarding the number of failed payment requests for Nova incident INC-014 (114 vs 314). The evidence confirms this conflict and notes that neither export is authoritative.",
+            "duration_ms": 4440.827200000058,
+            "metadata": {
+              "unsupported_claim_indices": [],
+              "answer_addresses_question": true,
+              "unresolved_conflict": true,
+              "reason": "The proposed answer correctly identifies that the two audit exports provide conflicting data regarding the number of failed payment requests for Nova incident INC-014 (114 vs 314). The evidence confirms this conflict and notes that neither export is authoritative."
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "838b1e8b-1ff2-52da-ad1e-b5378a219d6a",
+          "ffc35a15-41ca-539a-8d3f-0da1c576bcaa",
+          "1341f181-2654-5b51-9ff3-84c4e2c473ea",
+          "0e765265-ad2a-5e74-94a1-da60fdf0d8d5",
+          "8cfe9f1e-8212-5323-9bb3-366af60086ef",
+          "208ec341-096b-5827-86cc-e93dc880fd84",
+          "84acac10-1658-51fa-bbad-1affd8d593a0",
+          "1876cd13-315e-5910-aaa2-cea6e6263e81"
+        ],
+        "retrieved_document_ids": [
+          "24f55828-a9aa-5d79-b248-cc5b5312e080",
+          "f9516fdc-a962-56b2-a74e-f7d72658f160",
+          "df15b1c5-4c88-52c8-b9d8-a54af739439b",
+          "7b355ddf-fc63-53f1-8d76-4d193877bf32",
+          "3afbd07c-7257-573a-8179-60c442010381",
+          "f527d349-e091-590a-b785-a8ecb9cebb95",
+          "c9144cd3-25c3-5f8e-9a41-7f34c4f614d1",
+          "2d6f2e6b-e808-5a15-8d8a-fe6436cc6195"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 13916.597199990065,
+        "usage": {
+          "input_tokens": 5925,
+          "output_tokens": 380,
+          "calls": 3,
+          "retries": 0
+        },
+        "cached": false,
+        "warnings": []
+      },
+      "metrics": {
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "mrr": 1.0,
+        "all_support_at_10": 1.0,
+        "evidence_precision_at_10": 0.25,
+        "answer_token_f1": 0.2222222222222222,
+        "answer_exact_match": 0.0,
+        "answer_fact_recall": 0.0,
+        "status_accuracy": 1.0,
+        "abstention_accuracy": null,
+        "contradiction_accuracy": 1.0,
+        "citation_gold_precision": 1.0,
+        "citation_gold_recall": 1.0,
+        "citation_source_validity": 1.0,
+        "claim_citation_id_validity": null,
+        "claim_citation_coverage": null,
+        "injection_output_safety": null,
+        "error_rate": 0.0,
+        "elapsed_ms": 13916.597199990065
+      }
+    },
+    {
+      "case": {
+        "id": "direct-13",
+        "category": "direct",
+        "question": "What database connection timeout did Morrow change CHG-013 configure?",
+        "expected_answers": [
+          "850 milliseconds",
+          "850 ms"
+        ],
+        "required_facts": [
+          [
+            "850"
+          ]
+        ],
+        "gold_document_ids": [
+          "d1c0398b-d7ea-5578-9186-52a4689684e6"
+        ],
+        "gold_passage_ids": [],
+        "expected_status": "answered",
+        "required_hops": 1,
+        "split": "tuning",
+        "source": "authored-incidents",
+        "forbidden_output_patterns": [],
+        "forbidden_exact_answers": [],
+        "notes": ""
+      },
+      "answer": {
+        "id": "79930d7c-f66b-44ee-af21-b36a9d258621",
+        "question": "What database connection timeout did Morrow change CHG-013 configure?",
+        "status": "answered",
+        "answer": "Morrow change CHG-013 configured the database connection timeout to 850 milliseconds. [C1]",
+        "claims": [
+          {
+            "text": "Morrow change CHG-013 configured the database connection timeout to 850 milliseconds.",
+            "citation_ids": [
+              "C1"
+            ],
+            "supported": true
+          }
+        ],
+        "citations": [
+          {
+            "id": "C1",
+            "passage_id": "284bd437-ba6b-5fbe-b3e6-d274ab04e425",
+            "document_id": "d1c0398b-d7ea-5578-9186-52a4689684e6",
+            "revision": 1,
+            "title": "Morrow: CHG-013 deployment log",
+            "quote": "Change CHG-013 reduced the database connection timeout from 2000 milliseconds to 850 milliseconds in authorization-service.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 277,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:morrow-change"
+          }
+        ],
+        "conflicts": [],
+        "plan": {
+          "kind": "direct",
+          "subquestions": [
+            "\"CHG-013\" database connection timeout"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 3770.199799997499,
+            "metadata": {
+              "kind": "direct",
+              "subquestions": [
+                "\"CHG-013\" database connection timeout"
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 1596.3786000065738,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"CHG-013\" database connection timeout"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 3864.100500009954,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 163.32500000135042,
+            "metadata": {
+              "invalid": false,
+              "citations": 1
+            }
+          },
+          {
+            "stage": "verification",
+            "detail": "The proposed answer accurately reflects the information provided in the source document (passage_id: 284bd437-ba6b-5fbe-b3e6-d274ab04e425), which states that CHG-013 reduced the database connection timeout to 850 milliseconds.",
+            "duration_ms": 5096.05309998733,
+            "metadata": {
+              "unsupported_claim_indices": [],
+              "answer_addresses_question": true,
+              "unresolved_conflict": false,
+              "reason": "The proposed answer accurately reflects the information provided in the source document (passage_id: 284bd437-ba6b-5fbe-b3e6-d274ab04e425), which states that CHG-013 reduced the database connection timeout to 850 milliseconds."
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "284bd437-ba6b-5fbe-b3e6-d274ab04e425",
+          "37165fad-55be-5945-9c4c-b72cd87f9104",
+          "173e1dd1-4c96-5b89-97fd-d1cdc77cc726",
+          "736a17d1-643a-5208-856c-939fcb0e602e",
+          "60dbe8fe-afc4-55d4-82f2-7972815d51ce",
+          "37f2dbb4-8fe2-5082-9cce-b315a8fa85b4",
+          "97d264e6-748f-55d7-b085-c8ed21bc4438",
+          "84b74d1b-f6e2-5257-874b-6bf35936a171"
+        ],
+        "retrieved_document_ids": [
+          "d1c0398b-d7ea-5578-9186-52a4689684e6",
+          "fa2482fc-7238-5269-a81f-f52c136d3858",
+          "df279fa0-3897-57cc-9410-1ff9791cad46",
+          "9f4cc695-720f-5611-bcfc-e08e4b4bdf4f",
+          "d53489fa-a496-5e33-bdb1-48fb4b389de4",
+          "0a8f279b-6dd9-51dd-ab62-42dd5c8b56c2",
+          "0b904911-8a07-59ca-ba92-f7eb9d7f8645",
+          "67b8f1f1-0a07-509a-a74b-e42a88b403aa"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 15142.259299987927,
+        "usage": {
+          "input_tokens": 6428,
+          "output_tokens": 284,
+          "calls": 3,
+          "retries": 0
+        },
+        "cached": false,
+        "warnings": []
+      },
+      "metrics": {
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "mrr": 1.0,
+        "all_support_at_10": 1.0,
+        "evidence_precision_at_10": 0.125,
+        "answer_token_f1": 0.3076923076923077,
+        "answer_exact_match": 0.0,
+        "answer_fact_recall": 1.0,
+        "status_accuracy": 1.0,
+        "abstention_accuracy": null,
+        "contradiction_accuracy": null,
+        "citation_gold_precision": 1.0,
+        "citation_gold_recall": 1.0,
+        "citation_source_validity": 1.0,
+        "claim_citation_id_validity": 1.0,
+        "claim_citation_coverage": 1.0,
+        "injection_output_safety": null,
+        "error_rate": 0.0,
+        "elapsed_ms": 15142.259299987927
+      }
+    },
+    {
+      "case": {
+        "id": "direct-14",
+        "category": "direct",
+        "question": "What database connection timeout did Nova change CHG-014 configure?",
+        "expected_answers": [
+          "900 milliseconds",
+          "900 ms"
+        ],
+        "required_facts": [
+          [
+            "900"
+          ]
+        ],
+        "gold_document_ids": [
+          "aa2d81f0-6382-5b5b-985f-25641ca86b2d"
+        ],
+        "gold_passage_ids": [],
+        "expected_status": "answered",
+        "required_hops": 1,
+        "split": "tuning",
+        "source": "authored-incidents",
+        "forbidden_output_patterns": [],
+        "forbidden_exact_answers": [],
+        "notes": ""
+      },
+      "answer": {
+        "id": "34242a85-743c-4977-8294-2994b4115e14",
+        "question": "What database connection timeout did Nova change CHG-014 configure?",
+        "status": "answered",
+        "answer": "Change CHG-014 configured the database connection timeout to 900 milliseconds. [C1]",
+        "claims": [
+          {
+            "text": "Change CHG-014 configured the database connection timeout to 900 milliseconds.",
+            "citation_ids": [
+              "C1"
+            ],
+            "supported": true
+          }
+        ],
+        "citations": [
+          {
+            "id": "C1",
+            "passage_id": "3d0ff02e-753a-5535-887c-0760e85a3089",
+            "document_id": "aa2d81f0-6382-5b5b-985f-25641ca86b2d",
+            "revision": 1,
+            "title": "Nova: CHG-014 deployment log",
+            "quote": "Change CHG-014 reduced the database connection timeout from 2000 milliseconds to 900 milliseconds in merchant-router.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 267,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:nova-change"
+          }
+        ],
+        "conflicts": [],
+        "plan": {
+          "kind": "direct",
+          "subquestions": [
+            "\"CHG-014\" database connection timeout"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 4842.196099998546,
+            "metadata": {
+              "kind": "direct",
+              "subquestions": [
+                "\"CHG-014\" database connection timeout"
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 1549.7940999921411,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"CHG-014\" database connection timeout"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 9054.821800003992,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 572.541799992905,
+            "metadata": {
+              "invalid": false,
+              "citations": 1
+            }
+          },
+          {
+            "stage": "verification",
+            "detail": "The proposed answer accurately reflects the information provided in the Nova: CHG-014 deployment log (passage_id: 3d0ff02e-753a-5535-887c-0760e85a3089), which states that CHG-014 reduced the database connection timeout to 900 milliseconds.",
+            "duration_ms": 2612.90170000575,
+            "metadata": {
+              "unsupported_claim_indices": [],
+              "answer_addresses_question": true,
+              "unresolved_conflict": false,
+              "reason": "The proposed answer accurately reflects the information provided in the Nova: CHG-014 deployment log (passage_id: 3d0ff02e-753a-5535-887c-0760e85a3089), which states that CHG-014 reduced the database connection timeout to 900 milliseconds."
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "37f2dbb4-8fe2-5082-9cce-b315a8fa85b4",
+          "3d0ff02e-753a-5535-887c-0760e85a3089",
+          "96bd1ed5-efdd-55da-aa9a-a1ba751aae9e",
+          "8cc335a0-d658-584a-b7df-c3b1f60d3390",
+          "284bd437-ba6b-5fbe-b3e6-d274ab04e425",
+          "736a17d1-643a-5208-856c-939fcb0e602e",
+          "84b74d1b-f6e2-5257-874b-6bf35936a171",
+          "60dbe8fe-afc4-55d4-82f2-7972815d51ce"
+        ],
+        "retrieved_document_ids": [
+          "0a8f279b-6dd9-51dd-ab62-42dd5c8b56c2",
+          "aa2d81f0-6382-5b5b-985f-25641ca86b2d",
+          "4932d17f-0377-55c3-9849-0ee66604f194",
+          "bd464f2e-7329-5b40-8c84-6cddcb9dd129",
+          "d1c0398b-d7ea-5578-9186-52a4689684e6",
+          "9f4cc695-720f-5611-bcfc-e08e4b4bdf4f",
+          "67b8f1f1-0a07-509a-a74b-e42a88b403aa",
+          "d53489fa-a496-5e33-bdb1-48fb4b389de4"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 18957.257100002607,
+        "usage": {
+          "input_tokens": 6426,
+          "output_tokens": 296,
+          "calls": 3,
+          "retries": 0
+        },
+        "cached": false,
+        "warnings": []
+      },
+      "metrics": {
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "mrr": 0.5,
+        "all_support_at_10": 1.0,
+        "evidence_precision_at_10": 0.125,
+        "answer_token_f1": 0.33333333333333337,
+        "answer_exact_match": 0.0,
+        "answer_fact_recall": 1.0,
+        "status_accuracy": 1.0,
+        "abstention_accuracy": null,
+        "contradiction_accuracy": null,
+        "citation_gold_precision": 1.0,
+        "citation_gold_recall": 1.0,
+        "citation_source_validity": 1.0,
+        "claim_citation_id_validity": 1.0,
+        "claim_citation_coverage": 1.0,
+        "injection_output_safety": null,
+        "error_rate": 0.0,
+        "elapsed_ms": 18957.257100002607
+      }
+    },
+    {
+      "case": {
+        "id": "ownership-13",
+        "category": "multi_hop",
+        "question": "Which team owns the service affected by Morrow incident INC-013, and what change triggered that incident?",
+        "expected_answers": [
+          "The Summit team owns authorization-service, which was affected by CHG-013."
+        ],
+        "required_facts": [
+          [
+            "Summit"
+          ],
+          [
+            "authorization-service"
+          ],
+          [
+            "CHG-013"
+          ]
+        ],
+        "gold_document_ids": [
+          "d5f31e30-8602-5789-a163-1b3877db51dc",
+          "38516da4-866e-5049-ada3-0b14714ea2f6"
+        ],
+        "gold_passage_ids": [],
+        "expected_status": "answered",
+        "required_hops": 2,
+        "split": "tuning",
+        "source": "authored-incidents",
+        "forbidden_output_patterns": [],
+        "forbidden_exact_answers": [],
+        "notes": ""
+      },
+      "answer": {
+        "id": "51788c70-e980-4c1d-a8c0-cb8701c2ef19",
+        "question": "Which team owns the service affected by Morrow incident INC-013, and what change triggered that incident?",
+        "status": "answered",
+        "answer": "The service affected by Morrow incident INC-013 is the authorization-service, which is owned by the Summit team. [C1] [C2]\n\nThe incident was triggered by change CHG-013, which reduced the database connection timeout from 2000 milliseconds to 850 milliseconds. [C3] [C4]",
+        "claims": [
+          {
+            "text": "The service affected by Morrow incident INC-013 is the authorization-service, which is owned by the Summit team.",
+            "citation_ids": [
+              "C1",
+              "C2"
+            ],
+            "supported": true
+          },
+          {
+            "text": "The incident was triggered by change CHG-013, which reduced the database connection timeout from 2000 milliseconds to 850 milliseconds.",
+            "citation_ids": [
+              "C3",
+              "C4"
+            ],
+            "supported": true
+          }
+        ],
+        "citations": [
+          {
+            "id": "C1",
+            "passage_id": "f380e591-53f7-55fa-9c2d-fe86bcab6249",
+            "document_id": "d5f31e30-8602-5789-a163-1b3877db51dc",
+            "revision": 1,
+            "title": "Morrow: INC-013 incident report",
+            "quote": "The affected service was authorization-service",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 334,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:morrow-incident"
+          },
+          {
+            "id": "C2",
+            "passage_id": "c2434ac1-6f65-5e3e-b522-cb12bcee3b5b",
+            "document_id": "38516da4-866e-5049-ada3-0b14714ea2f6",
+            "revision": 1,
+            "title": "Morrow: service ownership catalog",
+            "quote": "Service authorization-service is owned by the Summit team.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 209,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:morrow-catalog"
+          },
+          {
+            "id": "C3",
+            "passage_id": "f380e591-53f7-55fa-9c2d-fe86bcab6249",
+            "document_id": "d5f31e30-8602-5789-a163-1b3877db51dc",
+            "revision": 1,
+            "title": "Morrow: INC-013 incident report",
+            "quote": "Operators observed database connection failures immediately after change CHG-013.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 334,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:morrow-incident"
+          },
+          {
+            "id": "C4",
+            "passage_id": "284bd437-ba6b-5fbe-b3e6-d274ab04e425",
+            "document_id": "d1c0398b-d7ea-5578-9186-52a4689684e6",
+            "revision": 1,
+            "title": "Morrow: CHG-013 deployment log",
+            "quote": "Change CHG-013 reduced the database connection timeout from 2000 milliseconds to 850 milliseconds in authorization-service.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 277,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:morrow-change"
+          }
+        ],
+        "conflicts": [],
+        "plan": {
+          "kind": "multi_hop",
+          "subquestions": [
+            "\"INC-013\" Morrow incident"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 2452.8043000027537,
+            "metadata": {
+              "kind": "multi_hop",
+              "subquestions": [
+                "\"INC-013\" Morrow incident"
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 2368.385900001158,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"INC-013\" Morrow incident"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "follow_up",
+            "detail": "Checked evidence for missing reasoning links",
+            "duration_ms": 2816.1645000072895,
+            "metadata": {
+              "additional_tool_calls": 1
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 3336.4265999989584,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"authorization-service\" owner team"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 2308.134599996265,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 646.8509999976959,
+            "metadata": {
+              "invalid": false,
+              "citations": 4
+            }
+          },
+          {
+            "stage": "verification",
+            "detail": "The proposed answer accurately identifies the service (authorization-service), the owning team (Summit team), and the specific change (CHG-013) that triggered the incident, supported by the provided evidence.",
+            "duration_ms": 3809.3508999882033,
+            "metadata": {
+              "unsupported_claim_indices": [],
+              "answer_addresses_question": true,
+              "unresolved_conflict": false,
+              "reason": "The proposed answer accurately identifies the service (authorization-service), the owning team (Summit team), and the specific change (CHG-013) that triggered the incident, supported by the provided evidence."
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "f380e591-53f7-55fa-9c2d-fe86bcab6249",
+          "c2434ac1-6f65-5e3e-b522-cb12bcee3b5b",
+          "1876cd13-315e-5910-aaa2-cea6e6263e81",
+          "284bd437-ba6b-5fbe-b3e6-d274ab04e425",
+          "8cfe9f1e-8212-5323-9bb3-366af60086ef",
+          "c24cbb96-e397-5e2d-af38-0eb7ad577efa",
+          "173e1dd1-4c96-5b89-97fd-d1cdc77cc726",
+          "1abe0955-dc70-56f6-b2c7-0551b7d0c996",
+          "c550aca1-7cdf-5723-85ed-c9e28fda6efc",
+          "09fd0a61-f17b-5670-9a3f-2e902ab6f6e9",
+          "a0a6d47c-cc11-552a-93a2-357d475fa853",
+          "52a6d494-2fc0-5204-a59d-9fad36ad4721"
+        ],
+        "retrieved_document_ids": [
+          "d5f31e30-8602-5789-a163-1b3877db51dc",
+          "38516da4-866e-5049-ada3-0b14714ea2f6",
+          "2d6f2e6b-e808-5a15-8d8a-fe6436cc6195",
+          "d1c0398b-d7ea-5578-9186-52a4689684e6",
+          "3afbd07c-7257-573a-8179-60c442010381",
+          "52f4ef37-19cd-566b-8ac0-280e92443912",
+          "df279fa0-3897-57cc-9410-1ff9791cad46",
+          "d7a1fe7c-fa7d-5f0b-bcfc-6dcf9effc3ac",
+          "3b12e1d3-343e-5759-be55-d9f209ecabdb",
+          "35f381a7-3844-508b-9e21-94218d421938",
+          "ce9ccd98-b508-50fd-b64c-6d70fd0bf40e",
+          "3ad1eb7f-8e9b-57c9-97ea-9bff8288c2c8"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 18062.01299998793,
+        "usage": {
+          "input_tokens": 11169,
+          "output_tokens": 525,
+          "calls": 4,
+          "retries": 0
+        },
+        "cached": false,
+        "warnings": []
+      },
+      "metrics": {
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "mrr": 1.0,
+        "all_support_at_10": 1.0,
+        "evidence_precision_at_10": 0.2,
+        "answer_token_f1": 0.4444444444444445,
+        "answer_exact_match": 0.0,
+        "answer_fact_recall": 1.0,
+        "status_accuracy": 1.0,
+        "abstention_accuracy": null,
+        "contradiction_accuracy": null,
+        "citation_gold_precision": 0.75,
+        "citation_gold_recall": 1.0,
+        "citation_source_validity": 1.0,
+        "claim_citation_id_validity": 1.0,
+        "claim_citation_coverage": 1.0,
+        "injection_output_safety": null,
+        "error_rate": 0.0,
+        "elapsed_ms": 18062.01299998793
+      }
+    },
+    {
+      "case": {
+        "id": "ownership-14",
+        "category": "multi_hop",
+        "question": "Which team owns the service affected by Nova incident INC-014, and what change triggered that incident?",
+        "expected_answers": [
+          "The Tundra team owns merchant-router, which was affected by CHG-014."
+        ],
+        "required_facts": [
+          [
+            "Tundra"
+          ],
+          [
+            "merchant-router"
+          ],
+          [
+            "CHG-014"
+          ]
+        ],
+        "gold_document_ids": [
+          "c1b03e22-e324-5039-9dab-5093ffc96c76",
+          "f9efd379-588d-5459-a927-f72b5542e96e"
+        ],
+        "gold_passage_ids": [],
+        "expected_status": "answered",
+        "required_hops": 2,
+        "split": "tuning",
+        "source": "authored-incidents",
+        "forbidden_output_patterns": [],
+        "forbidden_exact_answers": [],
+        "notes": ""
+      },
+      "answer": {
+        "id": "868217cc-2b73-4377-83b5-caf6553eae81",
+        "question": "Which team owns the service affected by Nova incident INC-014, and what change triggered that incident?",
+        "status": "answered",
+        "answer": "The service affected by Nova incident INC-014 is merchant-router, which is owned by the Tundra team. [C1] [C2]\n\nThe incident was triggered by change CHG-014, which reduced the database connection timeout from 2000 milliseconds to 900 milliseconds. [C3] [C4]",
+        "claims": [
+          {
+            "text": "The service affected by Nova incident INC-014 is merchant-router, which is owned by the Tundra team.",
+            "citation_ids": [
+              "C1",
+              "C2"
+            ],
+            "supported": true
+          },
+          {
+            "text": "The incident was triggered by change CHG-014, which reduced the database connection timeout from 2000 milliseconds to 900 milliseconds.",
+            "citation_ids": [
+              "C3",
+              "C4"
+            ],
+            "supported": true
+          }
+        ],
+        "citations": [
+          {
+            "id": "C1",
+            "passage_id": "1e2bd54d-ecfb-5514-b037-a431978288c3",
+            "document_id": "c1b03e22-e324-5039-9dab-5093ffc96c76",
+            "revision": 1,
+            "title": "Nova: INC-014 incident report",
+            "quote": "The affected service was merchant-router",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 326,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:nova-incident"
+          },
+          {
+            "id": "C2",
+            "passage_id": "b6d5823f-604d-5242-b908-847039298155",
+            "document_id": "f9efd379-588d-5459-a927-f72b5542e96e",
+            "revision": 1,
+            "title": "Nova: service ownership catalog",
+            "quote": "Service merchant-router is owned by the Tundra team.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 199,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:nova-catalog"
+          },
+          {
+            "id": "C3",
+            "passage_id": "3d0ff02e-753a-5535-887c-0760e85a3089",
+            "document_id": "aa2d81f0-6382-5b5b-985f-25641ca86b2d",
+            "revision": 1,
+            "title": "Nova: CHG-014 deployment log",
+            "quote": "Change CHG-014 reduced the database connection timeout from 2000 milliseconds to 900 milliseconds in merchant-router.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 267,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:nova-change"
+          },
+          {
+            "id": "C4",
+            "passage_id": "96bd1ed5-efdd-55da-aa9a-a1ba751aae9e",
+            "document_id": "4932d17f-0377-55c3-9849-0ee66604f194",
+            "revision": 1,
+            "title": "Nova: rollback verification",
+            "quote": "The verified cause was the 900 millisecond connection timeout.",
+            "location": {
+              "page": null,
+              "section": null,
+              "start_char": 0,
+              "end_char": 413,
+              "sentence_ids": []
+            },
+            "source_uri": "urn:investigation:synthetic:nova-verification"
+          }
+        ],
+        "conflicts": [],
+        "plan": {
+          "kind": "multi_hop",
+          "subquestions": [
+            "\"INC-014\" Nova incident"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 4120.968699993682,
+            "metadata": {
+              "kind": "multi_hop",
+              "subquestions": [
+                "\"INC-014\" Nova incident"
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 1826.923100001295,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"INC-014\" Nova incident"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "follow_up",
+            "detail": "Checked evidence for missing reasoning links",
+            "duration_ms": 6829.96460000868,
+            "metadata": {
+              "additional_tool_calls": 1
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 4607.339200010756,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"merchant-router\" service owner"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 2557.9235999903176,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 645.3733000089414,
+            "metadata": {
+              "invalid": false,
+              "citations": 4
+            }
+          },
+          {
+            "stage": "verification",
+            "detail": "The proposed answer accurately identifies the service (merchant-router), the owning team (Tundra), and the specific change (CHG-014) that triggered the incident, all of which are directly supported by the provided evidence.",
+            "duration_ms": 4800.7179999985965,
+            "metadata": {
+              "unsupported_claim_indices": [],
+              "answer_addresses_question": true,
+              "unresolved_conflict": false,
+              "reason": "The proposed answer accurately identifies the service (merchant-router), the owning team (Tundra), and the specific change (CHG-014) that triggered the incident, all of which are directly supported by the provided evidence."
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "1e2bd54d-ecfb-5514-b037-a431978288c3",
+          "96bd1ed5-efdd-55da-aa9a-a1ba751aae9e",
+          "b6d5823f-604d-5242-b908-847039298155",
+          "9b624f96-ec2e-5580-b572-52882a070cbe",
+          "ffc35a15-41ca-539a-8d3f-0da1c576bcaa",
+          "3d0ff02e-753a-5535-887c-0760e85a3089",
+          "838b1e8b-1ff2-52da-ad1e-b5378a219d6a",
+          "97cd228c-9bc9-5f29-ba90-b7fafe875b6f",
+          "c5324b65-c199-5a70-a227-1ca0f5b700b7",
+          "f380e591-53f7-55fa-9c2d-fe86bcab6249",
+          "5bd6fc1c-18a3-58e5-b489-9b4d01fac3e2",
+          "a2d308c8-823e-50a9-9e3d-8b428f46be0d"
+        ],
+        "retrieved_document_ids": [
+          "c1b03e22-e324-5039-9dab-5093ffc96c76",
+          "4932d17f-0377-55c3-9849-0ee66604f194",
+          "f9efd379-588d-5459-a927-f72b5542e96e",
+          "6099699e-fefd-578b-ab6a-edd6c7e345ad",
+          "f9516fdc-a962-56b2-a74e-f7d72658f160",
+          "aa2d81f0-6382-5b5b-985f-25641ca86b2d",
+          "24f55828-a9aa-5d79-b248-cc5b5312e080",
+          "11d39f8d-c35b-5319-9e0e-3bd3f4e55e71",
+          "f4394577-5a59-5b85-8db8-38584e8fe0a9",
+          "d5f31e30-8602-5789-a163-1b3877db51dc",
+          "472fdc6d-b5d1-58de-9e92-6ef45fcf14a3",
+          "688cef10-081e-5903-a75c-c646bb6a75c6"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 25713.30200000375,
+        "usage": {
+          "input_tokens": 12225,
+          "output_tokens": 534,
+          "calls": 4,
+          "retries": 0
+        },
+        "cached": false,
+        "warnings": []
+      },
+      "metrics": {
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "mrr": 1.0,
+        "all_support_at_10": 1.0,
+        "evidence_precision_at_10": 0.2,
+        "answer_token_f1": 0.4444444444444445,
+        "answer_exact_match": 0.0,
+        "answer_fact_recall": 1.0,
+        "status_accuracy": 1.0,
+        "abstention_accuracy": null,
+        "contradiction_accuracy": null,
+        "citation_gold_precision": 0.5,
+        "citation_gold_recall": 1.0,
+        "citation_source_validity": 1.0,
+        "claim_citation_id_validity": 1.0,
+        "claim_citation_coverage": 1.0,
+        "injection_output_safety": null,
+        "error_rate": 0.0,
+        "elapsed_ms": 25713.30200000375
+      }
+    },
+    {
+      "case": {
+        "id": "unknown-13",
+        "category": "unanswerable",
+        "question": "What was the exact financial revenue loss in euros caused by Morrow incident INC-013?",
+        "expected_answers": [],
+        "required_facts": [],
+        "gold_document_ids": [],
+        "gold_passage_ids": [],
+        "expected_status": "insufficient_evidence",
+        "required_hops": 1,
+        "split": "tuning",
+        "source": "authored-incidents",
+        "forbidden_output_patterns": [],
+        "forbidden_exact_answers": [],
+        "notes": ""
+      },
+      "answer": {
+        "id": "b67a7c2e-0a0b-4f9c-8067-becdc9018d25",
+        "question": "What was the exact financial revenue loss in euros caused by Morrow incident INC-013?",
+        "status": "insufficient_evidence",
+        "answer": "The available sources do not establish a reliable answer. Missing evidence: While audit exports provide the number of failed payment requests (113 or 313), there is no information regarding the monetary value of these requests or the total financial revenue loss in euros caused by incident INC-013.",
+        "claims": [],
+        "citations": [],
+        "conflicts": [],
+        "plan": {
+          "kind": "multi_hop",
+          "subquestions": [
+            "\"Morrow incident\" INC-013 financial revenue loss"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 2602.9167999950005,
+            "metadata": {
+              "kind": "multi_hop",
+              "subquestions": [
+                "\"Morrow incident\" INC-013 financial revenue loss"
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 2227.0055999979377,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"Morrow incident\" INC-013 financial revenue loss"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "follow_up",
+            "detail": "Checked evidence for missing reasoning links",
+            "duration_ms": 7008.075700010522,
+            "metadata": {
+              "additional_tool_calls": 1
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 2343.111399997724,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"Morrow incident\" INC-013 \"revenue loss\" euros"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 2471.9736999977613,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 0.010299991117790341,
+            "metadata": {
+              "invalid": false,
+              "citations": 0
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "1876cd13-315e-5910-aaa2-cea6e6263e81",
+          "f380e591-53f7-55fa-9c2d-fe86bcab6249",
+          "8cfe9f1e-8212-5323-9bb3-366af60086ef",
+          "173e1dd1-4c96-5b89-97fd-d1cdc77cc726",
+          "1abe0955-dc70-56f6-b2c7-0551b7d0c996",
+          "4fb479de-0faa-5a49-895b-1c1c84ec261c",
+          "a0a6d47c-cc11-552a-93a2-357d475fa853",
+          "a3448e33-4844-5d68-9dae-a52a4b772e84",
+          "1bea29d6-8769-5706-b327-b84e33c698ca",
+          "1e2bd54d-ecfb-5514-b037-a431978288c3",
+          "208ec341-096b-5827-86cc-e93dc880fd84"
+        ],
+        "retrieved_document_ids": [
+          "2d6f2e6b-e808-5a15-8d8a-fe6436cc6195",
+          "d5f31e30-8602-5789-a163-1b3877db51dc",
+          "3afbd07c-7257-573a-8179-60c442010381",
+          "df279fa0-3897-57cc-9410-1ff9791cad46",
+          "d7a1fe7c-fa7d-5f0b-bcfc-6dcf9effc3ac",
+          "7c8adb74-edee-54f6-96a3-89d66e43221c",
+          "ce9ccd98-b508-50fd-b64c-6d70fd0bf40e",
+          "040645d3-e040-5703-9a9f-01ea1729425a",
+          "09a51dc8-95ef-548e-9f48-ed0f5ff409ee",
+          "c1b03e22-e324-5039-9dab-5093ffc96c76",
+          "f527d349-e091-590a-b785-a8ecb9cebb95"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 16974.556999994093,
+        "usage": {
+          "input_tokens": 8292,
+          "output_tokens": 128,
+          "calls": 3,
+          "retries": 0
+        },
+        "cached": false,
+        "warnings": []
+      },
+      "metrics": {
+        "recall_at_5": null,
+        "recall_at_10": null,
+        "mrr": null,
+        "all_support_at_10": null,
+        "evidence_precision_at_10": null,
+        "answer_token_f1": null,
+        "answer_exact_match": null,
+        "answer_fact_recall": null,
+        "status_accuracy": 1.0,
+        "abstention_accuracy": 1.0,
+        "contradiction_accuracy": null,
+        "citation_gold_precision": null,
+        "citation_gold_recall": null,
+        "citation_source_validity": null,
+        "claim_citation_id_validity": null,
+        "claim_citation_coverage": null,
+        "injection_output_safety": null,
+        "error_rate": 0.0,
+        "elapsed_ms": 16974.556999994093
+      }
+    },
+    {
+      "case": {
+        "id": "unknown-14",
+        "category": "unanswerable",
+        "question": "What was the exact financial revenue loss in euros caused by Nova incident INC-014?",
+        "expected_answers": [],
+        "required_facts": [],
+        "gold_document_ids": [],
+        "gold_passage_ids": [],
+        "expected_status": "insufficient_evidence",
+        "required_hops": 1,
+        "split": "tuning",
+        "source": "authored-incidents",
+        "forbidden_output_patterns": [],
+        "forbidden_exact_answers": [],
+        "notes": ""
+      },
+      "answer": {
+        "id": "39f1ef8a-4912-4ce9-b611-8d2ed4cde942",
+        "question": "What was the exact financial revenue loss in euros caused by Nova incident INC-014?",
+        "status": "insufficient_evidence",
+        "answer": "The available sources do not establish a reliable answer. Missing evidence: The provided documents contain information regarding the number of failed payment requests during incident INC-014 (114 or 314), but they do not provide a financial value in euros for the revenue loss caused by these failures.",
+        "claims": [],
+        "citations": [],
+        "conflicts": [],
+        "plan": {
+          "kind": "multi_hop",
+          "subquestions": [
+            "\"INC-014\" Nova incident financial revenue loss"
+          ],
+          "rationale": "Bounded retrieval followed by evidence validation."
+        },
+        "trace": [
+          {
+            "stage": "planning",
+            "detail": "Planned focused evidence searches",
+            "duration_ms": 5541.594599999371,
+            "metadata": {
+              "kind": "multi_hop",
+              "subquestions": [
+                "\"INC-014\" Nova incident financial revenue loss"
+              ],
+              "rationale": "Bounded retrieval followed by evidence validation."
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 2119.9348000081955,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"INC-014\" Nova incident financial revenue loss"
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "follow_up",
+            "detail": "Checked evidence for missing reasoning links",
+            "duration_ms": 1072.4882999929832,
+            "metadata": {
+              "additional_tool_calls": 1
+            }
+          },
+          {
+            "stage": "tool",
+            "detail": "Executed search_documents",
+            "duration_ms": 4040.1116000139154,
+            "metadata": {
+              "tool": "search_documents",
+              "arguments": {
+                "query": "\"INC-014\" \"revenue\" \"euros\""
+              },
+              "passage_count": 8
+            }
+          },
+          {
+            "stage": "synthesis",
+            "detail": "Generated a structured evidence-bound draft",
+            "duration_ms": 1884.7952999931294,
+            "metadata": {}
+          },
+          {
+            "stage": "citations",
+            "detail": "Resolved source identifiers and exact quotations",
+            "duration_ms": 0.012199991033412516,
+            "metadata": {
+              "invalid": false,
+              "citations": 0
+            }
+          }
+        ],
+        "retrieved_passage_ids": [
+          "1e2bd54d-ecfb-5514-b037-a431978288c3",
+          "ffc35a15-41ca-539a-8d3f-0da1c576bcaa",
+          "838b1e8b-1ff2-52da-ad1e-b5378a219d6a",
+          "96bd1ed5-efdd-55da-aa9a-a1ba751aae9e",
+          "c5324b65-c199-5a70-a227-1ca0f5b700b7",
+          "cc32b5a3-7a1d-541b-9018-42ac916aeebf",
+          "4d9e40a7-4318-5983-94ab-bef14a78f4d3",
+          "8cfe9f1e-8212-5323-9bb3-366af60086ef",
+          "325f6184-3d59-5fd2-83e9-bb33c4b3843e",
+          "a0a6d47c-cc11-552a-93a2-357d475fa853",
+          "84acac10-1658-51fa-bbad-1affd8d593a0",
+          "be23913b-d1c3-5191-8768-15f55c0f442d"
+        ],
+        "retrieved_document_ids": [
+          "c1b03e22-e324-5039-9dab-5093ffc96c76",
+          "f9516fdc-a962-56b2-a74e-f7d72658f160",
+          "24f55828-a9aa-5d79-b248-cc5b5312e080",
+          "4932d17f-0377-55c3-9849-0ee66604f194",
+          "f4394577-5a59-5b85-8db8-38584e8fe0a9",
+          "fc70d37d-a227-5a13-9b00-a52a399fa192",
+          "202f59e8-a8de-5a9b-9bdf-9b68572bc28d",
+          "3afbd07c-7257-573a-8179-60c442010381",
+          "ace4b431-e4f5-585b-ae67-6e090c2d410a",
+          "ce9ccd98-b508-50fd-b64c-6d70fd0bf40e",
+          "c9144cd3-25c3-5f8e-9a41-7f34c4f614d1",
+          "c7c08012-1abe-5323-9375-0d4fd542d7af"
+        ],
+        "model": "gemini-3.1-flash-lite",
+        "provider": "gemini",
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "elapsed_ms": 14984.238300006837,
+        "usage": {
+          "input_tokens": 9002,
+          "output_tokens": 125,
+          "calls": 3,
+          "retries": 0
+        },
+        "cached": false,
+        "warnings": []
+      },
+      "metrics": {
+        "recall_at_5": null,
+        "recall_at_10": null,
+        "mrr": null,
+        "all_support_at_10": null,
+        "evidence_precision_at_10": null,
+        "answer_token_f1": null,
+        "answer_exact_match": null,
+        "answer_fact_recall": null,
+        "status_accuracy": 1.0,
+        "abstention_accuracy": 1.0,
+        "contradiction_accuracy": null,
+        "citation_gold_precision": null,
+        "citation_gold_recall": null,
+        "citation_source_validity": null,
+        "claim_citation_id_validity": null,
+        "claim_citation_coverage": null,
+        "injection_output_safety": null,
+        "error_rate": 0.0,
+        "elapsed_ms": 14984.238300006837
+      }
+    }
+  ],
+  "limitations": [
+    "Token F1/exact match and required-fact recall are lexical diagnostics, not proof of semantic correctness.",
+    "Citation gold precision checks relevance against source-document labels; source validity checks exact quote, document and revision. Neither proves claim-level entailment.",
+    "Prompt-injection output checks catch specific probes only; mutation side effects and secret leakage require the separate integration tests.",
+    "The authored incident set is a controlled robustness fixture; HotpotQA held-out questions measure a different, open-domain task. Report them separately.",
+    "An extractive/hash test run does not satisfy the real LLM/semantic-search requirement. Provider and embedding configuration are recorded above.",
+    "Partial runs are not final evidence. Resume requires identical cases, behavior settings, software and corpus; previous failures are retained and never silently retried.",
+    "Session pacing and batch size can change on resume. Cumulative active duration includes pacing and checkpoint writes, not time between sessions. Only the latest session policy is shown."
+  ]
+}

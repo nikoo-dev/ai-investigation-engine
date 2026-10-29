@@ -1,0 +1,132 @@
+{
+  "status": "incomplete",
+  "checked_at": "2026-10-29T00:27:02.520752+00:00",
+  "check_urls": true,
+  "checks": [
+    {
+      "id": "submission_manifest",
+      "status": "pass",
+      "detail": "Submission manifest is readable.",
+      "evidence_level": "verified",
+      "evidence": {},
+      "required": true
+    },
+    {
+      "id": "documentation",
+      "status": "pass",
+      "detail": "Required project documents exist.",
+      "evidence_level": "verified",
+      "evidence": {
+        "missing": []
+      },
+      "required": true
+    },
+    {
+      "id": "git_history",
+      "status": "pass",
+      "detail": "A local committed history exists.",
+      "evidence_level": "verified",
+      "evidence": {
+        "commit": "5ed377d40a6225ef2bb1770dc951420c888dc40e"
+      },
+      "required": true
+    },
+    {
+      "id": "dataset_manifest",
+      "status": "pass",
+      "detail": "Preparation manifest records 50,000+ primary records with hashes/provenance. Actual corpus file verification is reported separately.",
+      "evidence_level": "preparation_manifest",
+      "evidence": {
+        "records": 50085,
+        "primary_records": 50000,
+        "file_hashes_verified": true,
+        "record_count_independently_recounted": false,
+        "corpus_sha256": "18126707ba892950e6bef9647fd07cfddfd4d7bb0ec853351a268c38c07910d3",
+        "cases_sha256": "6b844b39feb8741c2fce19af8fb1ff4dc1b7d778d414aa1b82e1681eecdc5606",
+        "revision": "1908d6afbbead072334abe2965f91bd2709910ab"
+      },
+      "required": true
+    },
+    {
+      "id": "active_corpus",
+      "status": "pass",
+      "detail": "Current Store reports at least 50,000 active documents.",
+      "evidence_level": "verified",
+      "evidence": {
+        "documents": 50085,
+        "chunks": 52243,
+        "corpus_revision": "0e23207b-25d9-46b1-a1d2-5b6fbe72a648",
+        "backend": "qdrant_remote"
+      },
+      "required": true
+    },
+    {
+      "id": "live_llm_evaluation",
+      "status": "incomplete",
+      "detail": "Final evaluation must complete every planned case; partial or invalidated runs do not qualify.",
+      "evidence_level": "unverified",
+      "evidence": {},
+      "required": true
+    },
+    {
+      "id": "configuration_comparisons",
+      "status": "incomplete",
+      "detail": "A valid final evaluation is needed before comparing configurations.",
+      "evidence_level": "unverified",
+      "evidence": {},
+      "required": true
+    },
+    {
+      "id": "manual_answer_review",
+      "status": "incomplete",
+      "detail": "Artifact path is not configured.",
+      "evidence_level": "unverified",
+      "evidence": {},
+      "required": false
+    },
+    {
+      "id": "public_live_demo",
+      "status": "pass",
+      "detail": "Public HTTPS health and readiness endpoints responded without redirects.",
+      "evidence_level": "verified",
+      "evidence": {
+        "url": "https://ai-investigation-engine-h233.onrender.com",
+        "health": {
+          "status": "ok",
+          "boot_id": "bd381639-dbbd-41eb-b2fb-e17764d3863e",
+          "started_at": "2026-10-29T00:03:06.782705+00:00"
+        }
+      },
+      "required": true
+    },
+    {
+      "id": "published_repository",
+      "status": "pass",
+      "detail": "The current local commit resolves in the public GitHub repository.",
+      "evidence_level": "verified",
+      "evidence": {
+        "url": "https://github.com/nikoo-dev/ai-investigation-engine",
+        "commit": "5ed377d40a6225ef2bb1770dc951420c888dc40e"
+      },
+      "required": true
+    },
+    {
+      "id": "restart_persistence",
+      "status": "pass",
+      "detail": "Captured application-instance transition and unchanged source match current live HTTP observations. Prior captures are retained evidence, not cryptographic proof.",
+      "evidence_level": "captured_transition_and_current_http",
+      "evidence": {
+        "document_id": "db8ce5cf-3471-59b5-8467-9ea81fd95fb4",
+        "before_boot_id": "e194b90c-fefd-4c88-a644-1f954db078b0",
+        "after_boot_id": "bd381639-dbbd-41eb-b2fb-e17764d3863e",
+        "captured_by": "Codex HTTP verification"
+      },
+      "required": true
+    }
+  ],
+  "limitations": [
+    "This audit validates supplied evidence and current observations; it does not independently rerun model evaluations or authenticate historical captures/human reviews.",
+    "A Store count verifies active records, not complete manifest-ID reconciliation or hosted vector-database performance.",
+    "Passing this package audit is not a guarantee of perfect answer quality or a particular assessment score."
+  ]
+}

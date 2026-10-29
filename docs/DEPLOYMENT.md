@@ -11,10 +11,11 @@ upgrades or model billing to complete the assignment.
 2. Create/select a project and create a Gemini API key. Keep billing disabled if
    you want the free-tier quota to be a hard spending boundary.
 3. Copy `.env.example` to `.env` locally. Set `GEMINI_API_KEY`, `LLM_PROVIDER=gemini`,
-   and `LLM_MODEL=gemini-3.5-flash-lite`.
-4. Verify the model is available to your project. Google's current model guide
-   directs new projects to 3.5 Flash-Lite or 3.8 Flash; 2.5 access is restricted for
-   new users. Both generation and tool-call access must work with the selected key.
+   and `LLM_MODEL=gemini-3.1-flash-lite`.
+4. Verify the model is available to your project. This workspace verified native
+   tools, structured output and all 12 reserved tuning cases with 3.1 Flash-Lite.
+   Both generation and tool-call access must work with the selected key. Free
+   model availability and quotas are project-specific; check the current guide.
 5. Run `uv run investigate ask "What changed in Atlas CHG-001?"` after seeding data.
    Confirm the answer reports `provider: gemini` and nonzero model-call usage.
 
@@ -82,6 +83,14 @@ After the Qdrant cluster is populated, this
 opens the published repository's Blueprint setup. Review the Free plan and enter
 the secret environment values in Render before deploying. The link itself does
 not provision infrastructure or supply credentials.
+
+The actual deployment for this workspace is
+[ai-investigation-engine-h233.onrender.com](https://ai-investigation-engine-h233.onrender.com).
+Readiness, real Gemini conflict synthesis, TXT lifecycle and restart persistence
+are recorded in `reports/deployment/`. Pushing Git commits did not restart this
+particular service during verification; use **Manual Deploy -> Deploy latest
+commit** when necessary and confirm the checkout SHA in Render's logs. Do not
+infer the running code from the GitHub branch alone.
 
 1. Sign up at [Render](https://dashboard.render.com/) using the GitHub account.
 2. Choose **New -> Blueprint**, select the repository, and use its `render.yaml`.
@@ -156,6 +165,15 @@ Qdrant URL and an admin token.
 
 - Provider 429/503: the app retries within a bound, then reports unavailability.
   Check current project quotas; do not create uncontrolled retry loops.
+  A daily quota error is not fixed by redeploying Render or creating another key
+  for the same project. Retain the evaluation checkpoint and resume after quota
+  recovery. A different supported free model requires an explicit `LLM_MODEL`
+  configuration and a new evaluation directory; never merge different models
+  into one checkpoint. During actual verification, Gemini 3.5 Flash-Lite reported
+  the project's 500-request daily model quota. Gemini 3.1 Flash-Lite is being
+  checked separately and passed all 12 tuning cases. The blueprint now explicitly
+  selects it; an existing service must update `LLM_MODEL` and redeploy. No automatic
+  fallback is implemented.
 - Qdrant unavailable: inspect cluster suspension/status and `/ready`; do not
   initialize an empty replacement database and call the original data preserved.
 - Incompatible collection signature: restore the matching configuration or choose

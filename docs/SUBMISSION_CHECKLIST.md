@@ -122,5 +122,9 @@ reconciliation, and lexical metrics do not replace human semantic review.
 Before submission also inspect the full [requirements matrix](REQUIREMENTS.md),
 actual benchmark/model-comparison artifacts and [AI disclosure](AI_USAGE_REPORT.md).
 
-The public demo and final Gemini evaluation remain pending until their actual
-artifacts and external observations exist. Optional human review is not claimed.
+The public demo, source reconciliation, protected TXT lifecycle and hosted
+restart now have actual observations in `reports/deployment/`. The full live
+Gemini evaluation and matching comparisons remain incomplete; the current
+progress audit deliberately reports those gaps. The provider's daily free quota
+must recover, or a separately recorded, explicitly configured free-model run
+must complete. Optional human review is not claimed.

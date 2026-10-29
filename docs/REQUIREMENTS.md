@@ -11,10 +11,11 @@ adapter with mocked HTTP tests does not prove a successful live LLM investigatio
 A dataset preparation command does not prove that 50,000 records are indexed.
 A deployment configuration does not prove a public URL is running.
 
-Gemini credentials, native tool calling and three full-corpus investigations have
-been verified; the complete held-out evaluation is underway. Hosting/database
-access is still pending. The full live evaluation, public demo and hosted restart
-persistence remain explicit external submission gates. A candidate's manual answer
+Gemini credentials, native tool calling and full-corpus investigations have been
+verified. The public Render app, 50,085-record Qdrant Cloud corpus, protected TXT
+lifecycle, exact citation resolution and hosted restart persistence are verified
+in `reports/deployment/`. The complete live evaluation and matching comparisons
+remain incomplete: Gemini 3.5 Flash-Lite reached its daily free quota. A candidate's manual answer
 review is recommended preparation, not an extra assignment requirement.
 Generated reports and the final delivery checklist must be used to update
 the run-dependent entries below; do not infer completion from this matrix alone.
@@ -119,9 +120,9 @@ extractive answers; they do not establish live Gemini quality or hosted behavior
 
 | Assignment bullet | Implementation / selected approach | Required external evidence |
 | --- | --- | --- |
-| Real public application URL | Containerized FastAPI/UI on Render free web service | **Pending accounts/deployment:** record a reachable HTTPS URL and smoke-test it from outside the development machine. |
+| Real public application URL | Containerized FastAPI/UI on Render free web service | [Live app](https://ai-investigation-engine-h233.onrender.com); actual HTTP investigation and desktop/mobile page checks in `reports/deployment/`. Provider daily quota currently restricts fresh answers. |
 | Working host/database integration | Remote Qdrant Cloud; production requires `QDRANT_URL` | Upload, query, citation, update and delete on the hosted app using the actual remote store. |
-| Data survives application restart | Durable documents/chunks/jobs/state in Qdrant; local caches may be rebuilt | Local restart test exists. Restart/redeploy the hosted application and repeat source/count checks. |
+| Data survives application restart | Durable documents/chunks/jobs/state in Qdrant; local caches may be rebuilt | `reports/deployment/restart-evidence.json` records different actual boot IDs with the same document ID, revision and checksum. |
 | Protect API keys and secrets | Environment/secret settings, `SecretStr`, management bearer token, generic provider errors | Secret-safe HTTP tests; verify repository history and deployed client assets contain no credentials. |
 | Describe deployment architecture | One application container and external persistent Qdrant; browser only contacts the app | README/deployment guide must include the public URL, environment setup and persistence boundaries. |
 | Account for cost, resources and free-tier limits | Local CPU embeddings, bounded provider calls/context, caching, request/concurrency limits | Record actual account quotas, model availability, host memory and cold starts before submission. |
@@ -161,7 +162,7 @@ Bonus work does not waive any core requirement.
 | Required deliverable | What must be supplied |
 | --- | --- |
 | GitHub repository, full code and history | [Published repository](https://github.com/nikoo-dev/ai-investigation-engine), with full source and meaningful history. The current published commit was verified through GitHub's public API; subsequent local changes still need to be pushed. |
-| Live demo | A publicly reachable hosted application, with a tested cold-start path and working persistent corpus. **Pending external account setup.** |
+| Live demo | [Public app](https://ai-investigation-engine-h233.onrender.com), real Cloud/Gemini conflict query, document lifecycle and restart persistence verified. Unanswerable browser acceptance is incomplete because the provider reached its daily quota. |
 | README | Purpose, architecture, setup, configuration, usage, evaluation, deployment, choices and limitations; link all reports and the actual demo. |
 | Evaluation report | Generated results, exact configurations/manifest hashes, methodology, comparison and failure analysis. Disclose any optional manual/model review. **Real Gemini evaluation is underway; required comparisons remain pending.** |
 | AI Usage Report | [`AI_USAGE_REPORT.md`](AI_USAGE_REPORT.md), describing actual AI assistance and clearly separating it from the candidate's own verified work. |

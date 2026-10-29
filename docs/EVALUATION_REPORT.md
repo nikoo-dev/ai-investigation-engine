@@ -2,11 +2,11 @@
 
 Reviewed on 2026-10-29. The measurements below were recorded on 2026-10-27;
 their original timestamps and individual predictions remain in the linked files.
-The completed measurements below use real local ONNX retrieval and extractive
-preview. On 2026-10-29 Gemini access and three full-corpus investigations were
-verified; the 92-case live evaluation is underway. **A partial live run is not
-final evaluation evidence, and no public deployment is yet verified.** Preview
-answer scores do not satisfy the LLM requirement.
+The completed local measurements below use real ONNX retrieval and extractive
+preview. On 2026-10-29 the public Render/Gemini application and its Qdrant Cloud
+corpus were verified. **The live LLM evaluation and matching configuration
+comparisons remain incomplete.** Preview scores and partial live runs do not
+substitute for final LLM evaluation evidence.
 
 The initial corrected live run stopped after 53 recorded cases, including one
 provider-output error. Its verifier explanations also revealed a decision-schema
@@ -16,8 +16,26 @@ Decision flags are now mandatory, with explicit conflict semantics. The separate
 [12-case tuning run](../reports/evaluation/gemini-tuning-v3/report.md) completed
 with zero runtime errors, 100% expected-status accuracy, and both tuning conflicts
 confirmed. These are tuning diagnostics, not held-out semantic-correctness claims.
-The new 92-case run uses `reports/evaluation/gemini-full-hybrid-v3/`; its final
-results and controlled comparisons remain pending until their reports complete.
+The subsequent `gemini-full-hybrid-v3` run stopped after 45 cases when a model
+conflict object failed the required two-sided evidence constraint. Those outputs
+also remain unchanged. Minimum evidence counts are now included in the provider
+schema as well as local validation.
+
+The cloud run `reports/evaluation/gemini-cloud-hybrid-v4/` has 25 of 92 planned
+test cases, including one provider error. Actual provider diagnostics identify
+the project's **500 requests/day/model** free quota for `gemini-3.5-flash-lite`,
+not a missing credential or a failed Render deployment. The
+[quota diagnostic](../reports/deployment/gemini-daily-quota.json) retains the
+actual quota ID and retry delay without credentials. All attempts remain in
+the checkpoint. A separate free-model compatibility/tuning check uses Gemini
+3.1 Flash-Lite; its results cannot be merged into the 3.5 run. That separate
+[12-case tuning run](../reports/evaluation/gemini-3.1-tuning/report.md) completed
+with zero runtime errors, all expected statuses correct, both conflicts surfaced
+and both unanswerable cases withheld. Tuning diagnostics do not establish
+held-out semantic accuracy. The new full-cloud run is
+`reports/evaluation/gemini-3.1-cloud-hybrid/`: 96 planned test/security cases,
+matching the experiment runner's case manifest. Its outputs remain incomplete
+until every planned case has a recorded attempt.
 
 ## Corpus integrity and provenance
 
@@ -34,6 +52,14 @@ checked every source ID, normalized stored-text checksum and source URI: 50,085
 records checked, zero missing records, checksum mismatches, URI mismatches or
 duplicate source IDs. Corpus revision:
 `9e48a0b3-7f60-483b-86d9-5e7149562bb6`.
+
+The same prepared corpus was imported into Qdrant Cloud: 50,085 created records,
+zero failures and 52,243 chunks in 702.35 seconds. The
+[cloud reconciliation](../reports/cloud-corpus-reconciliation.json) checked all
+50,085 stored source IDs, normalized text checksums and URIs with zero mismatches.
+Later disposable upload/replace/delete checks changed the corpus generation but
+left the original source count unchanged. The v4 checkpoint binds its own exact
+remote corpus revision; it must not be resumed after source mutations.
 
 [Model provenance](../reports/model-provenance.json) records immutable model
 revisions and actual downloaded-file hashes. Model downloads use those revisions
@@ -140,9 +166,10 @@ actual hosted configuration before claiming the deployment meets its limits.
 
 ## Remaining submission checks
 
-1. Configure Gemini locally, verify native tool calls and structured synthesis,
-   then record a real held-out evaluation of at least 40 questions across every
-   required category. Preserve quota errors and failed cases.
+1. Complete the real model evaluation across every required category. Native
+   tools, structured synthesis and verification already work with actual Gemini
+   responses. Preserve quota errors and failed cases; a partial checkpoint does
+   not pass the evidence audit.
 2. Repeat required chunking and retrieval comparisons with the same evaluated
    question manifest. The experiment runner uses test plus security; standalone
    evaluation defaults to test only. Compare matching manifests, not these two
@@ -150,9 +177,9 @@ actual hosted configuration before claiming the deployment meets its limits.
 3. Inspect semantic entailment and missing evidence in the resulting answers.
    The [optional judge/review workflow](ANSWER_REVIEW.md) can assist, but valid
    quotations and lexical scores alone do not establish correctness.
-4. Publish the GitHub repository and public app, verify its actual memory and
-   provider quotas, and capture hosted restart-persistence evidence using the
-   [deployment guide](DEPLOYMENT.md) and [submission checklist](SUBMISSION_CHECKLIST.md).
+4. Complete the public causal/conflict/abstention acceptance after model quota
+   recovery or an explicitly configured tested model. Publication, remote corpus
+   reconciliation and hosted restart persistence are already verified below.
 
 The automated suite currently passes 193 tests; Ruff, formatting, mypy and
 JavaScript syntax checks also pass. Provider tests use mocked responses and do
@@ -162,7 +189,8 @@ build and nonroot runtime smoke have since passed on
 [GitHub Actions](https://github.com/nikoo-dev/ai-investigation-engine/actions/runs/40780475600).
 The runtime check imports the CPU ONNX provider, checks writable cache permissions,
 and exercises upload/query and persistence across app lifespans. It uses synthetic
-hash embeddings and extractive answers; real hosted model memory remains unverified.
+hash embeddings and extractive answers. Actual hosted inference and a separate
+process-memory observation are recorded below.
 The [captured CI result](../reports/ci/github-actions-db764a3.json) identifies its
 actual source commit and individual check outcomes.
 
@@ -179,3 +207,30 @@ one of three planned questions, and the second resumed to all three. The origina
 completed prediction remained unchanged and both sessions used the same corpus
 revision and software fingerprint. This checks cross-process recovery with real
 retrieval and extractive answers; it makes no live Gemini claim.
+
+## Public deployment observations
+
+The [public application](https://ai-investigation-engine-h233.onrender.com)
+returned a real Gemini conflict answer with three model calls, no retries and
+both opposing audit quotations resolved to stored passages. The
+[HTTP smoke artifact](../reports/deployment/public-smoke.json) records the actual
+answer and 24.83-second cold query time. The
+[lifecycle artifact](../reports/deployment/public-lifecycle.json) records an
+unauthorized write rejected with 401, then authenticated TXT creation,
+replacement to revision two, deletion and 404 on the deleted source.
+
+After the candidate manually deployed commit `5ed377d`,
+[restart observations](../reports/deployment/restart-evidence.json) recorded a
+new process boot ID with the same source ID, revision and content checksum.
+Health and remote readiness both returned 200 after restart. The
+[memory observation](../reports/deployment/hosted-memory.json) reports about
+443 MiB of process RSS after model inference. This is one process observation,
+not peak RSS, total container memory, or a guarantee of staying below a host limit.
+
+The [public read-only browser check](../reports/deployment/ui/browser-readonly-check.json)
+verified the real 50,085-document status, desktop/mobile layouts and mobile
+document library without page errors or horizontal overflow. It makes no model
+availability claim. A separate answer-browser attempt rendered causal and
+conflict findings and opened an exact source quote, but stopped at the
+unanswerable question when Gemini returned its quota error. Its partial
+screenshots are retained; it is not a completed three-question acceptance test.
